@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Zerlight"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/tatiana/CLionProjects/Zerlight/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/tatiana/CLionProjects/Zerlight/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/tatiana/CLionProjects/Zerlight/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Zerlight">
+				<Option output="/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Zerlight" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tatiana/CLionProjects/Zerlight/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/SDL2"/>
+					<Add directory="/home/tatiana/CLionProjects/Zerlight"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 Zerlight"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Zerlight/fast">
+				<Option output="/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Zerlight" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tatiana/CLionProjects/Zerlight/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/SDL2"/>
+					<Add directory="/home/tatiana/CLionProjects/Zerlight"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 Zerlight/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/tatiana/CLionProjects/Zerlight/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ActionEvent.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ActionEvent.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ActionListener.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ActionListener.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ClipRectangle.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ClipRectangle.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ContainerEvent.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ContainerEvent.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ContainerListener.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ContainerListener.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/DeathListener.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/DeathListener.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/DefaultFont.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/DefaultFont.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/Event.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/Event.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/Exception.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/Exception.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/FocusHandler.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/FocusHandler.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/FocusListener.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/FocusListener.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/Font.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/Font.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/Graphics.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/Graphics.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/Gui.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/Gui.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ImageFont.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ImageFont.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ImageLoader.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ImageLoader.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/Input.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/Input.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/InputEvent.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/InputEvent.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/Key.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/Key.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/KeyEvent.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/KeyEvent.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/KeyInput.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/KeyInput.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/KeyListener.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/KeyListener.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ListModel.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ListModel.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/MouseEvent.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/MouseEvent.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/MouseInput.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/MouseInput.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/MouseListener.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/MouseListener.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/MultipleInheritable.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/Rectangle.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/Rectangle.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/SelectionEvent.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/SelectionEvent.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/SelectionListener.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/SelectionListener.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/WidgetFactory.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/WidgetFactory.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/WidgetListener.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/WidgetListener.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZButton.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZButton.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZCheckBox.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZCheckBox.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZColor.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZColor.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZContainer.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZContainer.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZDropDown.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZDropDown.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZIcon.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZIcon.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZImage.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZImage.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZLabel.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZLabel.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZListBox.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZListBox.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZProgressBar.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZProgressBar.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZScrollArea.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZScrollArea.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZSlider.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZSlider.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZText.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZText.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZTextBox.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZTextBox.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZWidget.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/gui/ZWidget.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/OpenGLGraphics.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/OpenGLGraphics.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/OpenGLImage.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/OpenGLImage.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/OpenGLSDLImageLoader.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/OpenGLSDLImageLoader.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/SDLDeleters.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/SDLDeleters.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/SDLGraphics.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/SDLGraphics.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/SDLImage.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/SDLImage.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/SDLImageLoader.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/SDLImageLoader.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/SDLInput.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/SDLInput.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/SDLPixel.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/guichan/sdl/SDLPixel.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/interface/ActionConstants.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/interface/InterfaceWidgetFactory.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/interface/InterfaceWidgetFactory.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/interface/MainActionListener.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/interface/MainActionListener.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/interface/MainActionOptions.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/interface/MapWidget.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/interface/MapWidget.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/interface/OptionButton.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/interface/OptionButton.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/interface/OptionCheckBox.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/interface/OptionCheckBox.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/interface/ResolutionListModel.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/interface/ResolutionListModel.h">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/main.cpp">
+			<Option target="Zerlight"/>
+		</Unit>
+		<Unit filename="/home/tatiana/CLionProjects/Zerlight/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
