@@ -11,6 +11,8 @@
 
 #include <GL/gl.h>
 
+#include <thread>
+
 class GLUquadric;
 
 namespace sdl_interface
@@ -54,6 +56,19 @@ public:
     void action(const gui::ActionEvent& actionEvent);
 
 private:
+    void runIntro();
+    void runMain();
+
+    void input();
+
+    void displayMainWindow();
+    void drawSpace();
+    void drawBackground();
+
+    void displayGenerateNewWordProgress();
+
+    void displayWorldMapContainer();
+
     float mRotation;
 
     bool mRunning;
@@ -70,6 +85,8 @@ private:
     int mWidth,mHeight;
 
     float mTime, mDeltaTime;
+
+    void initVideo();
 
     std::shared_ptr<SDL_Window> mWindow;
     SDL_GLContext mGLContext;
@@ -198,6 +215,9 @@ private:
 
     void initGame();
     void clearGame();
+
+    float mProgress;
+    std::thread mGameThread;
 };
 
 

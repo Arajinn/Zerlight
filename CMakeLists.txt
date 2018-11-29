@@ -76,7 +76,7 @@ add_executable(Zerlight main.cpp
         interface/ActionConstants.h
         interface/OptionCheckBox.cpp interface/OptionCheckBox.h
         interface/ResolutionListModel.cpp interface/ResolutionListModel.h
-        interface/OptionButton.cpp interface/OptionButton.h interface/MainActionListener.cpp interface/MainActionListener.h interface/MainActionOptions.cpp interface/InterfaceWidgetFactory.cpp interface/InterfaceWidgetFactory.h interface/MapWidget.cpp interface/MapWidget.h)
+        interface/OptionButton.cpp interface/OptionButton.h interface/MainActionListener.cpp interface/MainActionListener.h interface/MainActionOptions.cpp interface/InterfaceWidgetFactory.cpp interface/InterfaceWidgetFactory.h interface/MapWidget.cpp interface/MapWidget.h interface/MainActionGame.cpp)
 
 TARGET_LINK_LIBRARIES(${PROJECT_NAME}
         ${SDL2_LIBRARIES}
