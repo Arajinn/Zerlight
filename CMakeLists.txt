@@ -76,7 +76,100 @@ add_executable(Zerlight main.cpp
         interface/ActionConstants.h
         interface/OptionCheckBox.cpp interface/OptionCheckBox.h
         interface/ResolutionListModel.cpp interface/ResolutionListModel.h
-        interface/OptionButton.cpp interface/OptionButton.h interface/MainActionListener.cpp interface/MainActionListener.h interface/MainActionOptions.cpp interface/InterfaceWidgetFactory.cpp interface/InterfaceWidgetFactory.h interface/MapWidget.cpp interface/MapWidget.h interface/MainActionGame.cpp)
+        interface/OptionButton.cpp interface/OptionButton.h
+        interface/MainActionListener.cpp interface/MainActionListener.h
+        interface/MainActionOptions.cpp interface/MainActionGame.cpp
+        interface/InterfaceWidgetFactory.cpp interface/InterfaceWidgetFactory.h
+        interface/MapWidget.cpp interface/MapWidget.h
+        game/core/enums.h
+        game/core/GameManager.cpp game/core/GameManager.h
+        game/core/GameEntity.cpp game/core/GameEntity.h
+        game/core/Liquid.cpp game/core/Liquid.h
+        game/core/Grass.cpp game/core/Grass.h
+        game/core/Ramp.cpp game/core/Ramp.h
+        game/core/Item.cpp game/core/Item.h
+        game/core/ItemHistory.cpp game/core/ItemHistory.h
+        game/core/Character.cpp game/core/Character.h
+        game/core/CharacterHistory.cpp game/core/CharacterHistory.h
+        game/core/CharacterAttribute.cpp game/core/CharacterAttribute.h
+        game/core/Body.cpp game/core/Body.h
+        game/core/BodySection.cpp game/core/BodySection.h
+        game/core/BodyPart.cpp game/core/BodyPart.h
+        game/core/HealthStatusEffect.cpp game/core/HealthStatusEffect.h
+        game/core/Mind.cpp game/core/Mind.h
+        game/core/Squad.cpp game/core/Squad.h
+        game/core/SquadPosition.cpp game/core/SquadPosition.h
+        game/core/Construction.cpp game/core/Construction.h
+        game/core/Stairs.cpp game/core/Stairs.h
+        game/core/Scaffolding.cpp game/core/Scaffolding.h
+        game/core/ConstructedTerrain.cpp game/core/ConstructedTerrain.h
+        game/core/StorageContainer.cpp game/core/StorageContainer.h
+        game/core/ResourcePile.cpp game/core/ResourcePile.h
+        game/core/AIDirector.cpp game/core/AIDirector.h
+        game/core/Fortress.cpp game/core/Fortress.h
+        game/core/Pathfinder.cpp game/core/Pathfinder.h
+        game/core/PriorityQueue.cpp game/core/PriorityQueue.h
+        game/core/Job.cpp game/core/Job.h
+        game/core/StockManager.cpp game/core/StockManager.h
+        game/behavior/TaskResult.h
+        game/behavior/Node.cpp game/behavior/Node.h
+        game/behavior/Action.cpp game/behavior/Action.h
+        game/behavior/CompositeNode.cpp game/behavior/CompositeNode.h
+        game/behavior/Selector.cpp game/behavior/Selector.h
+        game/behavior/Sequence.cpp game/behavior/Sequence.h
+        game/behavior/Condition.cpp game/behavior/Condition.h
+        game/behavior/SatisfyDyingOfThirst.cpp game/behavior/SatisfyDyingOfThirst.h
+        game/behavior/GetDrinkOrDrinkSelf.cpp game/behavior/GetDrinkOrDrinkSelf.h
+        game/behavior/GetFed.cpp game/behavior/GetFed.h
+        game/behavior/PathToNeedGoal.cpp game/behavior/PathToNeedGoal.h
+        game/behavior/SatisfyStarvation.cpp game/behavior/SatisfyStarvation.h
+        game/behavior/SatisfyThirst.cpp game/behavior/SatisfyThirst.h
+        game/behavior/StopStarvationOrEatAtTable.cpp game/behavior/StopStarvationOrEatAtTable.h
+        game/behavior/LookingForFood.cpp game/behavior/LookingForFood.h
+        game/behavior/GetFedOrFeedSelfAtTable.cpp game/behavior/GetFedOrFeedSelfAtTable.h
+        game/behavior/GetFedOrFeedSelf.cpp game/behavior/GetFedOrFeedSelf.h
+        game/behavior/FindFoodAndEatAtTable.cpp game/behavior/FindFoodAndEatAtTable.h
+        game/behavior/FindFood.cpp game/behavior/FindFood.h
+        game/behavior/LookForFood.cpp game/behavior/LookForFood.h
+        game/behavior/GetFood.cpp game/behavior/GetFood.h
+        game/behavior/LookForChairThenEatAtTable.cpp game/behavior/LookForChairThenEatAtTable.h
+        game/behavior/PickupFood.cpp game/behavior/PickupFood.h
+        game/behavior/LookForChair.cpp game/behavior/LookForChair.h
+        game/behavior/EatAtTable.cpp game/behavior/EatAtTable.h
+        game/behavior/PathToFood.cpp game/behavior/PathToFood.h
+        game/behavior/FreeHandsForItem.cpp game/behavior/FreeHandsForItem.h
+        game/behavior/PathToChair.cpp game/behavior/PathToChair.h
+        game/behavior/SatisfyHunger.cpp game/behavior/SatisfyHunger.h
+        game/behavior/WanderInGeneral.cpp game/behavior/WanderInGeneral.h
+        game/behavior/GeneralWander.cpp game/behavior/GeneralWander.h
+        game/behavior/FindDrink.cpp game/behavior/FindDrink.h
+        game/behavior/PathToNeedGoal.cpp game/behavior/PathToNeedGoal.h
+        game/behavior/LookForDrink.cpp game/behavior/LookForDrink.h
+        game/behavior/DrinkItem.cpp game/behavior/DrinkItem.h
+        game/behavior/PathToDrink.cpp game/behavior/PathToDrink.h
+        game/behavior/PlayerCharacterBehavior.cpp game/behavior/PlayerCharacterBehavior.h
+        game/map/vector3.cpp game/map/vector3.h
+        game/map/rectangle2.cpp game/map/rectangle2.h
+        game/map/MapCell.cpp game/map/MapCell.h
+        game/map/Map.cpp game/map/Map.h
+        game/map/Region.cpp game/map/Region.h
+        game/map/NavGraph.cpp game/map/NavGraph.h
+        game/map/NavGraphNode.cpp game/map/NavGraphNode.h
+        game/properties/GameDefinition.cpp game/properties/GameDefinition.h
+        game/properties/GameSettings.cpp game/properties/GameSettings.h
+        game/properties/TerrainSettings.cpp game/properties/TerrainSettings.h
+        game/properties/SettlerSettings.cpp game/properties/SettlerSettings.h
+        game/properties/RaceDefinition.cpp game/properties/RaceDefinition.h
+        game/properties/AttributeDef.cpp game/properties/AttributeDef.h
+        game/properties/ItemDefinition.cpp game/properties/ItemDefinition.h
+        game/properties/ItemSettings.cpp game/properties/ItemSettings.h
+        game/properties/MaterialDef.cpp game/properties/MaterialDef.h
+        game/properties/BodyDef.cpp game/properties/BodyDef.h
+        game/properties/BodySectionDef.cpp game/properties/BodySectionDef.h
+        game/properties/BodyPartDef.cpp game/properties/BodyPartDef.h
+        game/properties/ConstructionDef.cpp game/properties/ConstructionDef.h
+        game/utils/Randomizer.cpp game/utils/Randomizer.h
+        game/utils/math_utils.h)
 
 TARGET_LINK_LIBRARIES(${PROJECT_NAME}
         ${SDL2_LIBRARIES}
