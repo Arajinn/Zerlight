@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 28.03.2018.
+// Created by tatiana on 28.03.2018.
 //
 
 #ifndef ZERL_RAMP_H
@@ -13,12 +13,19 @@ namespace game {
         Ramp(const map::vector3& position);
         ~Ramp();
 
-        static std::shared_ptr<Ramp> create(const map::vector3& position, std::string constructionID, ConstructOrientation orientation=ConstructOrientation::FrontLeft);
+        static std::shared_ptr<Ramp> create(const map::vector3& position, std::string constructionID, const int& materialIndex,
+                ConstructOrientation orientation=ConstructOrientation::FrontLeft);
 
+        virtual void spawn(std::shared_ptr<map::MapCell> mapCell) override;
+
+        int materialIndex() const;
+
+        virtual std::vector<draw_info> get_draw_info(const int& x, const int& y, const int& z,
+                                                     const view_orientation& orientation) const;
     protected:
-        void init(std::string constructionID, ConstructOrientation orientation);
+        void init(std::string constructionID, const int& materialIndex, ConstructOrientation orientation);
     private:
-
+        int mMaterialIndex;
     };
 }
 

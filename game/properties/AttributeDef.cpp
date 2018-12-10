@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 04.04.2018.
+// Created by tatiana on 04.04.2018.
 //
 
 #include "AttributeDef.h"

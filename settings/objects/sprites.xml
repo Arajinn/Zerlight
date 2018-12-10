@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Sprites>
+  <!--Item:
+        Slash/Pierce/Blunt/Heat: Damage type
+          Blocks (Optional): Default max float value. Amount of damage reduced when hit
+          PercentTransfered (Optional): Default 0. Range [0, 1].  Percent of damage that is applied to the next layer if this layer is still not destroyed
+          PercentReceived (Optional): Default 1. Percent of damage received
+        ID: Defines ID for this material referenced everywhere else
+        Name: Name of material
+        Type: Type of material
+        Color: Color of material.  This is used when tinting sprites
+        Value: This setting is multiplied by the value of the item to determine worth
+        Strength: Used when calculating damage as well as affects job speed when mining
+  -->
+  <Item>
+    <SpriteID>RoughSoilWall</SpriteID>
+    <Source>dirt_wall.png</Source>
+  </Item>
+  <Item>
+    <SpriteID>RoughSoilFloor</SpriteID>
+    <Source>dirt_floor.png</Source>
+  </Item>
+  <Item>
+    <SpriteID>RoughStoneWall</SpriteID>
+    <Source>raw_stone_wall.png</Source>
+  </Item>
+  <Item>
+    <SpriteID>RoughStoneFloor</SpriteID>
+    <Source>raw_stone_floor.png</Source>
+  </Item>
+  <Item>
+	<SpriteID>StoneTopRightRamp</SpriteID>
+	<Source>raw_stone_ramp_01.png</Source>
+</Item>
+	<Item>
+	<SpriteID>StoneTopLeftRamp</SpriteID>
+	<Source>raw_stone_ramp_02.png</Source>
+</Item>
+<Item>
+	<SpriteID>StoneBottomRightRamp</SpriteID>
+	<Source>raw_stone_ramp_03.png</Source>
+</Item>
+<Item>
+	<SpriteID>StoneBottomLeftRamp</SpriteID>
+	<Source>raw_stone_ramp_04.png</Source>
+</Item>
+<Item>
+	<SpriteID>WineBarrel</SpriteID>
+	<Source>wine1.png</Source>
+</Item>
+<Item>
+	<SpriteID>WineLiquid</SpriteID>
+	<Source>wine2.png</Source>
+</Item>
+</Sprites>

@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 26.06.2018.
+// Created by tatiana on 26.06.2018.
 //
 
 #include "SatisfyStarvation.h"

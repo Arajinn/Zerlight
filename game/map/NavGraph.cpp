@@ -1,8 +1,9 @@
 //
-// Created by tatiana.polozova on 2018-04-18.
+// Created by tatiana on 2018-04-18.
 //
 
 #include "NavGraph.h"
+#include "game/core/defines.h"
 #include "game/core/GameManager.h"
 #include "Region.h"
 #include "Map.h"
@@ -16,7 +17,7 @@ namespace map
 {
     NavGraph::NavGraph()
     {
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
         this->subdivideIntoAllowedAreas(map::rectangle2(0,0,map->mapWidth()-1,map->mapHeight()-1),0,map->mapDepth());
     }
 
@@ -27,7 +28,7 @@ namespace map
 
     void NavGraph::subdivideIntoAllowedAreas(map::rectangle2 bounds, int levelStart, int levelEnd)
     {
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
         for (int level = levelStart; level < levelEnd; ++level)
         {
             for (int y = bounds.top(), yMax=bounds.bottom(); y <= yMax; ++y)
@@ -70,8 +71,8 @@ namespace map
         int xMax=bounds.right();
         int yMax=bounds.bottom();
 
-        std::shared_ptr<NavGraphNode> node=std::shared_ptr<NavGraphNode>(new NavGraphNode(GAME->nextNavID()));
-        auto map=GAME->region()->map();
+        std::shared_ptr<NavGraphNode> node=std::shared_ptr<NavGraphNode>(new NavGraphNode(GMINSTANCE->nextNavID()));
+        auto map=WORLD_MAP;
         map->cell(x,y,level)->setNavGraphNode(node);
 
         while (flag)
@@ -138,7 +139,7 @@ namespace map
 
     void NavGraph::createConnections(std::shared_ptr<NavGraphNode> node)
     {
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
 
         for (int iy=node->area().top(),yMax=node->area().bottom();iy<=yMax;iy++)
         {
@@ -304,7 +305,7 @@ namespace map
             if (node->navGraphID()!=-1)
                 return;
 
-            node->setNavGraphID(GAME->nextNavNodeID());
+            node->setNavGraphID(GMINSTANCE->nextNavNodeID());
         }
         else
         {
@@ -376,7 +377,7 @@ namespace map
 
     void NavGraph::setNewNodeOnCells(const rectangle2& area, const int& level, std::shared_ptr<NavGraphNode> node)
     {
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
         for (int y=area.top(), yMax=area.bottom();y<=yMax;y++)
         {
             for (int x=area.left(),xMax=area.right();x<=xMax;x++)
@@ -419,7 +420,7 @@ namespace map
 
                 if (iter==std::end(idList))
                 {
-                    auto id=GAME->nextNavNodeID();
+                    auto id=GMINSTANCE->nextNavNodeID();
                     idList.push_back(id);
                     this->propagateNavGraphID(node,id);
                 }
@@ -435,7 +436,7 @@ namespace map
         }
         else
         {
-            mapCell->setNavGraphNode(std::shared_ptr<NavGraphNode>(new NavGraphNode(GAME->nextNavID())));
+            mapCell->setNavGraphNode(std::shared_ptr<NavGraphNode>(new NavGraphNode(GMINSTANCE->nextNavID())));
             auto pos=mapCell->position();
             mapCell->navGraphNode()->setArea(rectangle2(pos.x(),pos.y(),0,0),pos.z());
             this->createConnections(mapCell->navGraphNode());
@@ -470,7 +471,7 @@ namespace map
 
     bool NavGraph::growRight(const int&, const int& right, const int& top, const int& bottom, const int& level, std::vector<std::shared_ptr<NavGraphNode>>& victimNodes)
     {
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
 
         for (int index=top;index<=bottom;index++)
         {
@@ -500,7 +501,7 @@ namespace map
 
     bool NavGraph::growLeft(const int& left, const int&, const int& top, const int& bottom, const int& level, std::vector<std::shared_ptr<NavGraphNode>>& victimNodes)
     {
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
 
         for (int index=top;index<=bottom;index++)
         {
@@ -527,7 +528,7 @@ namespace map
 
     bool NavGraph::growTop(const int& left, const int& right, const int& top, const int& bottom, const int& level, std::vector<std::shared_ptr<NavGraphNode>>& victimNodes)
     {
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
 
         for (int index=left;index<=right;index++)
         {
@@ -554,7 +555,7 @@ namespace map
 
     bool NavGraph::growBottom(const int& left, const int& right, const int& top, const int& bottom, const int& level, std::vector<std::shared_ptr<NavGraphNode>>& victimNodes)
     {
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
 
         for (int index=left;index<=right;index++)
         {
@@ -717,7 +718,7 @@ namespace map
 
                 if ((iter1==std::end(idList)) && (iter2==std::end(connections)))
                 {
-                    auto id=GAME->nextNavNodeID();
+                    auto id=GMINSTANCE->nextNavNodeID();
                     idList.push_back(id);
                     this->propagateNavGraphID(node,id);
                 }

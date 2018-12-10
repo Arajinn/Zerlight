@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 2018-04-20.
+// Created by tatiana on 2018-04-20.
 //
 
 #include "Scaffolding.h"

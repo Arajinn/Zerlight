@@ -8,9 +8,9 @@
 #include "ActionConstants.h"
 #include "OptionCheckBox.h"
 #include "guichan/sdl/SDLDeleters.h"
-#include "guichan/sdl/OpenGLSDLImageLoader.h"
 #include "guichan/sdl/OpenGLGraphics.h"
 #include "guichan/sdl/OpenGLImage.h"
+#include "guichan/sdl/OpenGLSDLImageLoader.h"
 #include "guichan/sdl/SDLInput.h"
 #include "guichan/gui/WidgetFactory.h"
 #include "guichan/gui/ZImage.h"
@@ -24,6 +24,7 @@
 #include "guichan/gui/ZDropDown.h"
 #include "guichan/gui/ZSlider.h"
 #include "guichan/gui/ActionEvent.h"
+#include "game/core/defines.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_video.h>
@@ -58,8 +59,8 @@ void MainActionListener::init()
     mDisplayWorldMap=false;
 
     mGlow=0.0;
-    mWidth=800;
-    mHeight=600;
+    mWidth=1024;
+    mHeight=768;
     mTime=-1.0f;
     mDeltaTime=0.0f;
     mInit=true;
@@ -70,10 +71,8 @@ void MainActionListener::init()
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    //mScreen = SDL_SetVideoMode(800, 600, 32, SDL_HWSURFACE | SDL_OPENGL | SDL_HWACCEL);
-
     mWindow = std::shared_ptr<SDL_Window>(SDL_CreateWindow("FPS demo", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-    800, 600, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE),sdl_interface::DeleteSdlWindow);
+    mWidth, mHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE),sdl_interface::DeleteSdlWindow);
 
     mGLContext=SDL_GL_CreateContext(mWindow.get());
 
@@ -193,7 +192,6 @@ void MainActionListener::cleanGui()
     mSplashImage = nullptr;
     mSDLInput = nullptr;
     mOpenGLGraphics = nullptr;
-    mOpenGLImageLoader = nullptr;
     mTitleLabel = nullptr;
 }
 
@@ -451,12 +449,12 @@ void MainActionListener::action(const gui::ActionEvent& actionEvent)
         if (mGui->getTop()!=mGenerateNewWorld)
             mGui->setTop(mGenerateNewWorld);
 
-        //std::packaged_task<bool()> task(std::bind(&game::Game::generate_new_world,mGame.get()));
-        //std::future<bool> result = task.get_future();
+        std::packaged_task<bool()> task(std::bind(&game::GameManager::generateNewWorld,GMINSTANCE.get()));
+        std::future<bool> result = task.get_future();
 
-        //mGameThread = std::thread(std::move(task));
+        mGameThread = std::thread(std::move(task));
         //bool ret=result.get();
-        //mGameThread.join();
+        mGameThread.detach();
     }
 }
 
@@ -595,7 +593,7 @@ void MainActionListener::drawSpace()
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
-    glOrtho(0.0, 800, 600, 0.0, 1, 0.0);
+    glOrtho(0.0, mWidth, mHeight, 0.0, 1, 0.0);
 
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, mStarsTexture);
@@ -704,37 +702,31 @@ void MainActionListener::drawBackground()
 
 void MainActionListener::displayGenerateNewWordProgress()
 {
-    std::cout << "generate new world " << mDeltaTime << std::endl;
+    //std::cout << "generate new world " << mDeltaTime << std::endl;
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //mProgress = mGame->getInitProgress();
+    mProgress = GMINSTANCE->getInitProgress();
     mGenerateNewWorldProgress->setProgress(mProgress);
 
     mGui->draw();
 
     SDL_GL_SwapWindow(mWindow.get());
 
-//    if (mGame->isGenerateFinish())
-//    {
-//        std::cout << "generate new world finish" << std::endl;
-//
-//        mWorldMapContainer->set_game(mGame);
-//
-//        mDisplayMainWindow=false;
-//        mDisplayGenerateNewWordProgress=false;
-//        mDisplayWorldMap=true;
-//
-//        mGenerateNewWorld->setVisible(false);
-//        mWorldMapContainer->setVisible(true);
-//
-//        if (mGui->getTop()!=mWorldMapContainer)
-//            mGui->setTop(mWorldMapContainer);
-//
-//        mWorldMapContainer->setXBoundaries(0,mGame->map()->horizontalSize()-1);
-//        mWorldMapContainer->setYBoundaries(0,mGame->map()->horizontalSize()-1);
-//        mWorldMapContainer->setZBoundaries(0,mGame->map()->verticalSize()-1);
-//    }
+    if (GMINSTANCE->getIsGenerateFinish())
+    {
+        std::cout << "generate new world finish" << std::endl;
+
+        mDisplayMainWindow=false;
+        mDisplayGenerateNewWordProgress=false;
+        mDisplayWorldMap=true;
+
+        mGenerateNewWorld->setVisible(false);
+        mWorldMapContainer->setVisible(true);
+
+        if (mGui->getTop()!=mWorldMapContainer)
+            mGui->setTop(mWorldMapContainer);
+    }
 
     SDL_Delay(10);
 }

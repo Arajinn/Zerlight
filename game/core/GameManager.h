@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 26.03.2018.
+// Created by tatiana on 26.03.2018.
 //
 
 #ifndef ZERL_GAMEMANAGER_H
@@ -7,8 +7,6 @@
 
 #include <memory>
 #include <vector>
-
-#define GAME game::GameManager::instance()
 
 namespace game
 {
@@ -34,12 +32,9 @@ class GameManager : public std::enable_shared_from_this<GameManager> {
 
         static std::shared_ptr<GameManager> create();
 
-        void testSpawn();
-
-        static const std::shared_ptr<GameManager> instance();
+        bool testSpawn();
 
         const std::shared_ptr<map::Region> region() const;
-        const std::shared_ptr<properties::GameDefinition> gameDefinition() const;
 
         void update(const float& dt);
 
@@ -48,11 +43,15 @@ class GameManager : public std::enable_shared_from_this<GameManager> {
 
         unsigned int nextNavNodeID();
         unsigned int nextNavID();
+
+        bool generateNewWorld();
+        float getInitProgress();
+
+        bool getIsGenerateFinish() const;
     private:
         void init();
 
         std::shared_ptr<map::Region> mRegion;
-        std::shared_ptr<properties::GameDefinition> mGameDefs;
         std::shared_ptr<AIDirector> mAIDirector;
 
         void processSpawn();
@@ -65,10 +64,13 @@ class GameManager : public std::enable_shared_from_this<GameManager> {
         int mNextGameObjectID;
         std::vector<std::shared_ptr<GameEntity>> mSpawnList;
         std::vector<std::shared_ptr<GameEntity>> mActiveList;
+        std::vector<std::shared_ptr<GameEntity>> mNonActiveList;
         std::vector<std::shared_ptr<GameEntity>> mDeleteList;
 
         unsigned int mNextNodeID;
         unsigned int mNextNavGraphID;
+
+        bool mIsGenerateFinish;
     };
 }
 

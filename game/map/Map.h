@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 27.03.2018.
+// Created by tatiana on 27.03.2018.
 //
 
 #ifndef ZERL_MAP_H
@@ -22,7 +22,7 @@ namespace map {
         Map();
         ~Map();
 
-        void testMap();
+        bool testMap();
         void postInit();
 
         const std::shared_ptr<MapCell> cell(const vector3& pos) const;
@@ -38,11 +38,19 @@ namespace map {
         const std::shared_ptr<NavGraph> navGraph();
 
         static float distanceSquaredWithBias(const vector3& pos1, const vector3& pos2);
+
+        float getInitProgress() const;
     private:
         std::vector<std::vector<std::vector<std::shared_ptr<MapCell>>>> mMap;
         int mMapWidth, mMapHeight, mMapDepth;
 
         std::shared_ptr<NavGraph> mNavGraph;
+
+        float mInitProgress;
+
+        void propagateVisibility(const int& x, const int& y, const int& z);
+
+        void generateRamps();
     };
 }
 

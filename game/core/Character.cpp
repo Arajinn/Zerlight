@@ -1,8 +1,9 @@
 //
-// Created by tatiana.polozova on 26.03.2018.
+// Created by tatiana on 26.03.2018.
 //
 
 #include "Character.h"
+#include "defines.h"
 #include "Pathfinder.h"
 #include "Body.h"
 #include "Mind.h"
@@ -40,14 +41,15 @@ namespace game
 
     }
 
-    std::shared_ptr<Character> Character::create(const map::vector3& position, std::shared_ptr<properties::RaceDefinition> aRaceDef)
+    std::shared_ptr<Character> Character::create(const map::vector3& position,
+            std::shared_ptr<const properties::RaceDefinition> aRaceDef)
     {
         std::shared_ptr<Character> ptr=std::shared_ptr<Character>(new Character(position));
         ptr->init(aRaceDef);
         return ptr;
     }
 
-    void Character::init(std::shared_ptr<properties::RaceDefinition> aRaceDef)
+    void Character::init(std::shared_ptr<const properties::RaceDefinition> aRaceDef)
     {
         mSquad=nullptr;
         mJob=nullptr;
@@ -109,7 +111,7 @@ namespace game
         return mPathfinder;
     }
 
-    std::shared_ptr<properties::RaceDefinition> Character::raceDefinition() const
+    std::shared_ptr<const properties::RaceDefinition> Character::raceDefinition() const
     {
         return mHistory->raceDef;
     }
@@ -129,7 +131,7 @@ namespace game
         if (!mPathfinder->findNavPath(this->position(),position,adjacent))
             return false;
 
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
         auto cell1=map->cell(this->position());
         auto cell2=map->cell(mPathfinder->endPosition());
 
@@ -143,7 +145,7 @@ namespace game
 
     void Character::moveTo(map::vector3 new_position)
     {
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
 
         if ((mStartingFallPosition==map::vector3_one) && (!map->isWalkable(new_position)) && (this->cell()->hasFloor()))
         {
@@ -208,9 +210,9 @@ namespace game
 
                 auto nextPos=mPathfinder->nextPosition();
                 if (nextPos!=this->position()) {
-                    auto mapCell = GAME->region()->map()->cell(nextPos);
+                    auto mapCell = WORLD_MAP->cell(nextPos);
 
-                    if (GAME->region()->map()->isWalkable(nextPos) || (mJob != nullptr) && (mapCell->proposedJob() == mJob))
+                    if (WORLD_MAP->isWalkable(nextPos) || (mJob != nullptr) && (mapCell->proposedJob() == mJob))
                     {
                         if (mPathfinder->pathing())
                         {
@@ -336,7 +338,7 @@ namespace game
 
     bool Character::findOwnedPossession(ItemEffectType type)
     {
-        auto gameDef=GAME->gameDefinition();
+        auto gameDef=GAME_DEFINITIONS;
 
         for (auto posession : mPossessions)
         {
@@ -355,7 +357,7 @@ namespace game
         if (this->findOwnedPossession(type))
             return true;
 
-        auto entities=GAME->region()->fortress()->getEntities(type);
+        auto entities=GMINSTANCE->region()->fortress()->getEntities(type);
         if (entities.size()==0)
             return false;
 
@@ -363,7 +365,7 @@ namespace game
         {
             if ((type==ItemEffectType::Drink) || (type==ItemEffectType::Food))
             {
-                float nutritionWeight=GAME->gameDefinition()->gameSettings()->NutritionWeight;
+                float nutritionWeight=GAME_SETTINGS->NutritionWeight;
                 map::vector3 pos=this->position();
                 std::sort(std::begin(entities),std::end(entities),[&nutritionWeight,&type,&pos](const std::shared_ptr<GameEntity>& left,const std::shared_ptr<GameEntity>& right)
                 {
@@ -412,7 +414,7 @@ namespace game
             }
         }
 
-        auto this_cell=GAME->region()->map()->cell(this->position());
+        auto this_cell=WORLD_MAP->cell(this->position());
         if (this_cell->navGraphNode()==nullptr)
             return false;
 
@@ -421,9 +423,9 @@ namespace game
             auto castToItem=std::dynamic_pointer_cast<Item>(ent);
             if (castToItem)
             {
-                if (GAME->gameDefinition()->itemDefinition(castToItem->itemID())->hasEffect(type))
+                if (GAME_DEFINITIONS->itemDefinition(castToItem->itemID())->hasEffect(type))
                 {
-                    auto cell=GAME->region()->map()->cell(ent->position());
+                    auto cell=WORLD_MAP->cell(ent->position());
                     if ((cell->navGraphNode()!=nullptr) && (cell->navGraphNode()->navGraphID()==this_cell->navGraphNode()->navGraphID()) && (this->tryToUseItem(castToItem)))
                         return true;
                 }
@@ -559,7 +561,7 @@ namespace game
     {
         body->eatFoot(item);
 
-        auto cell=GAME->region()->map()->cell(this->position());
+        auto cell=WORLD_MAP->cell(this->position());
         if (cell->hasEmbeddedWall())
         {
             if (cell->embeddedWall()->effectAmount(ItemEffectType::Sit)>0.0f)
@@ -582,5 +584,10 @@ namespace game
     bool Character::isStarving() const
     {
         return body->isStarving();
+    }
+
+    bool Character::isUpdatable() const
+    {
+        return true;
     }
 }

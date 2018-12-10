@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 27.03.2018.
+// Created by tatiana on 27.03.2018.
 //
 
 #ifndef ZERL_MAPCELL_H
@@ -34,6 +34,8 @@ namespace map {
 
         void addObject(std::shared_ptr<game::GameEntity> ent);
         void removeObject(std::shared_ptr<game::GameEntity> ent);
+        int getObjectsCount() const;
+        std::vector<std::shared_ptr<game::GameEntity>> getObjects() const;
 
         void addCharacter(std::shared_ptr<game::Character> character);
         void removeCharacter(std::shared_ptr<game::Character> character);
@@ -41,6 +43,10 @@ namespace map {
         void setEmbeddedWall(std::shared_ptr<game::GameEntity> ent);
         void setEmbeddedFloor(std::shared_ptr<game::GameEntity> ent);
         void setNaturalFloor(const int& floor);
+
+        void setRamp(std::shared_ptr<game::GameEntity> ent);
+        std::shared_ptr<const game::Ramp> ramp() const;
+        bool hasRamp() const;
 
         std::shared_ptr<MapCell> getShiftCell(int dx, int dy, int dz);
 
@@ -57,9 +63,9 @@ namespace map {
         bool hasGrassRampTop() const;
         bool willSuffocate() const;
         bool hasLava() const;
-        bool hasRamp() const;
         bool hasSupport() const;
         bool hasScaffolding() const;
+        bool hasWall() const;
 
         const float& weight() const;
 
@@ -73,6 +79,18 @@ namespace map {
         std::shared_ptr<game::Liquid> liquid();
 
         const map::vector3& position() const;
+
+        bool isVisible() const;
+        void setIsVisible(const bool& value);
+
+        bool isOutside() const;
+        void setOutside(const bool& value);
+
+        bool isAir() const;
+
+
+        int naturalWall() const;
+        int naturalFloor() const;
     private:
         map::vector3 mPosition;
 
@@ -94,6 +112,8 @@ namespace map {
         std::shared_ptr<game::Job> mProposedJob;
 
         std::shared_ptr<map::NavGraphNode> mNavGraphNode;
+
+        bool mIsVisible, mOutside;
     };
 }
 

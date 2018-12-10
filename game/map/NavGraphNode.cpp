@@ -1,8 +1,9 @@
 //
-// Created by tatiana.polozova on 28.03.2018.
+// Created by tatiana on 28.03.2018.
 //
 
 #include "NavGraphNode.h"
+#include "game/core/defines.h"
 #include "game/core/GameManager.h"
 #include "game/map/Region.h"
 #include "game/map/Map.h"
@@ -161,7 +162,7 @@ namespace map
 
     bool NavGraphNode::hasDryLand() const
     {
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
         for (int i=0,isize=mArea.height();i<isize;i++)
         {
             for (int j=0,jsize=mArea.width();j<jsize;j++)

@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 2018-04-18.
+// Created by tatiana on 2018-04-18.
 //
 
 #ifndef ZERL_NAVGRAPH_H

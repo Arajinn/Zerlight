@@ -1,8 +1,9 @@
 //
-// Created by tatiana.polozova on 13.06.2018.
+// Created by tatiana on 13.06.2018.
 //
 
 #include "BodySection.h"
+#include "defines.h"
 #include "BodyPart.h"
 #include "Body.h"
 #include "GameManager.h"
@@ -38,7 +39,7 @@ namespace game
         parent_body=parent;
 
         mBodyPartID=sectionDef->BodyPartID;
-        mBodyPart=BodyPart::create(shared_from_this(),GAME->gameDefinition()->bodyPartDefinition(mBodyPartID));
+        mBodyPart=BodyPart::create(shared_from_this(),GAME_DEFINITIONS->bodyPartDefinition(mBodyPartID));
 
         mHeldItem= nullptr;
 

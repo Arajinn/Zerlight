@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 6/14/2018.
+// Created by tatiana on 6/14/2018.
 //
 
 #ifndef ZERL_BODYPART_H
@@ -29,14 +29,17 @@ class BodyPart : public std::enable_shared_from_this<BodyPart>
         BodyPart();
         ~BodyPart();
 
-        static std::shared_ptr<BodyPart> create(std::shared_ptr<BodySection> section, std::shared_ptr<properties::BodyPartDef> aBodyPartDef, std::string nameModifier="",
-                                        std::shared_ptr<BodyPart> containedBy=nullptr, std::shared_ptr<Item> prostheticPart=nullptr);
+        static std::shared_ptr<BodyPart> create(std::shared_ptr<BodySection> section,
+                std::shared_ptr<const properties::BodyPartDef> aBodyPartDef,
+                std::string nameModifier="", std::shared_ptr<BodyPart> containedBy=nullptr,
+                std::shared_ptr<Item> prostheticPart=nullptr);
 
         const BodyFunction& function() const;
         void addFunction();
     private:
-        void init(std::shared_ptr<BodySection> section, std::shared_ptr<properties::BodyPartDef> aBodyPartDef, std::string nameModifier="",
-                     std::shared_ptr<BodyPart> containedBy=nullptr, std::shared_ptr<Item> prostheticPart=nullptr);
+        void init(std::shared_ptr<BodySection> section, std::shared_ptr<const properties::BodyPartDef> aBodyPartDef,
+                std::string nameModifier="", std::shared_ptr<BodyPart> containedBy=nullptr,
+                std::shared_ptr<Item> prostheticPart=nullptr);
 
         std::shared_ptr<BodySection> parent_section;
         std::shared_ptr<BodyPart> parent_contained;
@@ -45,7 +48,7 @@ class BodyPart : public std::enable_shared_from_this<BodyPart>
 
         BodyPartStatus mStatus;
 
-        std::shared_ptr<properties::BodyPartDef> mBodyPartDef;
+        std::shared_ptr<const properties::BodyPartDef> mBodyPartDef;
 
         std::vector<std::shared_ptr<BodyPart>> mContainedParts;
     };

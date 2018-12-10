@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 25.06.2018.
+// Created by tatiana on 25.06.2018.
 //
 
 #ifndef ZERL_GETFOOD_H

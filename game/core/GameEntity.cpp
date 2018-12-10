@@ -1,11 +1,12 @@
 //
-// Created by tatiana.polozova on 26.03.2018.
+// Created by tatiana on 26.03.2018.
 //
 
 #include "GameEntity.h"
 #include "GameManager.h"
 #include "Item.h"
 #include "Construction.h"
+#include "defines.h"
 #include "game/properties/GameDefinition.h"
 #include "game/properties/ItemDefinition.h"
 #include "game/map/Region.h"
@@ -36,7 +37,7 @@ namespace game
 
         if (castItem!= nullptr)
         {
-            return GAME->gameDefinition()->itemDefinition(castItem->itemID())->hasEffect(type);
+            return GAME_DEFINITIONS->itemDefinition(castItem->itemID())->hasEffect(type);
         }
         else
         {
@@ -98,7 +99,7 @@ namespace game
 
     std::shared_ptr<map::MapCell> GameEntity::cell() const
     {
-        return GAME->region()->map()->cell(mPosition0);
+        return WORLD_MAP->cell(mPosition0);
     }
 
     void GameEntity::spawn(std::shared_ptr<map::MapCell> mapCell)
@@ -137,5 +138,11 @@ namespace game
     float GameEntity::effectAmount(ItemEffectType type)
     {
         return 0.0f;
+    }
+
+    std::vector<draw_info> GameEntity::get_draw_info(const int& x, const int& y, const int& z,
+                                                     const view_orientation& orientation) const
+    {
+        return std::vector<draw_info>();
     }
 }

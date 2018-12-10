@@ -48,6 +48,8 @@ namespace gui {
          */
         ZColor(int r, int g, int b, int a = 255);
 
+        ZColor(std::string color_info);
+
         /**
          * Adds the RGB values of two colors together. The values will be
          * clamped if they go out of range.
@@ -127,6 +129,8 @@ namespace gui {
          * transparent while a value of 255 is considered opaque.
          */
         int a;
+
+        bool valid() const;
     };
 }
 

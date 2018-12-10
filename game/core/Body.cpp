@@ -1,8 +1,9 @@
 //
-// Created by tatiana.polozova on 26.03.2018.
+// Created by tatiana on 26.03.2018.
 //
 
 #include "Body.h"
+#include "defines.h"
 #include "Character.h"
 #include "HealthStatusEffect.h"
 #include "SquadPosition.h"
@@ -74,7 +75,7 @@ namespace game
         mBodyFunctionCurrent.resize((int)BodyFunction::Count);
         std::fill(std::begin(mBodyFunctionCurrent),std::end(mBodyFunctionCurrent),0);
 
-        auto bodyDef=GAME->gameDefinition()->bodyDefinition(raceDef->BodyID);
+        auto bodyDef=GAME_DEFINITIONS->bodyDefinition(raceDef->BodyID);
         bodySectionsKey=0;
         mMainBodySection=BodySection::create(bodySectionsKey,shared_from_this(),bodyDef->MainBody,"");
     }

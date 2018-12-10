@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 26.03.2018.
+// Created by tatiana on 26.03.2018.
 //
 
 #ifndef ZERL_GAMEENTITY_H
@@ -7,6 +7,7 @@
 
 #include "game/core/enums.h"
 #include "game/map/vector3.h"
+#include "guichan/gui/ZColor.h"
 
 #include <memory>
 #include <vector>
@@ -17,6 +18,13 @@ namespace map
 }
 
 namespace game {
+    struct draw_info
+    {
+        std::string spriteID;
+        int order;
+        gui::ZColor color;
+    };
+
     class GameEntity : public std::enable_shared_from_this<GameEntity> {
     public:
         GameEntity(const map::vector3& position);
@@ -45,7 +53,12 @@ namespace game {
         static bool entityHasEffect(std::shared_ptr<GameEntity> ent, ItemEffectType type);
 
         const bool& toBeMoved() const;
-    protected:
+
+        virtual bool isUpdatable() const = 0;
+
+        virtual std::vector<draw_info> get_draw_info(const int& x, const int& y, const int& z,
+                                                     const view_orientation& orientation) const;
+     protected:
 
     private:
         int mGameObjectID;

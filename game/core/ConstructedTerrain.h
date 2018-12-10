@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 2018-04-19.
+// Created by tatiana on 2018-04-19.
 //
 
 #ifndef ZERL_CONSTRUCTEDTERRAIN_H

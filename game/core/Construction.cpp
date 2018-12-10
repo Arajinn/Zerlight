@@ -1,8 +1,9 @@
 //
-// Created by tatiana.polozova on 27.03.2018.
+// Created by tatiana on 27.03.2018.
 //
 
 #include "Construction.h"
+#include "defines.h"
 #include "GameManager.h"
 #include "Liquid.h"
 #include "game/properties/GameDefinition.h"
@@ -40,7 +41,7 @@ namespace game
         mConstructionID=constructionID;
         mOrientation=orientation;
 
-        mConstructionDef=GAME->gameDefinition()->constructionDefinition(constructionID);
+        mConstructionDef=GAME_DEFINITIONS->constructionDefinition(constructionID);
     }
 
     void Construction::spawn(std::shared_ptr<map::MapCell> mapCell)
@@ -49,11 +50,11 @@ namespace game
 
         if (mConstructionDef->hasFlag(ConstructionProperty::BlocksMovement)==true)
         {
-            GAME->region()->map()->navGraph()->removeTile(mapCell);
+            WORLD_MAP->navGraph()->removeTile(mapCell);
 
             auto liquid=mapCell->liquid();
             if (liquid!= nullptr)
-                GAME->addToDeleteList(std::dynamic_pointer_cast<GameEntity>(liquid));
+                GMINSTANCE->addToDeleteList(std::dynamic_pointer_cast<GameEntity>(liquid));
         }
 
         GameEntity::spawn(mapCell);
@@ -67,5 +68,10 @@ namespace game
         });
 
         return (iter!=std::end(mProperties));
+    }
+
+    bool Construction::isUpdatable() const
+    {
+        return false;
     }
 }

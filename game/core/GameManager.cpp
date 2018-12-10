@@ -1,8 +1,9 @@
 //
-// Created by tatiana.polozova on 26.03.2018.
+// Created by tatiana on 26.03.2018.
 //
 
 #include "GameManager.h"
+#include "defines.h"
 #include "Character.h"
 #include "Construction.h"
 #include "Item.h"
@@ -42,7 +43,6 @@ namespace game
         mNextNavGraphID=0;
 
         mRegion=std::shared_ptr<map::Region>(new map::Region());
-        mGameDefs=std::shared_ptr<properties::GameDefinition>(new properties::GameDefinition());
         mAIDirector=std::shared_ptr<AIDirector>(new AIDirector(shared_from_this()));
     }
 
@@ -58,11 +58,11 @@ namespace game
         return mNextNavGraphID;
     }
 
-    void GameManager::testSpawn()
+    bool GameManager::testSpawn()
     {
-        map::vector3 groundPosStair(20,20,20);
-        auto entStair=Stairs::create(groundPosStair,"SoilStairs");
-        this->addToSpawnList(entStair);
+//        map::vector3 groundPosStair(20,20,20);
+//        auto entStair=Stairs::create(groundPosStair,"SoilStairs");
+//        this->addToSpawnList(entStair);
 
         map::vector3 groundPosSettler(56,43,20);
         properties::SettlerSettings settlerSettings;
@@ -82,6 +82,8 @@ namespace game
 
         map::vector3 groundPosFood1(45,45,20);
         mAIDirector->createItem(groundPosFood1,"Fruit","Apple");
+
+        return true;
     }
 
     void GameManager::addToSpawnList(std::shared_ptr<GameEntity> ent)
@@ -114,26 +116,9 @@ namespace game
         }
     }
 
-    const std::shared_ptr<GameManager> GameManager::instance()
-    {
-        static std::shared_ptr<GameManager> self;
-
-        if (!self)
-        {
-            self = GameManager::create();
-        }
-
-        return self;
-    }
-
     const std::shared_ptr<map::Region> GameManager::region() const
     {
         return mRegion;
-    }
-
-    const std::shared_ptr<properties::GameDefinition> GameManager::gameDefinition() const
-    {
-        return mGameDefs;
     }
 
     void GameManager::processSpawn()
@@ -142,7 +127,11 @@ namespace game
         {
             auto mapCell=this->region()->map()->cell(ent->position());
             ent->spawn(mapCell);
-            mActiveList.push_back(ent);
+
+            if (ent->isUpdatable())
+                mActiveList.push_back(ent);
+            else
+                mNonActiveList.push_back(ent);
         }
 
         mSpawnList.clear();
@@ -168,7 +157,7 @@ namespace game
 
     void GameManager::processPostUpdate()
     {
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
 
         for (auto ent : mActiveList)
         {
@@ -188,15 +177,29 @@ namespace game
     {
         for (auto ent : mDeleteList)
         {
-            auto iter=std::find_if(std::begin(mActiveList),std::end(mActiveList),[&ent](std::shared_ptr<GameEntity> const& value)
+            if (ent->isUpdatable())
             {
-                return ent->ID()==value->ID();
-            });
+                auto iter = std::find_if(std::begin(mActiveList), std::end(mActiveList),
+                                         [&ent](std::shared_ptr<GameEntity> const &value) {
+                                             return ent->ID() == value->ID();
+                                         });
 
-            if (iter!=std::end(mActiveList))
+                if (iter != std::end(mActiveList)) {
+                    //int index = std::distance(std::begin(mActiveList), iter);
+                    mActiveList.erase(iter);
+                }
+            }
+            else
             {
-                int index=std::distance(std::begin(mActiveList),iter);
-                mActiveList.erase(iter);
+                auto iter = std::find_if(std::begin(mNonActiveList), std::end(mNonActiveList),
+                                         [&ent](std::shared_ptr<GameEntity> const &value) {
+                                             return ent->ID() == value->ID();
+                                         });
+
+                if (iter != std::end(mNonActiveList)) {
+                    //int index = std::distance(std::begin(mNonActiveList), iter);
+                    mNonActiveList.erase(iter);
+                }
             }
 
             auto mapCell=this->region()->map()->cell(ent->position());
@@ -217,5 +220,30 @@ namespace game
 
         this->processDeletion();
         mRegion->processDeletion();
+    }
+
+    bool GameManager::generateNewWorld()
+    {
+        mIsGenerateFinish=false;
+
+        mRegion->map()->testMap();
+
+        mRegion->map()->postInit();
+
+        this->testSpawn();
+
+        this->update(0.0f);
+
+        mIsGenerateFinish=true;
+    }
+
+    float GameManager::getInitProgress()
+    {
+        return mRegion->map()->getInitProgress();
+    }
+
+    bool GameManager::getIsGenerateFinish() const
+    {
+        return mIsGenerateFinish;
     }
 }

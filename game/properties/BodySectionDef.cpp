@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 6/14/2018.
+// Created by tatiana on 6/14/2018.
 //
 
 #include "BodySectionDef.h"

@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 27.03.2018.
+// Created by tatiana on 27.03.2018.
 //
 
 #ifndef ZERL_REGION_H

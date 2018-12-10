@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 2018-04-20.
+// Created by tatiana on 2018-04-20.
 //
 
 #include "ConstructionDef.h"
@@ -16,7 +16,7 @@ namespace properties {
 
     }
 
-    bool ConstructionDef::hasFlag(game::ConstructionProperty flag)
+    bool ConstructionDef::hasFlag(game::ConstructionProperty flag) const
     {
         auto iter=std::find_if(std::begin(Properties),std::end(Properties),[&flag](game::ConstructionProperty const& value)
         {

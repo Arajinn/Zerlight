@@ -1,8 +1,9 @@
 //
-// Created by tatiana.polozova on 27.03.2018.
+// Created by tatiana on 27.03.2018.
 //
 
 #include "Stairs.h"
+#include "defines.h"
 #include "game/core/GameManager.h"
 #include "game/map/MapCell.h"
 #include "game/map/Region.h"
@@ -37,7 +38,7 @@ namespace game
 
     void Stairs::spawn(std::shared_ptr<map::MapCell> mapCell)
     {
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
 
         auto down_cell=map->cell(this->position().x(),this->position().y(),this->position().z()-1);
         if (down_cell!=nullptr)
@@ -64,7 +65,7 @@ namespace game
 
     void Stairs::pre_delete()
     {
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
 
         auto down_dell=map->cell(this->position().x(),this->position().y(),this->position().z()-1);
         down_dell->setEmbeddedWall(nullptr);

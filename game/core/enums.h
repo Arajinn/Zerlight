@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 26.03.2018.
+// Created by tatiana on 26.03.2018.
 //
 
 #ifndef ZERL_ENUMS_H
@@ -7,6 +7,14 @@
 
 namespace game
 {
+    enum class view_orientation
+    {
+        front_left,
+        front_right,
+        back_right,
+        back_left
+    };
+
     enum class CharacterAttributeType
     {
         Fitness = 0,
@@ -104,7 +112,8 @@ namespace game
         Bone = 10,
         Hide = 11,
         Flesh = 12,
-        BodyFluid = 13
+        BodyFluid = 13,
+        Undef
     };
 
     enum class ItemQuality

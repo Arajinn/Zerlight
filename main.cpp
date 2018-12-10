@@ -1,5 +1,8 @@
 #include "interface/MainActionListener.h"
 #include "guichan/gui/Exception.h"
+#include "game/GameContainer.h"
+#include "guichan/sdl/OpenGLSDLImageLoader.h"
+#include "guichan/gui/ZImage.h"
 #include <iostream>
 
 int main()
@@ -8,6 +11,9 @@ int main()
     {
         std::shared_ptr<MainActionListener> fpsDemo=std::shared_ptr<MainActionListener>(new MainActionListener());
         fpsDemo->init();
+
+        std::shared_ptr<game::GameContainer> gameContainer=std::shared_ptr<game::GameContainer>(new game::GameContainer());
+
         fpsDemo->run();
     }
     catch (gui::Exception e)

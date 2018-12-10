@@ -11,8 +11,9 @@ PKG_SEARCH_MODULE(SDL2MIXER REQUIRED SDL2_mixer)
 
 FIND_PACKAGE(OpenGL)
 FIND_PACKAGE(Threads)
+FIND_PACKAGE(Boost)
 
-INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2MIXER_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2MIXER_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR})
 
@@ -169,7 +170,9 @@ add_executable(Zerlight main.cpp
         game/properties/BodyPartDef.cpp game/properties/BodyPartDef.h
         game/properties/ConstructionDef.cpp game/properties/ConstructionDef.h
         game/utils/Randomizer.cpp game/utils/Randomizer.h
-        game/utils/math_utils.h)
+        game/utils/math_utils.h game/core/defines.h
+        game/GameContainer.cpp game/GameContainer.h
+        game/core/String2Enums.cpp game/core/String2Enums.h game/properties/TerrainSprites.cpp game/properties/TerrainSprites.h game/properties/SpriteDef.cpp game/properties/SpriteDef.h)
 
 TARGET_LINK_LIBRARIES(${PROJECT_NAME}
         ${SDL2_LIBRARIES}

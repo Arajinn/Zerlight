@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 26.03.2018.
+// Created by tatiana on 26.03.2018.
 //
 
 #ifndef ZERL_CHARACTER_H
@@ -42,7 +42,8 @@ class Character : public GameEntity{
         Character(const map::vector3& position);
         ~Character();
 
-        static std::shared_ptr<Character> create(const map::vector3& position, std::shared_ptr<properties::RaceDefinition> aRaceDef);
+        static std::shared_ptr<Character> create(const map::vector3& position,
+                std::shared_ptr<const properties::RaceDefinition> aRaceDef);
 
         virtual void pre_update() override;
         virtual void update(float dt) override;
@@ -54,7 +55,7 @@ class Character : public GameEntity{
         std::shared_ptr<SquadPosition> squadPosition() const;
 
         std::shared_ptr<Pathfinder> pathfinder() const;
-        std::shared_ptr<properties::RaceDefinition> raceDefinition() const;
+        std::shared_ptr<const properties::RaceDefinition> raceDefinition() const;
         std::shared_ptr<CharacterHistory> history() const;
 
         bool pathTo(map::vector3 position, bool adjacent);
@@ -104,10 +105,11 @@ class Character : public GameEntity{
         bool isHungry() const;
         bool isStarving() const;
 
+        virtual bool isUpdatable() const;
     private:
         friend class Body;
         friend class Mind;
-        void init(std::shared_ptr<properties::RaceDefinition> aRaceDef);
+        void init(std::shared_ptr<const properties::RaceDefinition> aRaceDef);
 
         std::shared_ptr<CharacterHistory> mHistory;
 

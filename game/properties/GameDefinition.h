@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 27.03.2018.
+// Created by tatiana on 27.03.2018.
 //
 
 #ifndef ZERL_GAMEDEFINITION_H
@@ -18,6 +18,7 @@ namespace properties
     struct BodyPartDef;
     struct BodyDef;
     struct MaterialDef;
+    struct SpriteDef;
 }
 
 namespace properties {
@@ -28,25 +29,31 @@ namespace properties {
 
         const std::shared_ptr<TerrainSettings>& terrainSettings() const;
         int indexOfMaterial(std::string id) const;
+        int airMaterialIndex() const;
 
-        const std::shared_ptr<RaceDefinition>& raceDefinition(const std::string& id) const;
+        std::shared_ptr<const RaceDefinition> raceDefinition(const std::string& id) const;
 
-        const std::shared_ptr<ConstructionDef>& constructionDefinition(const std::string& id) const;
+        std::shared_ptr<const ConstructionDef> constructionDefinition(const std::string& id) const;
 
-        const std::shared_ptr<ItemDefinition>& itemDefinition(const std::string& id) const;
+        std::shared_ptr<const ItemDefinition> itemDefinition(const std::string& id) const;
 
-        const std::shared_ptr<GameSettings>& gameSettings() const;
+        std::shared_ptr<const GameSettings> gameSettings() const;
 
-        const std::shared_ptr<BodyPartDef>& bodyPartDefinition(const std::string& id) const;
+        std::shared_ptr<const BodyPartDef> bodyPartDefinition(const std::string& id) const;
 
-        const std::shared_ptr<BodyDef>& bodyDefinition(const std::string& id) const;
+        std::shared_ptr<const BodyDef> bodyDefinition(const std::string& id) const;
 
-        const std::shared_ptr<MaterialDef>& materialDefinition(const std::string& id) const;
+        std::shared_ptr<const MaterialDef> materialDefinition(const std::string& id) const;
+        std::shared_ptr<const MaterialDef> materialDefinition(const int& index) const;
+
+        std::shared_ptr<const SpriteDef> spriteDefinition(const std::string& spriteID) const;
     private:
         std::shared_ptr<TerrainSettings> mTerrainSettings;
         std::shared_ptr<GameSettings> mGameSettings;
 
-        std::vector<std::shared_ptr<MaterialDef>> mMaterials;
+        std::vector<std::shared_ptr<MaterialDef>> mMaterialDefs;
+        int mAirMaterialIndex{-1};
+        void parseMaterialDefsFile();
 
         std::vector<std::shared_ptr<RaceDefinition>> mRaceDefinitions;
 
@@ -59,6 +66,9 @@ namespace properties {
 
         std::vector<std::shared_ptr<BodyDef>> mBodyDefs;
         void initBodyDefs();
+
+        std::vector<std::shared_ptr<SpriteDef>> mSpriteDefs;
+        void parseSpriteDefsFile();
     };
 }
 

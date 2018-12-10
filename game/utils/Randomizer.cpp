@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 05.04.2018.
+// Created by tatiana on 05.04.2018.
 //
 
 #include "Randomizer.h"

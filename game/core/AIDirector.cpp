@@ -1,8 +1,9 @@
 //
-// Created by tatiana.polozova on 09.06.2018.
+// Created by tatiana on 09.06.2018.
 //
 
 #include "AIDirector.h"
+#include "defines.h"
 #include "GameManager.h"
 #include "Fortress.h"
 #include "Item.h"
@@ -28,7 +29,7 @@ namespace game
 
     std::shared_ptr<Item> AIDirector::generateItem(const map::vector3& position, std::string itemID, std::string materialID, ItemQuality quality)
     {
-        std::shared_ptr<Item> craftableItem=Item::create(position,itemID,materialID,GAME->gameDefinition()->itemDefinition(itemID));
+        std::shared_ptr<Item> craftableItem=Item::create(position,itemID,materialID,GAME_DEFINITIONS->itemDefinition(itemID));
         return craftableItem;
     }
 
@@ -83,7 +84,7 @@ namespace game
         }
         else
         {
-            std::shared_ptr<Character> settler=Character::create(groundPos,mGameManager->gameDefinition()->raceDefinition(settlerSettings.RaceID));
+            std::shared_ptr<Character> settler=Character::create(groundPos,GAME_DEFINITIONS->raceDefinition(settlerSettings.RaceID));
             settler->setBehavior(behavior::BehaviorType::PlayerCharacter);
 
             mGameManager->addToSpawnList(settler);

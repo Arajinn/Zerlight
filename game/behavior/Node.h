@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 08.06.2018.
+// Created by tatiana on 08.06.2018.
 //
 
 #ifndef ZERL_NODE_H

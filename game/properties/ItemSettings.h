@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 09.06.2018.
+// Created by tatiana on 09.06.2018.
 //
 
 #ifndef ZERL_ITEMSETTINGS_H

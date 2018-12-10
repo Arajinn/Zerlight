@@ -1,8 +1,9 @@
 //
-// Created by tatiana.polozova on 27.03.2018.
+// Created by tatiana on 27.03.2018.
 //
 
 #include "MapCell.h"
+#include "game/core/defines.h"
 #include "Map.h"
 #include "Region.h"
 #include "game/core/GameManager.h"
@@ -32,13 +33,16 @@ namespace map
 
         mNavGraphNode=nullptr;
 
+        mIsVisible=false;
+        mOutside=false;
+
         this->updateWeight();
     }
 
     MapCell::MapCell(const map::vector3& position, const std::string& type)
     {
-        mWall=GAME->gameDefinition()->indexOfMaterial(type);
-        mFloor=GAME->gameDefinition()->indexOfMaterial(type);
+        mWall=GAME_DEFINITIONS->indexOfMaterial(type);
+        mFloor=GAME_DEFINITIONS->indexOfMaterial(type);
 
         mEmbeddedWall= nullptr;
         mEmbeddedFloor= nullptr;
@@ -47,14 +51,17 @@ namespace map
         mLiquid=nullptr;
 
         mPosition=position;
+
+        mIsVisible=false;
+        mOutside=false;
 
         this->updateWeight();
     }
 
     MapCell::MapCell(const map::vector3& position, const std::string& wallType, const std::string& floorType)
     {
-        mWall=GAME->gameDefinition()->indexOfMaterial(wallType);
-        mFloor=GAME->gameDefinition()->indexOfMaterial(floorType);
+        mWall=GAME_DEFINITIONS->indexOfMaterial(wallType);
+        mFloor=GAME_DEFINITIONS->indexOfMaterial(floorType);
 
         mEmbeddedWall= nullptr;
         mEmbeddedFloor= nullptr;
@@ -63,6 +70,9 @@ namespace map
         mLiquid=nullptr;
 
         mPosition=position;
+
+        mIsVisible=false;
+        mOutside=false;
 
         this->updateWeight();
     }
@@ -78,8 +88,7 @@ namespace map
 
     bool MapCell::hasNaturalWall() const
     {
-        auto gd=GAME->gameDefinition();
-        return (mWall!=gd->indexOfMaterial(gd->terrainSettings()->AirMaterialID));
+        return (mWall!=GAME_DEFINITIONS->airMaterialIndex());
     }
 
     bool MapCell::hasEmbeddedWall() const
@@ -105,8 +114,7 @@ namespace map
 
     bool MapCell::hasNaturalFloor() const
     {
-        auto gd=GAME->gameDefinition();
-        return (mFloor!=gd->indexOfMaterial(gd->terrainSettings()->AirMaterialID));
+        return (mFloor!=GAME_DEFINITIONS->airMaterialIndex());
     }
 
     bool MapCell::hasStairs() const
@@ -189,7 +197,7 @@ namespace map
         if (mLiquid== nullptr)
             return false;
 
-        return (mLiquid->materialID()==GAME->gameDefinition()->terrainSettings()->LavaMaterialID);
+        return (mLiquid->materialID()==TERRAIN_SETTINGS->LavaMaterialID);
     }
 
     bool MapCell::hasRamp() const
@@ -197,7 +205,7 @@ namespace map
         if (mRamp== nullptr)
             return false;
 
-        return (mRamp->cell()->position()!=this->position());
+        return (mRamp->cell()->position()==this->position());
     }
 
     void MapCell::addObject(std::shared_ptr<game::GameEntity> ent)
@@ -220,6 +228,16 @@ namespace map
 
         if (iter!=std::end(mObjects))
             mObjects.erase(iter);
+    }
+
+    int MapCell::getObjectsCount() const
+    {
+        return mObjects.size();
+    }
+
+    std::vector<std::shared_ptr<game::GameEntity>> MapCell::getObjects() const
+    {
+        return mObjects;
     }
 
     void MapCell::addCharacter(std::shared_ptr<game::Character> character)
@@ -255,7 +273,7 @@ namespace map
         if (this->hasNaturalFloor())
             return true;
 
-        auto upper_cell=GAME->region()->map()->cell(mPosition.x(),mPosition.y(),mPosition.z()+1);
+        auto upper_cell=WORLD_MAP->cell(mPosition.x(),mPosition.y(),mPosition.z()+1);
 
         if (upper_cell==nullptr)
             return false;
@@ -284,7 +302,7 @@ namespace map
 
     std::shared_ptr<MapCell> MapCell::getShiftCell(int dx, int dy, int dz)
     {
-        return GAME->region()->map()->cell(mPosition.x()+dx,mPosition.y()+dy,mPosition.z()+dz);
+        return WORLD_MAP->cell(mPosition.x()+dx,mPosition.y()+dy,mPosition.z()+dz);
     }
 
     std::shared_ptr<game::GameEntity> MapCell::embeddedWall() const
@@ -331,5 +349,61 @@ namespace map
     const map::vector3& MapCell::position() const
     {
         return mPosition;
+    }
+
+    void MapCell::setIsVisible(const bool& value)
+    {
+        mIsVisible=value;
+    }
+
+    bool MapCell::isVisible() const
+    {
+        return mIsVisible;
+    }
+
+    bool MapCell::isOutside() const
+    {
+        return mOutside;
+    }
+
+    void MapCell::setOutside(const bool& value)
+    {
+        mOutside=value;
+    }
+
+    bool MapCell::hasWall() const
+    {
+        if (!hasNaturalWall())
+            return hasEmbeddedWall();
+
+        return true;
+    }
+
+    bool MapCell::isAir() const
+    {
+        if (!hasWall())
+            return !hasFloor();
+
+        return false;
+    }
+
+    int MapCell::naturalWall() const
+    {
+        return mWall;
+    }
+
+    int MapCell::naturalFloor() const
+    {
+        return mFloor;
+    }
+
+    void MapCell::setRamp(std::shared_ptr<game::GameEntity> ent)
+    {
+        mRamp=std::dynamic_pointer_cast<game::Ramp>(ent);
+    }
+
+    std::shared_ptr<const game::Ramp> MapCell::ramp() const
+    {
+        return mRamp;
     }
 }

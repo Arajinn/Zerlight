@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 27.03.2018.
+// Created by tatiana on 27.03.2018.
 //
 
 #ifndef ZERL_CONSTRUCTION_H
@@ -27,6 +27,7 @@ namespace game {
 
         bool hasFlag(ConstructionProperty prop) const;
 
+        virtual bool isUpdatable() const;
     protected:
         void init(std::string constructionID, ConstructOrientation orientation);
 
@@ -35,7 +36,7 @@ namespace game {
         ConstructOrientation mOrientation;
         std::string mConstructionID;
 
-        std::shared_ptr<properties::ConstructionDef> mConstructionDef;
+        std::shared_ptr<const properties::ConstructionDef> mConstructionDef;
     };
 }
 

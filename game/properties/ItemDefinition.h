@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 09.06.2018.
+// Created by tatiana on 09.06.2018.
 //
 
 #ifndef ZERL_ITEMDEFINITION_H
@@ -25,9 +25,9 @@ namespace properties {
         std::vector<ItemEffect> Effects;
         void addEffect(game::ItemEffectType a_effect, float a_amount);
 
-        bool hasEffect(game::ItemEffectType effectType);
+        bool hasEffect(game::ItemEffectType effectType) const;
 
-        float effectAmount(game::ItemEffectType type);
+        float effectAmount(game::ItemEffectType type) const;
         static float effectModifier(game::ItemQuality quality);
         static float effectModifierForFoodAndDrink(game::ItemQuality quality);
 

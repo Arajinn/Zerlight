@@ -1,8 +1,9 @@
 //
-// Created by tatiana.polozova on 09.06.2018.
+// Created by tatiana on 09.06.2018.
 //
 
 #include "Fortress.h"
+#include "defines.h"
 #include "GameManager.h"
 #include "Item.h"
 #include "StockManager.h"
@@ -72,7 +73,7 @@ namespace game
 
     void Fortress::trackEntity(std::shared_ptr<Item> item)
     {
-        auto itemDef = GAME->gameDefinition()->itemDefinition(item->itemID());
+        auto itemDef = GAME_DEFINITIONS->itemDefinition(item->itemID());
         auto effects=itemDef->Effects;
         for (auto effect : effects)
         {
@@ -152,7 +153,7 @@ namespace game
 
     void Fortress::stopTrackingItem(std::shared_ptr<Item> item)
     {
-        auto itemDef=GAME->gameDefinition()->itemDefinition(item->itemID());
+        auto itemDef=GAME_DEFINITIONS->itemDefinition(item->itemID());
         this->stopTrackingEntity(item,itemDef->Effects);
 
         if (!mStockManager->isItemInStocks(item))

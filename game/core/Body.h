@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 26.03.2018.
+// Created by tatiana on 26.03.2018.
 //
 
 #ifndef ZERL_BODY_H

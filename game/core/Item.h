@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 08.06.2018.
+// Created by tatiana on 08.06.2018.
 //
 
 #ifndef ZERL_ITEM_H
@@ -24,7 +24,8 @@ namespace game {
         Item(const map::vector3& position);
         ~Item();
 
-        static std::shared_ptr<Item> create(const map::vector3& position, std::string id, std::string materialID, std::shared_ptr<properties::ItemDefinition> aItemDef);
+        static std::shared_ptr<Item> create(const map::vector3& position, std::string id, std::string materialID,
+                std::shared_ptr<const properties::ItemDefinition> aItemDef);
 
         virtual void spawn(std::shared_ptr<map::MapCell> mapCell) override;
 
@@ -56,12 +57,14 @@ namespace game {
         float combatValue() const;
         float movementPenalty() const;
         float jobPenalty() const;
+
+        virtual bool isUpdatable() const;
     protected:
-        virtual void init(std::string id, std::string materialID, std::shared_ptr<properties::ItemDefinition> aItemDef);
+        virtual void init(std::string id, std::string materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef);
 
     private:
         std::shared_ptr<game::ItemHistory> mHistory;
-        std::shared_ptr<properties::ItemDefinition> mItemDef;
+        std::shared_ptr<const properties::ItemDefinition> mItemDef;
         std::shared_ptr<GameEntity> mParent;
 
         std::shared_ptr<Character> mCharacter;

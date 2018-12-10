@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 27.03.2018.
+// Created by tatiana on 27.03.2018.
 //
 
 #include "GameDefinition.h"
@@ -12,6 +12,15 @@
 #include "BodySectionDef.h"
 #include "BodyDef.h"
 #include "MaterialDef.h"
+#include "SpriteDef.h"
+#include "game/core/String2Enums.h"
+#include "guichan/gui/ZColor.h"
+#include "guichan/gui/ZImage.h"
+#include "guichan/sdl/OpenGLImage.h"
+
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/xml_parser.hpp>
+
 #include <algorithm>
 
 namespace properties {
@@ -19,6 +28,11 @@ namespace properties {
     {
         mTerrainSettings=std::shared_ptr<TerrainSettings>(new TerrainSettings);
         mTerrainSettings->AirMaterialID="Air";
+        mTerrainSettings->parseTerrainSettingsFile();
+
+        parseMaterialDefsFile();
+
+        parseSpriteDefsFile();
 
         std::shared_ptr<RaceDefinition> settlerDefinition=std::shared_ptr<RaceDefinition>(new RaceDefinition());
         settlerDefinition->ID="Gnome";
@@ -44,28 +58,17 @@ namespace properties {
         settlerDefinition->Attributes.push_back(properties::AttributeDef(game::CharacterAttributeType::Charm,80,120,100));
         mRaceDefinitions.push_back(settlerDefinition);
 
-        std::shared_ptr<MaterialDef> airDef=std::shared_ptr<MaterialDef>(new MaterialDef());
-        airDef->ID="Air";
-        airDef->Name="air";
-        airDef->Type=game::MaterialType::Air;
-        airDef->Value=0.0f;
-        airDef->Strength=0.0f;
-        mMaterials.push_back(airDef);
-
-        std::shared_ptr<MaterialDef> graniteDef=std::shared_ptr<MaterialDef>(new MaterialDef());
-        graniteDef->ID="Granite";
-        graniteDef->Name="granite";
-        graniteDef->Type=game::MaterialType::Stone;
-        graniteDef->Value=1.0f;
-        graniteDef->Strength=0.7f;
-        graniteDef->Color=gui::ZColor(128,128,128,255);
-        mMaterials.push_back(graniteDef);
-
         std::shared_ptr<ConstructionDef> soilStairs=std::shared_ptr<ConstructionDef>(new ConstructionDef());
         soilStairs->ID="SoilStairs";
         soilStairs->Name="stairs";
         soilStairs->Prefix="soil";
         mConstructionDefs.push_back(soilStairs);
+
+        std::shared_ptr<ConstructionDef> rawStoneRamp=std::shared_ptr<ConstructionDef>(new ConstructionDef());
+        rawStoneRamp->ID="RawStoneRamp";
+        rawStoneRamp->Name="ramp";
+        rawStoneRamp->Prefix="stone";
+        mConstructionDefs.push_back(rawStoneRamp);
 
         std::shared_ptr<ItemDefinition> wineDefinition=std::shared_ptr<ItemDefinition>(new ItemDefinition());
         wineDefinition->ID="Wine";
@@ -99,18 +102,18 @@ namespace properties {
 
     int GameDefinition::indexOfMaterial(std::string id) const
     {
-        auto iter=std::find_if(std::begin(mMaterials),std::end(mMaterials),[&id](std::shared_ptr<MaterialDef> const& value)
+        auto iter=std::find_if(std::begin(mMaterialDefs),std::end(mMaterialDefs),[&id](std::shared_ptr<MaterialDef> const& value)
         {
            return (id==value->ID);
         });
 
-        if (iter==std::end(mMaterials))
+        if (iter==std::end(mMaterialDefs))
             return -1;
         else
-            return std::distance(mMaterials.begin(),iter);
+            return std::distance(mMaterialDefs.begin(),iter);
     }
 
-    const std::shared_ptr<RaceDefinition>& GameDefinition::raceDefinition(const std::string& id) const
+    std::shared_ptr<const RaceDefinition> GameDefinition::raceDefinition(const std::string& id) const
     {
         auto iter=std::find_if(std::begin(mRaceDefinitions),std::end(mRaceDefinitions),[&id](std::shared_ptr<RaceDefinition> const& value)
         {
@@ -126,7 +129,7 @@ namespace properties {
             return nullptr;
     }
 
-    const std::shared_ptr<ConstructionDef>& GameDefinition::constructionDefinition(const std::string& id) const
+    std::shared_ptr<const ConstructionDef> GameDefinition::constructionDefinition(const std::string& id) const
     {
         auto iter=std::find_if(std::begin(mConstructionDefs),std::end(mConstructionDefs),[&id](std::shared_ptr<ConstructionDef> const& value)
         {
@@ -142,7 +145,7 @@ namespace properties {
             return nullptr;
     }
 
-    const std::shared_ptr<ItemDefinition>& GameDefinition::itemDefinition(const std::string& id) const
+    std::shared_ptr<const ItemDefinition> GameDefinition::itemDefinition(const std::string& id) const
     {
         auto iter=std::find_if(std::begin(mItemDefinitions),std::end(mItemDefinitions),[&id](std::shared_ptr<ItemDefinition> const& value)
         {
@@ -158,12 +161,12 @@ namespace properties {
             return nullptr;
     }
 
-    const std::shared_ptr<GameSettings>& GameDefinition::gameSettings() const
+    std::shared_ptr<const GameSettings> GameDefinition::gameSettings() const
     {
         return mGameSettings;
     }
 
-    const std::shared_ptr<BodyPartDef>& GameDefinition::bodyPartDefinition(const std::string& id) const
+    std::shared_ptr<const BodyPartDef> GameDefinition::bodyPartDefinition(const std::string& id) const
     {
         auto iter=std::find_if(std::begin(mBodyPartDefs),std::end(mBodyPartDefs),[&id](std::shared_ptr<BodyPartDef> const& value)
         {
@@ -376,7 +379,7 @@ namespace properties {
         }
     }
 
-    const std::shared_ptr<BodyDef>& GameDefinition::bodyDefinition(const std::string& id) const
+    std::shared_ptr<const BodyDef> GameDefinition::bodyDefinition(const std::string& id) const
     {
         auto iter=std::find_if(std::begin(mBodyDefs),std::end(mBodyDefs),[&id](std::shared_ptr<BodyDef> const& value)
         {
@@ -489,17 +492,94 @@ namespace properties {
         mBodyDefs.push_back(gnomeBody);
     }
 
-    const std::shared_ptr<MaterialDef>& GameDefinition::materialDefinition(const std::string& id) const
+    std::shared_ptr<const MaterialDef> GameDefinition::materialDefinition(const std::string& id) const
     {
-        auto iter=std::find_if(std::begin(mMaterials),std::end(mMaterials),[&id](std::shared_ptr<MaterialDef> const& value)
+        auto iter=std::find_if(std::begin(mMaterialDefs),std::end(mMaterialDefs),[&id](std::shared_ptr<MaterialDef> const& value)
         {
             return (id==value->ID);
         });
 
-        if (iter!=std::end(mMaterials))
+        if (iter!=std::end(mMaterialDefs))
         {
-            int index=std::distance(mMaterials.begin(),iter);
-            return mMaterials.at(index);
+            int index=std::distance(mMaterialDefs.begin(),iter);
+            return mMaterialDefs.at(index);
+        }
+        else
+            return nullptr;
+    }
+
+    std::shared_ptr<const MaterialDef> GameDefinition::materialDefinition(const int& index) const
+    {
+        return mMaterialDefs.at(index);
+    }
+
+    void GameDefinition::parseMaterialDefsFile()
+    {
+        std::string path="../settings/objects/material.xml";
+
+        boost::property_tree::ptree pt;
+        boost::property_tree::read_xml(path, pt);
+
+        for (auto const& tree_item : pt.get_child("Materials"))
+        {
+            if (tree_item.first=="Item")
+            {
+                std::shared_ptr<MaterialDef> newMaterialDef=std::shared_ptr<MaterialDef>(new MaterialDef());
+                newMaterialDef->ID=tree_item.second.get("ID","");
+                newMaterialDef->Name=tree_item.second.get("Name","");
+                auto typeStr=tree_item.second.get("Type","");
+                newMaterialDef->Type=game::String2Enums::str2MaterialType(typeStr);
+                newMaterialDef->Strength=tree_item.second.get("Strength",0.0f);
+                newMaterialDef->Value=tree_item.second.get("Value",0.0f);
+                std::string colorStr=tree_item.second.get("Color","");
+                newMaterialDef->Color=gui::ZColor(colorStr);
+                mMaterialDefs.push_back(newMaterialDef);
+
+                if (newMaterialDef->ID==mTerrainSettings->AirMaterialID)
+                    mAirMaterialIndex=mMaterialDefs.size()-1;
+            }
+        }
+    }
+
+    int GameDefinition::airMaterialIndex() const
+    {
+        return mAirMaterialIndex;
+    }
+
+    void GameDefinition::parseSpriteDefsFile()
+    {
+        std::string path="../settings/objects/sprites.xml";
+        std::string image_path="../images/textures/";
+
+        boost::property_tree::ptree pt;
+        boost::property_tree::read_xml(path, pt);
+
+        for (auto const& tree_item : pt.get_child("Sprites"))
+        {
+            if (tree_item.first=="Item")
+            {
+                std::shared_ptr<SpriteDef> newSpriteDef=std::shared_ptr<SpriteDef>(new SpriteDef());
+                newSpriteDef->SpriteID=tree_item.second.get("SpriteID","");
+                newSpriteDef->SpritePath=tree_item.second.get("Source","");
+                std::string filePath=image_path+newSpriteDef->SpritePath;
+                newSpriteDef->Image=gui::ZImage::load(filePath);
+
+                mSpriteDefs.push_back(newSpriteDef);
+            }
+        }
+    }
+
+    std::shared_ptr<const SpriteDef> GameDefinition::spriteDefinition(const std::string& spriteID) const
+    {
+        auto iter=std::find_if(mSpriteDefs.begin(),mSpriteDefs.end(),[&spriteID](std::shared_ptr<SpriteDef> const& item)
+        {
+            return (item->SpriteID==spriteID);
+        });
+
+        if (iter!=mSpriteDefs.end())
+        {
+            int index=std::distance(mSpriteDefs.begin(),iter);
+            return mSpriteDefs.at(index);
         }
         else
             return nullptr;

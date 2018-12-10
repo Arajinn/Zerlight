@@ -1,8 +1,9 @@
 //
-// Created by tatiana.polozova on 26.03.2018.
+// Created by tatiana on 26.03.2018.
 //
 
 #include "Pathfinder.h"
+#include "defines.h"
 #include "GameManager.h"
 #include "Character.h"
 #include "PriorityQueue.h"
@@ -75,7 +76,7 @@ namespace game
 
     bool Pathfinder::isAdjacentToNavGraph(const map::vector3& pos, unsigned int startGraphID)
     {
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
         std::vector<std::shared_ptr<map::MapCell>> mapCellArray(4);
         mapCellArray[0]=map->cell(pos.x()-1,pos.y(),pos.z());
         mapCellArray[1]=map->cell(pos.x()+1,pos.y(),pos.z());
@@ -96,7 +97,7 @@ namespace game
 
     bool Pathfinder::canReach(const map::vector3& start, const map::vector3& end, bool adjacent)
     {
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
 
         auto start_cell=map->cell(start);
         if (start_cell== nullptr)
@@ -141,7 +142,7 @@ namespace game
         int num5=num1-num2;
 
         std::vector<map::vector3> positions_list;
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
 
         while ((x1!=x2) || (y1!=y2))
         {
@@ -245,7 +246,7 @@ namespace game
         if(!this->canReach(start,end,adjacent))
             return false;
 
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
 
         auto start_cell=map->cell(start);
         if (start_cell== nullptr)
@@ -495,7 +496,7 @@ namespace game
             return true;
         }
 
-        auto map=GAME->region()->map();
+        auto map=WORLD_MAP;
 
         std::vector<PriorityQueuePathfinderNode> priority_queue;
         std::vector<std::shared_ptr<PathfinderNode>> sortedDictionary1,sortedDictionary2;

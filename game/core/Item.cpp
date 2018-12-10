@@ -1,8 +1,9 @@
 //
-// Created by tatiana.polozova on 08.06.2018.
+// Created by tatiana on 08.06.2018.
 //
 
 #include "Item.h"
+#include "defines.h"
 #include "ItemHistory.h"
 #include "GameManager.h"
 #include "Fortress.h"
@@ -31,14 +32,15 @@ namespace game
         std::cout << "~Item()" << std::endl;
     }
 
-    std::shared_ptr<Item> Item::create(const map::vector3& position, std::string id, std::string materialID, std::shared_ptr<properties::ItemDefinition> aItemDef)
+    std::shared_ptr<Item> Item::create(const map::vector3& position, std::string id, std::string materialID,
+            std::shared_ptr<const properties::ItemDefinition> aItemDef)
     {
         std::shared_ptr<Item> ptr=std::shared_ptr<Item>(new Item(position));
         ptr->init(id, materialID,aItemDef);
         return ptr;
     }
 
-    void Item::init(std::string id, std::string materialID, std::shared_ptr<properties::ItemDefinition> aItemDef)
+    void Item::init(std::string id, std::string materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef)
     {
         mItemDef=aItemDef;
         mCharacter=nullptr;
@@ -128,13 +130,15 @@ namespace game
 
         mParent=nullptr;
 
-        GAME->region()->fortress()->removeItem(std::dynamic_pointer_cast<Item>(shared_from_this()));
-        GAME->addToDeleteList(std::dynamic_pointer_cast<Item>(shared_from_this()));
+        GMINSTANCE->region()->fortress()->removeItem(std::dynamic_pointer_cast<Item>(shared_from_this()));
+        GMINSTANCE->addToDeleteList(std::dynamic_pointer_cast<Item>(shared_from_this()));
     }
 
     float Item::combatValue() const
     {
-        return mItemDef->CombatRatingModifier*GAME->gameDefinition()->materialDefinition(mHistory->materialID())->Strength;
+        float strength=GAME_DEFINITIONS->materialDefinition(mHistory->materialID())->Strength;
+        float modifier=mItemDef->CombatRatingModifier;
+        return modifier*strength;
     }
 
     float Item::movementPenalty() const
@@ -150,5 +154,10 @@ namespace game
     void Item::moveTo(map::vector3 new_position)
     {
         GameEntity::moveTo(new_position);
+    }
+
+    bool Item::isUpdatable() const
+    {
+        return false;
     }
 }

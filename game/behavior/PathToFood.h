@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 22.06.2018.
+// Created by tatiana on 22.06.2018.
 //
 
 #ifndef ZERL_PATHTOFOOD_H

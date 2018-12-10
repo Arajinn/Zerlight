@@ -1,5 +1,5 @@
 //
-// Created by tatiana.polozova on 09.06.2018.
+// Created by tatiana on 09.06.2018.
 //
 
 #include "ItemDefinition.h"
@@ -24,7 +24,7 @@ namespace properties
         Effects.push_back(ItemEffect(a_effect,a_amount));
     }
 
-    bool ItemDefinition::hasEffect(game::ItemEffectType effectType)
+    bool ItemDefinition::hasEffect(game::ItemEffectType effectType) const
     {
         auto iter=std::find_if(std::begin(Effects),std::end(Effects),[&effectType](ItemEffect const& value)
         {
@@ -34,7 +34,7 @@ namespace properties
         return (iter!=std::end(Effects));
     }
 
-    float ItemDefinition::effectAmount(game::ItemEffectType type)
+    float ItemDefinition::effectAmount(game::ItemEffectType type) const
     {
         auto iter=std::find_if(std::begin(Effects),std::end(Effects),[&type](ItemEffect const& value)
         {
