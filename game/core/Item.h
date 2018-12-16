@@ -59,6 +59,9 @@ namespace game {
         float jobPenalty() const;
 
         virtual bool isUpdatable() const;
+
+        virtual std::vector<properties::TileDef> get_draw_info(const int& x, const int& y, const int& z,
+                                                     const view_orientation& orientation) const;
     protected:
         virtual void init(std::string id, std::string materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef);
 

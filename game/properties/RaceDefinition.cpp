@@ -3,6 +3,7 @@
 //
 
 #include "RaceDefinition.h"
+#include "game/utils/Randomizer.h"
 #include <algorithm>
 
 namespace properties
@@ -28,5 +29,27 @@ namespace properties
             return 0.0f;
         else
             return iter->second;
+    }
+
+    game::GenderType RaceDefinition::generateGender() const
+    {
+        float rand=utils::Randomizer::instance()->uniform(0.0f,1.0f);
+
+        float summ=0.0f;
+        for (int i=0,isize=Genders.size();i<isize;i++)
+            summ+=Genders.at(i).second;
+
+        float threshold1=0.0f;
+        for (int i=0,isize=Genders.size();i<isize;i++)
+        {
+            float threshold2=threshold1+Genders.at(i).second/summ;
+
+            if (rand<threshold2)
+                return Genders.at(i).first;
+
+            threshold1=threshold2;
+        }
+
+        return game::GenderType::Neuter;
     }
 }

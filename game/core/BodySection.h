@@ -6,6 +6,7 @@
 #define ZERL_BODYSECTION_H
 
 #include "game/core/enums.h"
+#include "game/properties/TileDef.h"
 
 #include <vector>
 #include <memory>
@@ -28,7 +29,8 @@ class BodySection : public std::enable_shared_from_this<BodySection> {
         BodySection();
         ~BodySection();
 
-        static std::shared_ptr<BodySection> create(unsigned int &key, std::shared_ptr<Body> parent, std::shared_ptr<properties::BodySectionDef> sectionDef, std::string nameModifier="");
+        static std::shared_ptr<BodySection> create(unsigned int &key, std::shared_ptr<Body> parent,
+                std::shared_ptr<properties::BodySectionDef> sectionDef, BodySymmetricalType symmetricalType=BodySymmetricalType::None);
 
         void addFunction(std::shared_ptr<BodyPart> bodyPart);
 
@@ -40,9 +42,12 @@ class BodySection : public std::enable_shared_from_this<BodySection> {
         void dropItem();
 
         const EquipmentType& equipType() const;
+
+        void getTiles(std::vector<properties::TileDef>& tiles) const;
     private:
         friend class Body;
-        void init(unsigned int &key, std::shared_ptr<Body> parent, std::shared_ptr<properties::BodySectionDef> sectionDef, std::string nameModifier);
+        void init(unsigned int &key, std::shared_ptr<Body> parent, std::shared_ptr<properties::BodySectionDef> sectionDef,
+                BodySymmetricalType symmetricalType);
 
         unsigned int ID;
 
@@ -53,6 +58,10 @@ class BodySection : public std::enable_shared_from_this<BodySection> {
         bool mHasGrip;
         std::shared_ptr<Item> mHeldItem;
         EquipmentType mEquipType;
+        std::string mSectionSpriteID;
+        std::vector<std::string> mAdditionalDecorations;
+        int mDrawOrder;
+        BodySymmetricalType mSymmetricalType;
 
         std::vector<BodySectionStatus> mStatus;
         bool hasStatus(BodySectionStatus status) const;

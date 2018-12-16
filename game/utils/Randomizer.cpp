@@ -49,4 +49,11 @@ namespace utils {
 
         return result;
     }
+
+    float Randomizer::uniform(float min,float max)
+    {
+        std::uniform_real_distribution<float> dis(min,max);
+        float result=dis(gen);
+        return result;
+    }
 }

@@ -77,7 +77,7 @@ namespace game
 
         auto bodyDef=GAME_DEFINITIONS->bodyDefinition(raceDef->BodyID);
         bodySectionsKey=0;
-        mMainBodySection=BodySection::create(bodySectionsKey,shared_from_this(),bodyDef->MainBody,"");
+        mMainBodySection=BodySection::create(bodySectionsKey,shared_from_this(),bodyDef->MainBody,BodySymmetricalType::None);
     }
 
     float Body::exhaustionModifier() const
@@ -581,5 +581,17 @@ namespace game
             return;
 
         mLookingForFood=false;
+    }
+
+    std::vector<properties::TileDef> Body::getTiles() const
+    {
+        std::vector<properties::TileDef> result;
+        mMainBodySection->getTiles(result);
+        return result;
+    }
+
+    GenderType Body::gender() const
+    {
+        return owner->gender();
     }
 }

@@ -24,14 +24,16 @@ namespace game
 
     }
 
-    std::shared_ptr<BodySection> BodySection::create(unsigned int &key, std::shared_ptr<Body> parent, std::shared_ptr<properties::BodySectionDef> sectionDef, std::string nameModifier)
+    std::shared_ptr<BodySection> BodySection::create(unsigned int &key, std::shared_ptr<Body> parent,
+            std::shared_ptr<properties::BodySectionDef> sectionDef, BodySymmetricalType symmetricalType)
     {
         std::shared_ptr<BodySection> ptr=std::shared_ptr<BodySection>(new BodySection());
-        ptr->init(key, parent, sectionDef, nameModifier);
+        ptr->init(key, parent, sectionDef, symmetricalType);
         return ptr;
     }
 
-    void BodySection::init(unsigned int &key, std::shared_ptr<Body> parent, std::shared_ptr<properties::BodySectionDef> sectionDef, std::string nameModifier)
+    void BodySection::init(unsigned int &key, std::shared_ptr<Body> parent, std::shared_ptr<properties::BodySectionDef> sectionDef,
+                           BodySymmetricalType symmetricalType)
     {
         ID=key;
         mHasGrip=false;
@@ -45,10 +47,59 @@ namespace game
 
         mEquipType=sectionDef->EquipType;
 
+        if (symmetricalType==BodySymmetricalType::Left)
+        {
+            if (sectionDef->DecorationsLeft.size()>0)
+                mSectionSpriteID=sectionDef->DecorationsLeft.at(0);
+            else
+                mSectionSpriteID = sectionDef->SpriteIDLeft;
+        }
+        else if (symmetricalType==BodySymmetricalType::Right)
+        {
+            if (sectionDef->DecorationsRight.size()>0)
+                mSectionSpriteID=sectionDef->DecorationsRight.at(0);
+            else
+                mSectionSpriteID = sectionDef->SpriteIDRight;
+        }
+        else
+        {
+            if (sectionDef->Decorations.size()>0)
+                mSectionSpriteID=sectionDef->Decorations.at(0);
+            else
+                mSectionSpriteID = sectionDef->SpriteID;
+        }
+
+        auto gender=parent_body->gender();
+        if (gender==game::GenderType::Male)
+        {
+            for (int i=0,isize=sectionDef->AdditionalDecorationMale.size();i<isize;i++)
+            {
+                mAdditionalDecorations.push_back(sectionDef->AdditionalDecorationMale.at(i).at(0));
+            }
+        }
+        else if (gender==game::GenderType::Female)
+        {
+            for (int i=0,isize=sectionDef->AdditionalDecorationFemale.size();i<isize;i++)
+            {
+                mAdditionalDecorations.push_back(sectionDef->AdditionalDecorationFemale.at(i).at(0));
+            }
+        }
+        else
+        {
+            for (int i=0,isize=sectionDef->AdditionalDecoration.size();i<isize;i++)
+            {
+                mAdditionalDecorations.push_back(sectionDef->AdditionalDecoration.at(i).at(0));
+            }
+        }
+
+        mDrawOrder=sectionDef->DrawOrder;
+
+        mSymmetricalType=symmetricalType;
+
         parent_body->addSection(shared_from_this());
         if (sectionDef->Hand)
         {
-            if (nameModifier=="left")
+            if (symmetricalType==BodySymmetricalType::Left)
                 parent_body->addEquipmentSlot(shared_from_this(),EquipmentType::LeftHand);
             else
                 parent_body->addEquipmentSlot(shared_from_this(),EquipmentType::RightHand);
@@ -59,14 +110,14 @@ namespace game
             if (connectedSection->Symmetrical)
             {
                 key++;
-                mConnectsTo.push_back(BodySection::create(key,parent_body,connectedSection,"left"));
+                mConnectsTo.push_back(BodySection::create(key,parent_body,connectedSection,BodySymmetricalType::Left));
                 key++;
-                mConnectsTo.push_back(BodySection::create(key,parent_body,connectedSection,"right"));
+                mConnectsTo.push_back(BodySection::create(key,parent_body,connectedSection,BodySymmetricalType::Right));
             }
             else
             {
                 key++;
-                mConnectsTo.push_back(BodySection::create(key,parent_body,connectedSection,nameModifier));
+                mConnectsTo.push_back(BodySection::create(key,parent_body,connectedSection,symmetricalType));
             }
         }
     }
@@ -135,5 +186,32 @@ namespace game
     void BodySection::dropItem()
     {
         mHeldItem=nullptr;
+    }
+
+    void BodySection::getTiles(std::vector<properties::TileDef>& tiles) const
+    {
+        if (hasStatus(BodySectionStatus::Missing))
+            return;
+
+        if (!mSectionSpriteID.empty())
+        {
+            properties::TileDef info;
+            info.DrawOrder=float(mDrawOrder);
+            info.Color=gui::ZColor(-1,-1,-1);
+            info.SpriteID=mSectionSpriteID;
+            tiles.push_back(info);
+        }
+
+        for (int i=0,isize=mAdditionalDecorations.size();i<isize;i++)
+        {
+            properties::TileDef info;
+            info.DrawOrder=float(mDrawOrder+float(i)*0.01);
+            info.Color=gui::ZColor(-1,-1,-1);
+            info.SpriteID=mAdditionalDecorations.at(i);
+            tiles.push_back(info);
+        }
+
+        for (const auto connectedSection : mConnectsTo)
+            connectedSection->getTiles(tiles);
     }
 }

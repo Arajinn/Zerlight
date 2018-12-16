@@ -590,4 +590,24 @@ namespace game
     {
         return true;
     }
+
+    std::vector<properties::TileDef> Character::get_draw_info(const int& x, const int& y, const int& z, const view_orientation& orientation) const
+    {
+        std::vector<properties::TileDef> result;
+
+        result=body->getTiles();
+
+        std::sort(result.begin(), result.end(),
+                  [](const properties::TileDef & left, const properties::TileDef & right) -> bool
+                  {
+                      return left.DrawOrder > right.DrawOrder;
+                  });
+
+        return result;
+    }
+
+    GenderType Character::gender() const
+    {
+        return mHistory->gender();
+    }
 }

@@ -46,7 +46,7 @@ namespace game
         return mMaterialIndex;
     }
 
-    std::vector<draw_info> Ramp::get_draw_info(const int& x, const int& y, const int& z,
+    std::vector<properties::TileDef> Ramp::get_draw_info(const int& x, const int& y, const int& z,
             const view_orientation& orientation) const
     {
         std::shared_ptr<const properties::MaterialDef> materialDef=GAME_DEFINITIONS->materialDefinition(mMaterialIndex);
@@ -128,12 +128,12 @@ namespace game
         else if (hasSupport4)
             spriteID=terrainSprite->TopLeftRamp;
 
-        std::vector<draw_info> result(1);
+        std::vector<properties::TileDef> result(1);
 
-        draw_info item;
-        item.color=color;
-        item.spriteID=spriteID;
-        item.order=1;
+        properties::TileDef item;
+        item.Color=color;
+        item.SpriteID=spriteID;
+        item.DrawOrder=1.0f;
         result[0]=item;
 
         return result;

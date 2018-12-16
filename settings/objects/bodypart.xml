@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BodyParts>
+  <!--Item:
+        ID: ID of body part to be used in body.xml
+        Name: Name of part. Used in the combat log
+        MaterialID: ID of material for this part
+        TemplateMaterialIndex (Optional): Index into template materials to get material ID.  Overwrites MaterialID if used
+        BodyFunction (Optional): Supports Thought, Circulation, Sight, Breathe, Throat, Structure, Motor, Grip, Stand
+        BodyProperties (Optional): Supports Splinters, HasBlood, HasArtery, Nauseates.  Use commas to separate multiple properties
+        Thickness (Optional): Default is 1.0. Increases amount of damage this body part can sustain linearly.
+        ToHitWeight (Optional): Default is 1.0.  Weight that this body part will be hit in combat if the section it's in is hit
+        HarvestedItem (Optional): ID of item that can be harvested when butchering from this body part.  Material of item is the material of this body part
+        HarvestedQuantity (Optional): Default is 1.  Quantity of harvested item
+        Symmetrical (Optional): Default is false.  If true, generates a left and right of this body part
+        Contains (Optional): Additional body parts that are inside this one.  ID is not needed for these internal body parts
+        NaturalWeapon (Optional):
+          Name: Name of weapon.          
+          MaterialID: Material of weapon
+          TemplateMaterialIndex (Optional): Index into template materials.  Overwrites MaterialID if used
+          Size: Size of weapon.  Used to calculate damage
+          WeaponDef:
+            Skill: Associated skill used for this weapon
+            AttackMove: Supports an arbitrary number of these
+              Verb: Used in combat log
+              SFXEventName (optional): sound effect that fires for this attack
+              AttackType: Type of attack.  Used for defending against this attack.  Available types - Swing, Thrust, HandToHand, Projectile
+              AttackTime (optional, seconds): Default is 3.  Time before another attack can be attempted after this one
+              AttackRange (optional) [min, max] values are in distance squared: Defines min and max distance attack can be used.
+              RequiresAmmo (optional): Default is false.  If true, requires ammo to be available and consumes on use
+              Weight (optional): Weight that this attack will be selected
+              MinimumSkillLevel (optional): Minimum skill level before this attack can be made
+              DamageScale (optional): Multiplier that scales damage for this attack
+              Damage:  Type of damage this weapon applies. Supports multiple.  Damage is applied in order listed.  ex, Claymore will first do slash damage then apply blunt damage.  If slash damage cuts through a layer (skin, muscle), blunt damage will be applied to the next layer
+            TargetedAttackMove (optional): Supports an arbitrary number
+              TargetedMaterial: Material which determines if this attack will be used
+              AttackDef:  AttackMove defined above
+            DefendMove (optional): Supports an arbitrary number
+              Verb: Used in combat log
+              SFXEventName (optional): sound effect that fires for this defend move        
+              DefendTime (optional, seconds): Default is 1.  Time before this weapon can be used to defend with again
+              AttackDelay (optional, seconds): Default is 1.  Delays next attack by this amount when defending.
+              DefendType: Supports an arbitrary number of these.  AttackType that this move can defend against
+            Point (optional): Default is 0.  Used for determining damage of pierce attacks
+            Edge (optional): Default is 0.   Used for determining damage of slash attacks
+            BluntModifier (optional): Default is 1. Used for determining damage of blunt attacks
+            ProjectileModifier (optional): Default is 1.  Used for determing damage of ranged attacks
+            VelocityModifier (optional): Default is 1.  Used for determining damage of melee attacks as well as difficulty to defend against this weapon
+            KnockbackModifier (optional): Default is 0.  Determines chance of knocking an enemy back when hit
+            AmmoItemID (optional): ItemID of ammo used by this weapon for ranged attacks
+  -->
+  <Item>
+    <ID>GnomeLung</ID>
+    <Name>lung</Name>
+    <MaterialID>StandardWeakFlesh</MaterialID>
+    <BodyFunction>Breathe</BodyFunction>
+    <Symmetrical>true</Symmetrical>
+  </Item>
+  <Item>
+    <ID>GnomeHeart</ID>
+    <Name>heart</Name>
+    <MaterialID>StandardWeakFlesh</MaterialID>
+    <BodyFunction>Circulation</BodyFunction>
+    <ToHitWeight>0.5</ToHitWeight>
+  </Item>
+  <Item>
+    <ID>GnomeRibs</ID>
+    <Name>ribs</Name>
+    <MaterialID>StandardBone</MaterialID>
+    <BodyProperties>Splinters</BodyProperties>
+    <Contains>
+        <Item>GnomeLung</Item>
+        <Item>GnomeHeart</Item>
+      </Contains>
+  </Item>
+  <!-- GnomeUpperBody -->
+  <Item>
+    <ID>GnomeUpperBody</ID>
+    <Name>skin</Name>
+    <MaterialID>StandardSkin</MaterialID>
+    <BodyProperties>HasBlood</BodyProperties>
+    <Contains>
+      <Item>GnomeRibs</Item>
+    </Contains>
+  </Item>
+  <Item>
+    <ID>GnomeGuts</ID>
+    <Name>guts</Name>
+    <MaterialID>StandardWeakFlesh</MaterialID>
+    <BodyFunction>InternalOrgan</BodyFunction>
+    <BodyProperties>HasBlood, HasArtery, Nauseates</BodyProperties>
+  </Item>
+  <Item>
+    <ID>GnomeAbdominalMuscles</ID>
+    <Name>abdominal muscles</Name>
+    <MaterialID>StandardStrongFlesh</MaterialID>
+    <BodyProperties>HasBlood, HasArtery</BodyProperties>
+    <Contains>
+      <Item>GnomeGuts</Item>
+    </Contains>
+  </Item>
+  <!-- GnomeLowerBody -->
+  <Item>
+    <ID>GnomeLowerBody</ID>
+    <Name>skin</Name>
+    <MaterialID>StandardSkin</MaterialID>
+    <BodyProperties>HasBlood</BodyProperties>
+    <Contains>
+    <Item>GnomeAbdominalMuscles</Item>
+    </Contains>
+  </Item>
+  <Item>
+    <ID>GnomeBrain</ID>
+    <Name>brain</Name>
+    <MaterialID>StandardWeakFlesh</MaterialID>
+    <BodyFunction>Thought</BodyFunction>
+  </Item>
+  <Item>
+    <ID>GnomeSkull</ID>
+    <Name>skull</Name>
+    <MaterialID>StandardShell</MaterialID>
+    <BodyFunction>Structure</BodyFunction>
+    <HarvestedItem>Skull</HarvestedItem>
+    <HarvestedQuantity>1</HarvestedQuantity>
+    <Contains>
+    <Item>GnomeBrain</Item>
+    </Contains>
+  </Item>
+  <!-- GnomeHead -->
+  <Item>
+    <ID>GnomeHead</ID>
+    <Name>skin</Name>
+    <MaterialID>StandardSkin</MaterialID>
+    <BodyProperties>HasBlood</BodyProperties>
+    <Contains>
+    <Item>GnomeSkull</Item>
+    </Contains>
+  </Item>
+  <!-- GnomeEye -->
+  <Item>
+    <ID>GnomeEye</ID>
+    <Name>eye</Name>
+    <MaterialID>StandardWeakFlesh</MaterialID>
+    <BodyFunction>Sight</BodyFunction>
+    <Symmetrical>true</Symmetrical>
+  </Item>
+  <!-- GnomeMouth -->
+  <Item>
+    <ID>GnomeMouth</ID>
+    <Name>jaw</Name>
+    <MaterialID>StandardBone</MaterialID>
+    <NaturalWeapon>
+      <Name/>
+      <MaterialID>StandardBone</MaterialID>
+      <Size>5</Size>
+      <WeaponDef>
+        <Skill>NaturalAttack</Skill>
+        <AttackMove>
+          <Verb>bites</Verb>
+          <AttackType>HandToHand</AttackType>
+          <Damage>Pierce</Damage>
+          <Damage>Blunt</Damage>
+        </AttackMove>
+        <Point>1</Point>
+        <PenetrationDepth>1</PenetrationDepth>
+        <VelocityModifier>0.25</VelocityModifier>
+      </WeaponDef>
+    </NaturalWeapon>
+  </Item>
+  <Item>
+    <ID>GnomeThroat</ID>
+    <Name>throat</Name>
+    <MaterialID>StandardWeakFlesh</MaterialID>
+    <BodyFunction>Throat</BodyFunction>
+  </Item>
+  <!-- GnomeNeck -->
+  <Item>
+    <ID>GnomeNeck</ID>
+    <Name>skin</Name>
+    <MaterialID>StandardSkin</MaterialID>
+    <BodyProperties>HasBlood, HasArtery</BodyProperties>
+    <Contains>
+    <Item>GnomeThroat</Item>
+    </Contains>
+  </Item>
+  <Item>
+    <ID>GnomeStandardBone1</ID>
+    <Name>bone</Name>
+    <MaterialID>StandardBone</MaterialID>
+    <BodyFunction>Structure</BodyFunction>
+    <HarvestedItem>Bone</HarvestedItem>
+    <HarvestedQuantity>1</HarvestedQuantity>
+  </Item>
+  <Item>
+    <ID>GnomeStandardMuscle1</ID>
+    <Name>muscle</Name>
+    <MaterialID>StandardStrongFlesh</MaterialID>
+    <BodyFunction>Motor</BodyFunction>
+    <BodyProperties>HasBlood, HasArtery</BodyProperties>
+    <HarvestedItem>Giblets</HarvestedItem>
+    <HarvestedQuantity>1</HarvestedQuantity>
+    <Contains>
+    <Item>GnomeStandardBone1</Item>
+    </Contains>
+  </Item>
+  <!-- GnomeArm -->
+  <Item>
+    <ID>GnomeArm</ID>
+    <Name>skin</Name>
+    <MaterialID>StandardSkin</MaterialID>
+    <BodyProperties>HasBlood</BodyProperties>
+    <Symmetrical>true</Symmetrical>
+    <Contains>
+    <Item>GnomeStandardMuscle1</Item>
+    </Contains>
+  </Item>
+  <!-- GnomeLeg -->
+  <Item>
+    <ID>GnomeLeg</ID>
+    <Name>skin</Name>
+    <MaterialID>StandardSkin</MaterialID>
+    <BodyProperties>HasBlood</BodyProperties>
+    <Symmetrical>true</Symmetrical>
+    <Contains>
+    <Item>GnomeStandardMuscle1</Item>
+    </Contains>
+  </Item>  
+  <Item>
+    <ID>GnomeStandardMuscle2</ID>
+    <Name>muscle</Name>
+    <MaterialID>StandardStrongFlesh</MaterialID>
+    <BodyFunction>Grip</BodyFunction>
+    <BodyProperties>HasBlood</BodyProperties>
+  </Item>
+  <Item>
+    <ID>GnomeStandardBone2</ID>
+    <Name>bone</Name>
+    <MaterialID>StandardBone</MaterialID>
+    <BodyFunction>Structure</BodyFunction>
+    <BodyProperties>Splinters</BodyProperties>
+    <Contains>
+    <Item>GnomeStandardMuscle2</Item>
+    </Contains>
+  </Item>
+  <!-- GnomeHand -->
+  <Item>
+    <ID>GnomeHand</ID>
+    <Name>skin</Name>
+    <MaterialID>StandardSkin</MaterialID>
+    <BodyProperties>HasBlood</BodyProperties>
+    <Contains>
+    <Item>GnomeStandardBone2</Item>
+    </Contains>
+    <NaturalWeapon>
+      <Name/>
+      <MaterialID>StandardBone</MaterialID>
+      <Size>15</Size>
+      <WeaponDef>
+        <Skill>NaturalAttack</Skill>
+        <AttackMove>
+          <Verb>punches</Verb>
+          <AttackType>HandToHand</AttackType>
+          <Damage>Blunt</Damage>
+        </AttackMove>
+        <VelocityModifier>1</VelocityModifier>
+      </WeaponDef>
+    </NaturalWeapon>
+  </Item>
+  <Item>
+    <ID>GnomeStandardMuscle3</ID>
+    <Name>muscle</Name>
+    <MaterialID>StandardStrongFlesh</MaterialID>
+    <BodyFunction>Stand</BodyFunction>
+    <BodyProperties>HasBlood</BodyProperties>
+  </Item>
+  <Item>
+    <ID>GnomeStandardBone3</ID>
+    <Name>bone</Name>
+    <MaterialID>StandardBone</MaterialID>
+    <BodyFunction>Structure</BodyFunction>
+    <BodyProperties>Splinters</BodyProperties>
+    <Contains>
+    <Item>GnomeStandardMuscle3</Item>
+    </Contains>
+  </Item>
+  <!-- GnomeFoot -->
+  <Item>
+    <ID>GnomeFoot</ID>
+    <Name>skin</Name>
+    <MaterialID>StandardSkin</MaterialID>
+    <BodyProperties>HasBlood</BodyProperties>
+    <Contains>
+    <Item>GnomeStandardBone3</Item>
+    </Contains>
+    <NaturalWeapon>
+      <Name/>
+      <MaterialID>StandardBone</MaterialID>
+      <Size>30</Size>
+      <WeaponDef>
+        <Skill>NaturalAttack</Skill>
+        <AttackMove>
+          <Verb>kicks</Verb>
+          <AttackType>HandToHand</AttackType>
+          <Damage>Blunt</Damage>
+        </AttackMove>
+        <VelocityModifier>0.8</VelocityModifier>
+      </WeaponDef>
+    </NaturalWeapon>
+  </Item>
+ 
+  
+  
+  
+  </BodyParts>

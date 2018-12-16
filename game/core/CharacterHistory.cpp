@@ -3,13 +3,14 @@
 //
 
 #include "CharacterHistory.h"
+#include "game/properties/RaceDefinition.h"
 
 namespace game
 {
     CharacterHistory::CharacterHistory(std::shared_ptr<const properties::RaceDefinition> aRaceDef)
         :raceDef(aRaceDef)
     {
-
+        mGender=aRaceDef->generateGender();
     }
 
     CharacterHistory::~CharacterHistory()
@@ -20,5 +21,10 @@ namespace game
     void CharacterHistory::setName(const std::string& value)
     {
         mName=value;
+    }
+
+    const GenderType& CharacterHistory::gender() const
+    {
+        return mGender;
     }
 }

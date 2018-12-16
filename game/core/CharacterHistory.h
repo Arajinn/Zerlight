@@ -5,6 +5,8 @@
 #ifndef ZERL_CHARACTERHISTORY_H
 #define ZERL_CHARACTERHISTORY_H
 
+#include "game/core/enums.h"
+
 #include <string>
 #include <memory>
 
@@ -20,12 +22,15 @@ namespace game {
         ~CharacterHistory();
 
         void setName(const std::string& value);
+
+        const GenderType& gender() const;
     private:
         friend class Character;
 
         std::shared_ptr<const properties::RaceDefinition> raceDef;
 
         std::string mName;
+        GenderType mGender;
     };
 }
 

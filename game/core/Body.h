@@ -6,6 +6,7 @@
 #define ZERL_BODY_H
 
 #include "game/core/enums.h"
+#include "game/properties/TileDef.h"
 
 #include <vector>
 #include <memory>
@@ -88,6 +89,10 @@ namespace game {
         bool sheathItem();
 
         void eatFoot(std::shared_ptr<Item> item);
+
+        std::vector<properties::TileDef> getTiles() const;
+
+        GenderType gender() const;
     private:
         void init(std::shared_ptr<Character> parent);
 

@@ -60,15 +60,20 @@ namespace properties {
         std::vector<std::shared_ptr<ConstructionDef>> mConstructionDefs;
 
         std::vector<std::shared_ptr<ItemDefinition>> mItemDefinitions;
+        void parseItemDefs();
 
         std::vector<std::shared_ptr<BodyPartDef>> mBodyPartDefs;
         void initBodyPartDefs();
+        void parseBodyPartDefs();
 
         std::vector<std::shared_ptr<BodyDef>> mBodyDefs;
         void initBodyDefs();
+        void parseBodyDefs();
 
         std::vector<std::shared_ptr<SpriteDef>> mSpriteDefs;
         void parseSpriteDefsFile();
+
+        std::vector<std::string> split(std::string data, std::string delimiter);
     };
 }
 

@@ -398,13 +398,13 @@ void MapWidget::draw_item(std::shared_ptr<gui::Graphics> graphics)
                     if (cell->hasRamp())
                     {
                         std::shared_ptr<const game::Ramp> ramp=cell->ramp();
-                        std::vector<game::draw_info> draw_infos=ramp->get_draw_info(xIndex,yIndex,zIndex,mOrientation);
-                        game::draw_info info=draw_infos.at(0);
+                        std::vector<properties::TileDef> draw_infos=ramp->get_draw_info(xIndex,yIndex,zIndex,mOrientation);
+                        properties::TileDef info=draw_infos.at(0);
 
-                        if (!info.spriteID.empty())
+                        if (!info.SpriteID.empty())
                         {
-                            std::shared_ptr<const properties::SpriteDef> spriteDef=GAME_DEFINITIONS->spriteDefinition(info.spriteID);
-                            drawImage(graphics, spriteDef->Image, xWallPlot, yWallPlot, imageSize, info.color);
+                            std::shared_ptr<const properties::SpriteDef> spriteDef=GAME_DEFINITIONS->spriteDefinition(info.SpriteID);
+                            drawImage(graphics, spriteDef->Image, xWallPlot, yWallPlot, imageSize, info.Color);
                         }
                     }
 
@@ -412,7 +412,23 @@ void MapWidget::draw_item(std::shared_ptr<gui::Graphics> graphics)
                     {
                         std::vector<std::shared_ptr<game::GameEntity>> objects=cell->getObjects();
 
-                        int t=0;
+                        for (auto object : objects)
+                        {
+                            std::vector<properties::TileDef> draw_infos=object->get_draw_info(xIndex,yIndex,zIndex,mOrientation);
+                            for (const auto& draw_info : draw_infos)
+                            {
+                                if (!draw_info.SpriteID.empty())
+                                {
+                                    std::shared_ptr<const properties::SpriteDef> spriteDef=GAME_DEFINITIONS->spriteDefinition(draw_info.SpriteID);
+                                    drawImage(graphics, spriteDef->Image, xWallPlot, yWallPlot, imageSize, draw_info.Color);
+                                }
+                            }
+
+                            if (draw_infos.size()==0)
+                            {
+                                int t=0;
+                            }
+                        }
                     }
                 }
             }

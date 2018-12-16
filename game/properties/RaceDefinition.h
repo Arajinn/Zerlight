@@ -6,6 +6,7 @@
 #define ZERL_RACEDEFINITION_H
 
 #include "game/properties/AttributeDef.h"
+#include "game/core/enums.h"
 
 #include <string>
 #include <vector>
@@ -42,6 +43,9 @@ namespace properties {
         std::vector<std::pair<std::string,float>> AdditionalDiet;
 
         float additionalDietValue(std::string itemID) const;
+
+        std::vector<std::pair<game::GenderType,float>> Genders;
+        game::GenderType generateGender() const;
     };
 }
 

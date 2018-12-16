@@ -17,6 +17,7 @@ namespace properties {
         BodySectionDef();
         ~BodySectionDef();
 
+        std::string ID;
         std::string Name;
         std::string BodyPartID;
         game::Material MaterialID;
@@ -24,12 +25,19 @@ namespace properties {
 
         float ToHitWeight;
 
-        bool Limb;
-        bool Connection;
-        bool Symmetrical;
-        bool Hand;
+        bool Limb{false};
+        bool Connection{false};
+        bool Symmetrical{false};
+        bool Hand{false};
 
         std::vector<std::shared_ptr<BodySectionDef>> ConnectedSections;
+
+        std::string SpriteID;
+        std::string SpriteIDRight;
+        std::string SpriteIDLeft;
+        int DrawOrder;
+        std::vector<std::string> Decorations,DecorationsRight,DecorationsLeft;
+        std::vector<std::vector<std::string>> AdditionalDecoration,AdditionalDecorationMale,AdditionalDecorationFemale;
     };
 }
 

@@ -160,4 +160,49 @@ namespace game
     {
         return false;
     }
+
+    std::vector<properties::TileDef> Item::get_draw_info(const int& x, const int& y, const int& z,
+                                                 const view_orientation& orientation) const
+    {
+        std::vector<properties::TileDef> result;
+        float order=0.0f;
+        for (const auto& item : mItemDef->Sprites)
+        {
+            properties::TileDef info;
+            info.DrawOrder=order;
+            if (item.spriteIDByMaterialID.size()==0)
+            {
+                info.SpriteID=item.spriteID;
+            }
+            else
+            {
+                const std::string materialID = mHistory->materialID();
+                const std::string spriteID=item.getSpriteIDByMaterialID(materialID);
+                if (!spriteID.empty())
+                {
+                    info.SpriteID=spriteID;
+                }
+                else
+                {
+                    info.SpriteID=item.spriteID;
+                }
+            }
+
+            if (item.useMaterial)
+            {
+                const std::string materialID = mHistory->materialID();
+                std::shared_ptr<const properties::MaterialDef> materialDef=GAME_DEFINITIONS->materialDefinition(materialID);
+                info.Color=materialDef->Color;
+            }
+            else
+                info.Color=gui::ZColor(-1,-1,-1);
+
+            result.push_back(info);
+
+            order+=0.1f;
+        }
+
+        return result;
+    }
+
 }

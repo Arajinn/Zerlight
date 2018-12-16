@@ -14,7 +14,11 @@ namespace game {
     {
     public:
         static MaterialType str2MaterialType(const std::string& str);
-
+        static ItemEffectType str2ItemEffectType(const std::string& str);
+        static BodyPartProperty str2BodyPartProperty(const std::string& str);
+        static BodyFunction str2BodyFunction(const std::string& str);
+        static EquipmentType str2EquipmentType(const std::string& str);
+        static Material str2Material(const std::string& str);
     };
 }
 

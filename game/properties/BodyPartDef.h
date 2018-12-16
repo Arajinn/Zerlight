@@ -21,7 +21,7 @@ namespace properties {
         game::Material MaterialID;
         std::vector<game::BodyPartProperty> BodyProperties;
         bool Symmetrical;
-        std::vector<std::shared_ptr<BodyPartDef>> ContainedParts;
+        std::vector<std::shared_ptr<const BodyPartDef>> ContainedParts;
         game::BodyFunction BodyFunction;
 
         float Thickness;

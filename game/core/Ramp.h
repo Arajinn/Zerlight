@@ -20,7 +20,7 @@ namespace game {
 
         int materialIndex() const;
 
-        virtual std::vector<draw_info> get_draw_info(const int& x, const int& y, const int& z,
+        virtual std::vector<properties::TileDef> get_draw_info(const int& x, const int& y, const int& z,
                                                      const view_orientation& orientation) const;
     protected:
         void init(std::string constructionID, const int& materialIndex, ConstructOrientation orientation);

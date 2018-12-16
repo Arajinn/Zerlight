@@ -7,7 +7,7 @@
 
 #include "game/core/enums.h"
 #include "game/map/vector3.h"
-#include "guichan/gui/ZColor.h"
+#include "game/properties/TileDef.h"
 
 #include <memory>
 #include <vector>
@@ -18,12 +18,6 @@ namespace map
 }
 
 namespace game {
-    struct draw_info
-    {
-        std::string spriteID;
-        int order;
-        gui::ZColor color;
-    };
 
     class GameEntity : public std::enable_shared_from_this<GameEntity> {
     public:
@@ -56,7 +50,7 @@ namespace game {
 
         virtual bool isUpdatable() const = 0;
 
-        virtual std::vector<draw_info> get_draw_info(const int& x, const int& y, const int& z,
+        virtual std::vector<properties::TileDef> get_draw_info(const int& x, const int& y, const int& z,
                                                      const view_orientation& orientation) const;
      protected:
 

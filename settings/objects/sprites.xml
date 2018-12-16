@@ -52,4 +52,104 @@
 	<SpriteID>WineLiquid</SpriteID>
 	<Source>wine2.png</Source>
 </Item>
+<Item>
+	<SpriteID>AppleFruit</SpriteID>
+	<Source>fruit_apple.png</Source>
+</Item>
+<Item>
+	<SpriteID>GrapeFruit</SpriteID>
+	<Source>fruit_grape.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeHead</SpriteID>
+	<Source>gnome_head.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeTorso</SpriteID>
+	<Source>gnome_torso.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeArmRight</SpriteID>
+	<Source>gnome_arm_right.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeArmLeft</SpriteID>
+	<Source>gnome_arm_left.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeHandRight</SpriteID>
+	<Source>gnome_hand_right.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeHandLeft</SpriteID>
+	<Source>gnome_hand_left.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeFootRight</SpriteID>
+	<Source>gnome_foot_right.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeFootLeft</SpriteID>
+	<Source>gnome_foot_left.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeClothTorso1</SpriteID>
+	<Source>gnome_cloth_torso_1.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeClothTorso2</SpriteID>
+	<Source>gnome_cloth_torso_2.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeClothTorso3</SpriteID>
+	<Source>gnome_cloth_torso_3.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeClothTorso4</SpriteID>
+	<Source>gnome_cloth_torso_4.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeClothTorso5</SpriteID>
+	<Source>gnome_cloth_torso_5.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeClothArmRight</SpriteID>
+	<Source>gnome_cloth_arm_right.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeClothArmLeft</SpriteID>
+	<Source>gnome_cloth_arm_left.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeClothBootRight</SpriteID>
+	<Source>gnome_cloth_boot_right.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeClothBootLeft</SpriteID>
+	<Source>gnome_cloth_boot_left.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeMaleHair1</SpriteID>
+	<Source>gnome_hair_male_1.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeMaleHair2</SpriteID>
+	<Source>gnome_hair_male_2.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeFemaleHair1</SpriteID>
+	<Source>gnome_hair_female_1.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeFemaleHair2</SpriteID>
+	<Source>gnome_hair_female_2.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeMaleBeard1</SpriteID>
+	<Source>gnome_beard_male_1.png</Source>
+</Item>
+<Item>
+	<SpriteID>GnomeMaleBeard2</SpriteID>
+	<Source>gnome_beard_male_2.png</Source>
+</Item>
 </Sprites>

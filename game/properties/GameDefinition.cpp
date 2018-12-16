@@ -22,6 +22,7 @@
 #include <boost/property_tree/xml_parser.hpp>
 
 #include <algorithm>
+#include <regex>
 
 namespace properties {
     GameDefinition::GameDefinition()
@@ -56,6 +57,8 @@ namespace properties {
         settlerDefinition->Attributes.push_back(properties::AttributeDef(game::CharacterAttributeType::Curiosity,80,120,100));
         settlerDefinition->Attributes.push_back(properties::AttributeDef(game::CharacterAttributeType::Focus,80,120,100));
         settlerDefinition->Attributes.push_back(properties::AttributeDef(game::CharacterAttributeType::Charm,80,120,100));
+        settlerDefinition->Genders.push_back({game::GenderType::Male,1.0f});
+        settlerDefinition->Genders.push_back({game::GenderType::Female,1.0f});
         mRaceDefinitions.push_back(settlerDefinition);
 
         std::shared_ptr<ConstructionDef> soilStairs=std::shared_ptr<ConstructionDef>(new ConstructionDef());
@@ -70,24 +73,16 @@ namespace properties {
         rawStoneRamp->Prefix="stone";
         mConstructionDefs.push_back(rawStoneRamp);
 
-        std::shared_ptr<ItemDefinition> wineDefinition=std::shared_ptr<ItemDefinition>(new ItemDefinition());
-        wineDefinition->ID="Wine";
-        wineDefinition->Name="wine";
-        wineDefinition->addEffect(game::ItemEffectType::Drink,50.0f);
-        mItemDefinitions.push_back(wineDefinition);
-
-        std::shared_ptr<ItemDefinition> fruitDefinition=std::shared_ptr<ItemDefinition>(new ItemDefinition());
-        fruitDefinition->ID="Fruit";
-        fruitDefinition->Name="fruit";
-        fruitDefinition->addEffect(game::ItemEffectType::Food,15.0f);
-        mItemDefinitions.push_back(fruitDefinition);
+        parseItemDefs();
 
         mGameSettings=std::shared_ptr<GameSettings>(new GameSettings());
         mGameSettings->NutritionWeight=50.0f;
         mGameSettings->DepthDistanceBias=1.0f;
 
-        this->initBodyPartDefs();
-        this->initBodyDefs();
+        parseBodyPartDefs();
+        //this->initBodyPartDefs();
+        parseBodyDefs();
+        //this->initBodyDefs();
     };
 
     GameDefinition::~GameDefinition()
@@ -567,14 +562,26 @@ namespace properties {
                 mSpriteDefs.push_back(newSpriteDef);
             }
         }
+
+        std::sort(mSpriteDefs.begin(), mSpriteDefs.end(),
+             [](const std::shared_ptr<SpriteDef> & left, const std::shared_ptr<SpriteDef> & right) -> bool
+             {
+                 return left->SpriteID < right->SpriteID;
+             });
     }
 
     std::shared_ptr<const SpriteDef> GameDefinition::spriteDefinition(const std::string& spriteID) const
     {
-        auto iter=std::find_if(mSpriteDefs.begin(),mSpriteDefs.end(),[&spriteID](std::shared_ptr<SpriteDef> const& item)
-        {
-            return (item->SpriteID==spriteID);
-        });
+//        auto iter=std::find_if(mSpriteDefs.begin(),mSpriteDefs.end(),[&spriteID](std::shared_ptr<SpriteDef> const& item)
+//        {
+//            return (item->SpriteID==spriteID);
+//        });
+
+        auto iter = std::lower_bound(mSpriteDefs.begin(), mSpriteDefs.end(),spriteID,
+                [](const std::shared_ptr<SpriteDef>& left, const std::string& right)
+                {
+                    return left->SpriteID  < right;
+                });
 
         if (iter!=mSpriteDefs.end())
         {
@@ -583,5 +590,255 @@ namespace properties {
         }
         else
             return nullptr;
+    }
+
+    void GameDefinition::parseItemDefs()
+    {
+        std::string path="../settings/objects/items.xml";
+
+        boost::property_tree::ptree pt;
+        boost::property_tree::read_xml(path, pt);
+
+        for (auto const& tree_item : pt.get_child("Items"))
+        {
+            if (tree_item.first=="Item")
+            {
+                std::shared_ptr<ItemDefinition> newItemDefinition=std::shared_ptr<ItemDefinition>(new ItemDefinition());
+                newItemDefinition->ID=tree_item.second.get("ID","");
+                newItemDefinition->Name=tree_item.second.get("Name","");
+
+                for (const auto& child : tree_item.second)
+                {
+                    if (child.first=="Effect")
+                    {
+                        std::string typeStr=child.second.get("Effect","");
+                        game::ItemEffectType type=game::String2Enums::str2ItemEffectType(typeStr);
+                        float effectValue=child.second.get("Amount",0.0f);
+                        newItemDefinition->addEffect(type,effectValue);
+                    }
+                    else if (child.first=="SpriteID")
+                    {
+                        ItemDefinition::SpriteID spriteInfo;
+                        spriteInfo.spriteID=child.second.get("SpriteID","");
+                        int materialId=child.second.get("MaterialIndex",0);
+                        spriteInfo.useMaterial=(materialId!=-1);
+
+                        for (const auto& sprite_child : child.second)
+                        {
+                            if (sprite_child.first=="SpriteIDByMaterialID")
+                            {
+                                std::string key=sprite_child.second.get("Key","");
+                                std::string value=sprite_child.second.get("Value","");
+                                spriteInfo.spriteIDByMaterialID.push_back({key,value});
+                            }
+                        }
+
+                        newItemDefinition->Sprites.push_back(spriteInfo);
+                    }
+                }
+
+                mItemDefinitions.push_back(newItemDefinition);
+            }
+        }
+    }
+
+    std::vector<std::string> GameDefinition::split(std::string data, std::string delimiter)
+    {
+        std::vector<std::string> result;
+        std::string reg_str="[^"+delimiter+"]+";
+        std::regex reg(reg_str);
+        std::sregex_token_iterator begin(data.begin(), data.end(), reg), end;
+        std::copy(begin, end, std::back_inserter(result));
+        return result;
+    }
+
+    void GameDefinition::parseBodyPartDefs()
+    {
+        std::string path="../settings/objects/bodypart.xml";
+
+        boost::property_tree::ptree pt;
+        boost::property_tree::read_xml(path, pt);
+
+        for (auto const& tree_item : pt.get_child("BodyParts"))
+        {
+            if (tree_item.first=="Item")
+            {
+                std::shared_ptr<BodyPartDef> newBodyPartDef=std::shared_ptr<BodyPartDef>(new BodyPartDef());
+
+                newBodyPartDef->ID=tree_item.second.get("ID","");
+                newBodyPartDef->Name=tree_item.second.get("Name","");
+
+                std::string materialID=tree_item.second.get("MaterialID","");
+                newBodyPartDef->MaterialID=game::String2Enums::str2Material(materialID);
+
+                std::string bodyProperties=tree_item.second.get("BodyProperties","");
+                if (!bodyProperties.empty())
+                {
+                    std::vector<std::string> bodyPropertiesSplit = split(bodyProperties, ",");
+                    for (auto bodyProperty : bodyPropertiesSplit)
+                        newBodyPartDef->BodyProperties.push_back(game::String2Enums::str2BodyPartProperty(bodyProperty));
+                }
+
+                std::string bodyFunction=tree_item.second.get("BodyFunction","None");
+                newBodyPartDef->BodyFunction = game::String2Enums::str2BodyFunction(bodyFunction);
+
+                newBodyPartDef->Symmetrical = tree_item.second.get("Symmetrical",false);
+                newBodyPartDef->ToHitWeight = tree_item.second.get("ToHitWeight",0.0f);
+                newBodyPartDef->HarvestedItem = tree_item.second.get("HarvestedItem","");
+                newBodyPartDef->HarvestedQuantity = tree_item.second.get("HarvestedQuantity",1);
+
+                if (tree_item.second.get_child_optional("Contains"))
+                {
+                    for (auto const &contains : tree_item.second.get_child("Contains"))
+                    {
+                        if (contains.first=="Item")
+                        {
+                            std::string containsID=contains.second.get_value<std::string>();
+                            auto containsPtr=bodyPartDefinition(containsID);
+                            if (containsPtr!=nullptr)
+                                newBodyPartDef->ContainedParts.push_back(containsPtr);
+                        }
+                    }
+                }
+
+                mBodyPartDefs.push_back(newBodyPartDef);
+            }
+        }
+    }
+
+    void GameDefinition::parseBodyDefs()
+    {
+        std::string path="../settings/objects/body.xml";
+
+        boost::property_tree::ptree pt;
+        boost::property_tree::read_xml(path, pt);
+
+        std::vector<std::shared_ptr<BodySectionDef>> body_sections_container;
+
+        for (auto const& tree_item : pt.get_child("Bodies"))
+        {
+            if (tree_item.first == "Item")
+            {
+                if (tree_item.second.get_child_optional("MainBody"))
+                {
+                    std::shared_ptr<BodyDef> newBodyDef=std::shared_ptr<BodyDef>(new BodyDef());
+                    newBodyDef->ID = tree_item.second.get("ID", "");
+
+                    for (auto const &contains : tree_item.second.get_child("MainBody"))
+                    {
+                        if (contains.first == "Item")
+                        {
+                            std::string mainBodyID = contains.second.get_value<std::string>();
+                            auto iter = std::find_if(body_sections_container.begin(), body_sections_container.end(),
+                                                     [&mainBodyID](std::shared_ptr<BodySectionDef> const &item)
+                                                     {
+                                                         return item->ID == mainBodyID;
+                                                     });
+
+                            if (iter != body_sections_container.end())
+                            {
+                                int index = std::distance(body_sections_container.begin(), iter);
+                                newBodyDef->MainBody=body_sections_container.at(index);
+                            }
+                        }
+                    }
+
+                    mBodyDefs.push_back(newBodyDef);
+                    body_sections_container.clear();
+                }
+                else
+                    {
+                    std::shared_ptr<BodySectionDef> newBodySectionDef = std::shared_ptr<BodySectionDef>(
+                            new BodySectionDef());
+
+                    newBodySectionDef->ID = tree_item.second.get("ID", "");
+                    newBodySectionDef->Name = tree_item.second.get("Name", "");
+                    newBodySectionDef->BodyPartID = tree_item.second.get("BodyPartID", "");
+
+                    std::string materialID = tree_item.second.get("MaterialID", "");
+                    newBodySectionDef->MaterialID = game::String2Enums::str2Material(materialID);
+
+                    newBodySectionDef->ToHitWeight = tree_item.second.get("ToHitWeight", 0.0f);
+
+                    std::string equipType = tree_item.second.get("EquipType", "");
+                    newBodySectionDef->EquipType = game::String2Enums::str2EquipmentType(equipType);
+
+                    newBodySectionDef->Symmetrical = tree_item.second.get("Symmetrical", false);
+                    newBodySectionDef->Limb = tree_item.second.get("Limb", false);
+                    newBodySectionDef->Connection = tree_item.second.get("Connection", false);
+                    newBodySectionDef->Hand = tree_item.second.get("Hand", false);
+
+                    newBodySectionDef->SpriteID = tree_item.second.get("SpriteID", "");
+                    newBodySectionDef->SpriteIDRight = tree_item.second.get("SpriteIDRight", "");
+                    newBodySectionDef->SpriteIDLeft = tree_item.second.get("SpriteIDLeft", "");
+                    newBodySectionDef->DrawOrder = tree_item.second.get("DrawOrder", -1);
+
+                    if (tree_item.second.get_child_optional("Decoration"))
+                    {
+                        auto decoration_tree=tree_item.second.get_child("Decoration");
+                        for (auto const &contains : decoration_tree)
+                        {
+                            std::string spriteID = contains.second.get_value<std::string>();
+                            if (contains.first == "SpriteID")
+                            {
+                                newBodySectionDef->Decorations.push_back(spriteID);
+                            }
+                            else if (contains.first == "SpriteIDRight")
+                            {
+                                newBodySectionDef->DecorationsRight.push_back(spriteID);
+                            }
+                            else if (contains.first == "SpriteIDLeft")
+                            {
+                                newBodySectionDef->DecorationsLeft.push_back(spriteID);
+                            }
+                        }
+
+                        if (decoration_tree.get_child_optional("Additional"))
+                        {
+                            for (auto const &contains : decoration_tree.get_child("Additional"))
+                            {
+                                if ((contains.first == "Male") || (contains.first == "Female"))
+                                {
+                                    std::vector<std::string> container;
+                                    for (auto const item : contains.second)
+                                    {
+                                        std::string spriteID = item.second.get_value<std::string>();
+                                        container.push_back(spriteID);
+                                    }
+
+                                    if (contains.first == "Male")
+                                        newBodySectionDef->AdditionalDecorationMale.push_back(container);
+                                    else if (contains.first == "Female")
+                                        newBodySectionDef->AdditionalDecorationFemale.push_back(container);
+                                }
+                            }
+                        }
+                    }
+
+                    if (tree_item.second.get_child_optional("ConnectsTo"))
+                    {
+                        for (auto const &contains : tree_item.second.get_child("ConnectsTo"))
+                        {
+                            if (contains.first == "Item")
+                            {
+                                std::string connectsToID = contains.second.get_value<std::string>();
+                                auto iter = std::find_if(body_sections_container.begin(), body_sections_container.end(),
+                                                         [&connectsToID]
+                                                                 (std::shared_ptr<BodySectionDef> const &item) {
+                                                             return item->ID == connectsToID;
+                                                         });
+
+                                if (iter != body_sections_container.end()) {
+                                    int index = std::distance(body_sections_container.begin(), iter);
+                                    newBodySectionDef->ConnectedSections.push_back(body_sections_container.at(index));
+                                }
+                            }
+                        }
+                    }
+
+                    body_sections_container.push_back(newBodySectionDef);
+                }
+            }
+        }
     }
 }

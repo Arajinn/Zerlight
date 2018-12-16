@@ -78,10 +78,13 @@ namespace game
         mAIDirector->createItem(groundPosDrink2,"Wine","Apple");
 
         map::vector3 groundPosDrink3(5,5,21);
-        mAIDirector->createItem(groundPosDrink3,"Wine","Orange");
+        mAIDirector->createItem(groundPosDrink3,"Wine","Grape");
 
         map::vector3 groundPosFood1(45,45,20);
         mAIDirector->createItem(groundPosFood1,"Fruit","Apple");
+
+        map::vector3 groundPosFood2(15,15,21);
+        mAIDirector->createItem(groundPosFood2,"Fruit","Grape");
 
         return true;
     }

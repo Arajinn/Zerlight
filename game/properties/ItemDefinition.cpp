@@ -88,4 +88,21 @@ namespace properties
                 return 1.0f;
         }
     }
+
+    std::string ItemDefinition::SpriteID::getSpriteIDByMaterialID(const std::string& materialID) const
+    {
+        auto iter=std::find_if(spriteIDByMaterialID.begin(),spriteIDByMaterialID.end(),
+                [&materialID](std::pair<std::string,std::string> const& item)
+        {
+            return item.first==materialID;
+        });
+
+        if (iter!=spriteIDByMaterialID.end())
+        {
+            int index=std::distance(spriteIDByMaterialID.begin(),iter);
+            return spriteIDByMaterialID.at(index).second;
+        }
+        else
+            return "";
+    }
 }

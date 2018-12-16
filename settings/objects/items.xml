@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Items>
+  <!--Item:
+        Slash/Pierce/Blunt/Heat: Damage type
+          Blocks (Optional): Default max float value. Amount of damage reduced when hit
+          PercentTransfered (Optional): Default 0. Range [0, 1].  Percent of damage that is applied to the next layer if this layer is still not destroyed
+          PercentReceived (Optional): Default 1. Percent of damage received
+        ID: Defines ID for this material referenced everywhere else
+        Name: Name of material
+        Type: Type of material
+        Color: Color of material.  This is used when tinting sprites
+        Value: This setting is multiplied by the value of the item to determine worth
+        Strength: Used when calculating damage as well as affects job speed when mining
+  -->
+  
+  <!-- Wine -->
+	<Item>
+		<ID>Wine</ID>
+		<Name>wine</Name>
+		<Description>[ITEM_NAME].</Description>
+		<ObtainDescription>Made in a Distillery</ObtainDescription>
+		<Effect>
+			<Effect>Drink</Effect>
+			<Amount>50</Amount>
+		</Effect>
+		<SpriteID>
+			<SpriteID>WineBarrel</SpriteID>
+			<MaterialIndex>-1</MaterialIndex>
+		</SpriteID>
+		<SpriteID>
+			<SpriteID>WineLiquid</SpriteID>
+		</SpriteID>
+	</Item>  
+	<!-- Fruit -->
+	<Item>
+		<ID>Fruit</ID>
+		<ObtainDescription>Grown on farms or foraged from trees</ObtainDescription>
+		<GroupName>fruit</GroupName>
+		<Effect>
+			<Effect>Food</Effect>
+			<Amount>15</Amount>
+		</Effect>
+		<HasQuality>false</HasQuality>
+		<SpriteID>
+			<SpriteID>Strawberry</SpriteID>
+			<SpriteIDByMaterialID>
+				<Key>Apple</Key>
+				<Value>AppleFruit</Value>
+			</SpriteIDByMaterialID>
+			<SpriteIDByMaterialID>
+				<Key>Grape</Key>
+				<Value>GrapeFruit</Value>        
+			</SpriteIDByMaterialID>
+			<MaterialIndex>-1</MaterialIndex>
+		</SpriteID>
+	</Item>
+</Items>

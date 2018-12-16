@@ -106,6 +106,11 @@ class Character : public GameEntity{
         bool isStarving() const;
 
         virtual bool isUpdatable() const;
+
+        virtual std::vector<properties::TileDef> get_draw_info(const int& x, const int& y, const int& z,
+                                                 const view_orientation& orientation) const;
+
+        GenderType gender() const;
     private:
         friend class Body;
         friend class Mind;

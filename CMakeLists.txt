@@ -172,7 +172,7 @@ add_executable(Zerlight main.cpp
         game/utils/Randomizer.cpp game/utils/Randomizer.h
         game/utils/math_utils.h game/core/defines.h
         game/GameContainer.cpp game/GameContainer.h
-        game/core/String2Enums.cpp game/core/String2Enums.h game/properties/TerrainSprites.cpp game/properties/TerrainSprites.h game/properties/SpriteDef.cpp game/properties/SpriteDef.h)
+        game/core/String2Enums.cpp game/core/String2Enums.h game/properties/TerrainSprites.cpp game/properties/TerrainSprites.h game/properties/SpriteDef.cpp game/properties/SpriteDef.h game/properties/TileDef.cpp game/properties/TileDef.h)
 
 TARGET_LINK_LIBRARIES(${PROJECT_NAME}
         ${SDL2_LIBRARIES}

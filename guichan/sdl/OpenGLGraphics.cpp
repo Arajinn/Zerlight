@@ -366,7 +366,9 @@ namespace sdl_interface
         glEnable(GL_TEXTURE_2D);
 
         glBindTexture(GL_TEXTURE_2D, srcImage->getTextureHandle());
-        glColor3f(double(color.r)/255.0, double(color.g)/255.0, double(color.b)/255.0);
+
+        if (color.valid())
+            glColor3f(double(color.r)/255.0, double(color.g)/255.0, double(color.b)/255.0);
 
         // Check if blending already is enabled
         if (!mAlpha)

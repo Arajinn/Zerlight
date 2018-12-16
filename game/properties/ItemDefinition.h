@@ -32,6 +32,17 @@ namespace properties {
         static float effectModifierForFoodAndDrink(game::ItemQuality quality);
 
         float CombatRatingModifier;
+
+        struct SpriteID
+        {
+            std::string spriteID;
+            bool useMaterial;
+            std::vector<std::pair<std::string,std::string>> spriteIDByMaterialID;
+
+            std::string getSpriteIDByMaterialID(const std::string& materialID) const;
+        };
+
+        std::vector<SpriteID> Sprites;
     };
 }
 

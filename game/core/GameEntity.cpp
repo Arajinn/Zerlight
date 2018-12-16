@@ -140,9 +140,9 @@ namespace game
         return 0.0f;
     }
 
-    std::vector<draw_info> GameEntity::get_draw_info(const int& x, const int& y, const int& z,
+    std::vector<properties::TileDef> GameEntity::get_draw_info(const int& x, const int& y, const int& z,
                                                      const view_orientation& orientation) const
     {
-        return std::vector<draw_info>();
+        return std::vector<properties::TileDef>();
     }
 }

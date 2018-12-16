@@ -283,6 +283,20 @@ namespace game
         InternalBleeding = 16,
         Artificial = 32,
     };
+
+    enum class BodySymmetricalType
+    {
+        Left,
+        Right,
+        None
+    };
+
+    enum class GenderType
+    {
+        Neuter = 0,
+        Male = 1,
+        Female = 2
+    };
 }
 
 #endif //ZERL_ENUMS_H
