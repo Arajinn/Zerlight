@@ -21,17 +21,17 @@ namespace game
     bool StockManager::isItemInStocks(std::shared_ptr<Item> item)
     {
         std::string id=item->itemID();
-        auto iter_item_id=std::find_if(std::begin(mItems),std::end(mItems),[&id](properties::ItemsByQualityInfo const& value)
+        auto iter_item_id=std::find_if(mItems.begin(),mItems.end(),[&id](properties::ItemsByQualityInfo const& elem)
         {
-            return value.itemID==id;
+            return elem.itemID==id;
         });
 
-        if (iter_item_id==std::end(mItems))
+        if (iter_item_id==mItems.end())
             return false;
         else
         {
             auto allItems=iter_item_id->itemsOfQualityOrHigher(game::ItemQuality::Poor);
-            if (allItems.items.size()==0)
+            if (allItems.items.empty())
                 return false;
 
             return allItems.isItemInStocks(item);
@@ -46,12 +46,13 @@ namespace game
             return;
 
         std::string id=item->itemID();
-        auto iter_item_id=std::find_if(std::begin(mUnstockedItems),std::end(mUnstockedItems),[&id](properties::ItemsByQualityInfo const& value)
+        auto iter_item_id=std::find_if(mUnstockedItems.begin(),mUnstockedItems.end(),
+                [&id](properties::ItemsByQualityInfo const& elem)
         {
-            return value.itemID==id;
+            return elem.itemID==id;
         });
 
-        if (iter_item_id==std::end(mUnstockedItems))
+        if (iter_item_id==mUnstockedItems.end())
         {
             properties::ItemsByQualityInfo newInfoByQuality;
             newInfoByQuality.itemID=id;
@@ -72,12 +73,13 @@ namespace game
         else
         {
             ItemQuality quality=item->quality();
-            auto iter_item_quality=std::find_if(std::begin(iter_item_id->items),std::end(iter_item_id->items),[&quality](properties::ItemsByQuality const& value)
+            auto iter_item_quality=std::find_if(iter_item_id->items.begin(),iter_item_id->items.end(),
+                    [&quality](properties::ItemsByQuality const& elem)
             {
-                return (value.quality==quality);
+                return (elem.quality==quality);
             });
 
-            if (iter_item_quality==std::end(iter_item_id->items))
+            if (iter_item_quality==iter_item_id->items.end())
             {
                 properties::ItemsByQuality newItemsByQuality;
                 newItemsByQuality.quality=item->quality();
@@ -88,39 +90,41 @@ namespace game
 
                 newItemsByQuality.items.items.push_back(newItemsByMaterialInfo);
 
-                int index=std::distance(std::begin(mUnstockedItems),iter_item_id);
+                const auto index=std::distance(mUnstockedItems.begin(),iter_item_id);
                 mUnstockedItems[index].items.push_back(newItemsByQuality);
             }
             else
             {
                 std::string materialID=item->materialID();
-                auto iter_item_by_material=std::find_if(std::begin(iter_item_quality->items.items),std::end(iter_item_quality->items.items),[&materialID](properties::ItemsByMaterialInfo const& value)
+                auto iter_item_by_material=std::find_if(iter_item_quality->items.items.begin(),iter_item_quality->items.items.end(),
+                        [&materialID](properties::ItemsByMaterialInfo const& elem)
                 {
-                    return (value.materialID==materialID);
+                    return (elem.materialID==materialID);
                 });
 
-                if (iter_item_by_material==std::end(iter_item_quality->items.items))
+                if (iter_item_by_material==iter_item_quality->items.items.end())
                 {
                     properties::ItemsByMaterialInfo newItemsByMaterialInfo;
                     newItemsByMaterialInfo.materialID=item->materialID();
                     newItemsByMaterialInfo.items.push_back(item);
 
-                    int index1=std::distance(std::begin(mUnstockedItems),iter_item_id);
-                    int index2=std::distance(std::begin(iter_item_id->items),iter_item_quality);
+                    const auto index1=std::distance(mUnstockedItems.begin(),iter_item_id);
+                    const auto index2=std::distance(iter_item_id->items.begin(),iter_item_quality);
                     mUnstockedItems[index1].items[index2].items.items.push_back(newItemsByMaterialInfo);
                 }
                 else
                 {
-                    auto iter_item=std::find_if(std::begin(iter_item_by_material->items),std::end(iter_item_by_material->items),[&item](std::shared_ptr<game::Item> const& value)
+                    auto iter_item=std::find_if(iter_item_by_material->items.begin(),iter_item_by_material->items.end(),
+                            [&item](std::shared_ptr<game::Item> const& elem)
                     {
-                        return (value->ID()==item->ID());
+                        return (elem->ID()==item->ID());
                     });
 
-                    if (iter_item==std::end(iter_item_by_material->items))
+                    if (iter_item==iter_item_by_material->items.end())
                     {
-                        int index1=std::distance(std::begin(mUnstockedItems),iter_item_id);
-                        int index2=std::distance(std::begin(iter_item_id->items),iter_item_quality);
-                        int index3=std::distance(std::begin(iter_item_quality->items.items),iter_item_by_material);
+                        const auto index1=std::distance(mUnstockedItems.begin(),iter_item_id);
+                        const auto index2=std::distance(iter_item_id->items.begin(),iter_item_quality);
+                        const auto index3=std::distance(iter_item_quality->items.items.begin(),iter_item_by_material);
                         mUnstockedItems[index1].items[index2].items.items[index3].items.push_back(item);
                     }
                 }
@@ -131,12 +135,12 @@ namespace game
     void StockManager::addItem(std::shared_ptr<Item> item)
     {
         std::string itemID=item->itemID();
-        auto iter_item_id=std::find_if(std::begin(mItems),std::end(mItems),[&itemID](properties::ItemsByQualityInfo const& value)
+        auto iter_item_id=std::find_if(mItems.begin(),mItems.end(),[&itemID](properties::ItemsByQualityInfo const& elem)
         {
-            return value.itemID==itemID;
+            return elem.itemID==itemID;
         });
 
-        if (iter_item_id==std::end(mItems))
+        if (iter_item_id==mItems.end())
         {
             properties::ItemsByQualityInfo newInfoByQuality;
             newInfoByQuality.itemID=itemID;
@@ -157,12 +161,13 @@ namespace game
         else
         {
             ItemQuality quality=item->quality();
-            auto iter_item_quality=std::find_if(std::begin(iter_item_id->items),std::end(iter_item_id->items),[&quality](properties::ItemsByQuality const& value)
+            auto iter_item_quality=std::find_if(iter_item_id->items.begin(),iter_item_id->items.end(),
+                    [&quality](properties::ItemsByQuality const& elem)
             {
-                return (value.quality==quality);
+                return (elem.quality==quality);
             });
 
-            if (iter_item_quality==std::end(iter_item_id->items))
+            if (iter_item_quality==iter_item_id->items.end())
             {
                 properties::ItemsByQuality newItemsByQuality;
                 newItemsByQuality.quality=item->quality();
@@ -173,40 +178,42 @@ namespace game
 
                 newItemsByQuality.items.items.push_back(newItemsByMaterialInfo);
 
-                int index=std::distance(std::begin(mItems),iter_item_id);
+                const auto index=std::distance(mItems.begin(),iter_item_id);
                 mItems[index].items.push_back(newItemsByQuality);
             }
             else
             {
                 std::string materialID=item->materialID();
-                auto iter_item_by_material=std::find_if(std::begin(iter_item_quality->items.items),std::end(iter_item_quality->items.items),[&materialID](properties::ItemsByMaterialInfo const& value)
+                auto iter_item_by_material=std::find_if(iter_item_quality->items.items.begin(),iter_item_quality->items.items.end(),
+                        [&materialID](properties::ItemsByMaterialInfo const& elem)
                 {
-                    return (value.materialID==materialID);
+                    return (elem.materialID==materialID);
                 });
 
-                if (iter_item_by_material==std::end(iter_item_quality->items.items))
+                if (iter_item_by_material==iter_item_quality->items.items.end())
                 {
                     properties::ItemsByMaterialInfo newItemsByMaterialInfo;
                     newItemsByMaterialInfo.materialID=item->materialID();
                     newItemsByMaterialInfo.items.push_back(item);
 
-                    int index1=std::distance(std::begin(mItems),iter_item_id);
-                    int index2=std::distance(std::begin(iter_item_id->items),iter_item_quality);
+                    const auto index1=std::distance(mItems.begin(),iter_item_id);
+                    const auto index2=std::distance(iter_item_id->items.begin(),iter_item_quality);
                     mItems[index1].items[index2].items.items.push_back(newItemsByMaterialInfo);
                 }
                 else
                 {
                     int id=item->ID();
-                    auto iter_item=std::find_if(std::begin(iter_item_by_material->items),std::end(iter_item_by_material->items),[&id](std::shared_ptr<game::Item> const& value)
+                    auto iter_item=std::find_if(iter_item_by_material->items.begin(),iter_item_by_material->items.end(),
+                            [&id](std::shared_ptr<game::Item> const& elem)
                     {
-                        return (value->ID()==id);
+                        return (elem->ID()==id);
                     });
 
-                    if (iter_item==std::end(iter_item_by_material->items))
+                    if (iter_item==iter_item_by_material->items.end())
                     {
-                        int index1=std::distance(std::begin(mItems),iter_item_id);
-                        int index2=std::distance(std::begin(iter_item_id->items),iter_item_quality);
-                        int index3=std::distance(std::begin(iter_item_quality->items.items),iter_item_by_material);
+                        const auto index1=std::distance(mItems.begin(),iter_item_id);
+                        const auto index2=std::distance(iter_item_id->items.begin(),iter_item_quality);
+                        const auto index3=std::distance(iter_item_quality->items.items.begin(),iter_item_by_material);
                         mItems[index1].items[index2].items.items[index3].items.push_back(item);
                     }
                 }
@@ -219,50 +226,53 @@ namespace game
     void StockManager::removeItem(std::shared_ptr<Item> item)
     {
         std::string itemID=item->itemID();
-        auto iter_item_id=std::find_if(std::begin(mItems),std::end(mItems),[&itemID](properties::ItemsByQualityInfo const& value)
+        auto iter_item_id=std::find_if(mItems.begin(),mItems.end(),[&itemID](properties::ItemsByQualityInfo const& elem)
         {
-            return value.itemID==itemID;
+            return elem.itemID==itemID;
         });
 
-        if (iter_item_id!=std::end(mItems))
+        if (iter_item_id!=mItems.end())
         {
             ItemQuality quality=item->quality();
-            auto iter_item_quality=std::find_if(std::begin(iter_item_id->items),std::end(iter_item_id->items),[&quality](properties::ItemsByQuality const& value)
+            auto iter_item_quality=std::find_if(iter_item_id->items.begin(),iter_item_id->items.end(),
+                    [&quality](properties::ItemsByQuality const& elem)
             {
-                return (value.quality==quality);
+                return (elem.quality==quality);
             });
 
-            if (iter_item_quality!=std::end(iter_item_id->items))
+            if (iter_item_quality!=iter_item_id->items.end())
             {
                 std::string materialID=item->materialID();
-                auto iter_item_by_material=std::find_if(std::begin(iter_item_quality->items.items),std::end(iter_item_quality->items.items),[&materialID](properties::ItemsByMaterialInfo const& value)
+                auto iter_item_by_material=std::find_if(iter_item_quality->items.items.begin(),iter_item_quality->items.items.end(),
+                        [&materialID](properties::ItemsByMaterialInfo const& elem)
                 {
-                    return (value.materialID==materialID);
+                    return (elem.materialID==materialID);
                 });
 
-                if (iter_item_by_material!=std::end(iter_item_quality->items.items))
+                if (iter_item_by_material!=iter_item_quality->items.items.end())
                 {
                     int id=item->ID();
-                    auto iter_item=std::find_if(std::begin(iter_item_by_material->items),std::end(iter_item_by_material->items),[&id](std::shared_ptr<game::Item> const& value)
+                    auto iter_item=std::find_if(iter_item_by_material->items.begin(),iter_item_by_material->items.end(),
+                            [&id](std::shared_ptr<game::Item> const& elem)
                     {
-                        return (value->ID()==id);
+                        return (elem->ID()==id);
                     });
 
-                    if (iter_item!=std::end(iter_item_by_material->items))
+                    if (iter_item!=iter_item_by_material->items.end())
                     {
-                        int index1=std::distance(std::begin(mItems),iter_item_id);
-                        int index2=std::distance(std::begin(iter_item_id->items),iter_item_quality);
-                        int index3=std::distance(std::begin(iter_item_quality->items.items),iter_item_by_material);
+                        const auto index1=std::distance(mItems.begin(),iter_item_id);
+                        const auto index2=std::distance(iter_item_id->items.begin(),iter_item_quality);
+                        const auto index3=std::distance(iter_item_quality->items.items.begin(),iter_item_by_material);
 
                         mItems[index1].items[index2].items.items[index3].items.erase(iter_item);
 
-                        if (mItems[index1].items[index2].items.items[index3].items.size()==0)
+                        if (mItems[index1].items[index2].items.items[index3].items.empty())
                         {
                             mItems[index1].items[index2].items.items.erase(iter_item_by_material);
-                            if (mItems[index1].items[index2].items.items.size()==0)
+                            if (mItems[index1].items[index2].items.items.empty())
                             {
                                 mItems[index1].items.erase(iter_item_quality);
-                                if (mItems[index1].items.size()==0)
+                                if (mItems[index1].items.empty())
                                 {
                                     mItems.erase(iter_item_id);
                                 }
@@ -279,50 +289,54 @@ namespace game
     void StockManager::removeUnstockedItem(std::shared_ptr<Item> item)
     {
         std::string itemID=item->itemID();
-        auto iter_item_id=std::find_if(std::begin(mUnstockedItems),std::end(mUnstockedItems),[&itemID](properties::ItemsByQualityInfo const& value)
+        auto iter_item_id=std::find_if(mUnstockedItems.begin(),mUnstockedItems.end(),
+                [&itemID](properties::ItemsByQualityInfo const& elem)
         {
-            return value.itemID==itemID;
+            return elem.itemID==itemID;
         });
 
-        if (iter_item_id!=std::end(mUnstockedItems))
+        if (iter_item_id!=mUnstockedItems.end())
         {
             ItemQuality quality=item->quality();
-            auto iter_item_quality=std::find_if(std::begin(iter_item_id->items),std::end(iter_item_id->items),[&quality](properties::ItemsByQuality const& value)
+            auto iter_item_quality=std::find_if(iter_item_id->items.begin(),iter_item_id->items.end(),
+                    [&quality](properties::ItemsByQuality const& elem)
             {
-                return (value.quality==quality);
+                return (elem.quality==quality);
             });
 
-            if (iter_item_quality!=std::end(iter_item_id->items))
+            if (iter_item_quality!=iter_item_id->items.end())
             {
                 std::string materialID=item->materialID();
-                auto iter_item_by_material=std::find_if(std::begin(iter_item_quality->items.items),std::end(iter_item_quality->items.items),[&materialID](properties::ItemsByMaterialInfo const& value)
+                auto iter_item_by_material=std::find_if(iter_item_quality->items.items.begin(),iter_item_quality->items.items.end(),
+                        [&materialID](properties::ItemsByMaterialInfo const& elem)
                 {
-                    return (value.materialID==materialID);
+                    return (elem.materialID==materialID);
                 });
 
-                if (iter_item_by_material!=std::end(iter_item_quality->items.items))
+                if (iter_item_by_material!=iter_item_quality->items.items.end())
                 {
                     int id=item->ID();
-                    auto iter_item=std::find_if(std::begin(iter_item_by_material->items),std::end(iter_item_by_material->items),[&id](std::shared_ptr<game::Item> const& value)
+                    auto iter_item=std::find_if(iter_item_by_material->items.begin(),iter_item_by_material->items.end(),
+                            [&id](std::shared_ptr<game::Item> const& elem)
                     {
-                        return (value->ID()==id);
+                        return (elem->ID()==id);
                     });
 
-                    if (iter_item!=std::end(iter_item_by_material->items))
+                    if (iter_item!=iter_item_by_material->items.end())
                     {
-                        int index1=std::distance(std::begin(mUnstockedItems),iter_item_id);
-                        int index2=std::distance(std::begin(iter_item_id->items),iter_item_quality);
-                        int index3=std::distance(std::begin(iter_item_quality->items.items),iter_item_by_material);
+                        const auto index1=std::distance(mUnstockedItems.begin(),iter_item_id);
+                        const auto index2=std::distance(iter_item_id->items.begin(),iter_item_quality);
+                        const auto index3=std::distance(iter_item_quality->items.items.begin(),iter_item_by_material);
 
                         mUnstockedItems[index1].items[index2].items.items[index3].items.erase(iter_item);
 
-                        if (mUnstockedItems[index1].items[index2].items.items[index3].items.size()==0)
+                        if (mUnstockedItems[index1].items[index2].items.items[index3].items.empty())
                         {
                             mUnstockedItems[index1].items[index2].items.items.erase(iter_item_by_material);
-                            if (mUnstockedItems[index1].items[index2].items.items.size()==0)
+                            if (mUnstockedItems[index1].items[index2].items.items.empty())
                             {
                                 mUnstockedItems[index1].items.erase(iter_item_quality);
-                                if (mUnstockedItems[index1].items.size()==0)
+                                if (mUnstockedItems[index1].items.empty())
                                 {
                                     mUnstockedItems.erase(iter_item_id);
                                 }

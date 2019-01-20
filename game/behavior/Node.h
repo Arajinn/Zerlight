@@ -22,7 +22,7 @@ namespace behavior {
     class Node {
     public:
         Node();
-        ~Node();
+        virtual ~Node();
 
         virtual TaskResult execute(std::shared_ptr<game::Character> character, float dt, std::shared_ptr<Node> node=nullptr) = 0;
 

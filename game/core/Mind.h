@@ -21,6 +21,10 @@ namespace game {
         static std::shared_ptr<Mind> create(std::shared_ptr<Character> parent);
 
         void adjustHappiness(float delta);
+
+        float combatValue() const;
+
+        bool isUpset() const;
     private:
         void init(std::shared_ptr<Character> parent);
 

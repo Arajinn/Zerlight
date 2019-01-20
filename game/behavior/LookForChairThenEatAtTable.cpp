@@ -11,8 +11,8 @@ namespace behavior
     LookForChairThenEatAtTable::LookForChairThenEatAtTable()
         :Sequence()
     {
-        addNode(std::shared_ptr<LookForChair>(new LookForChair));
-        addNode(std::shared_ptr<EatAtTable>(new EatAtTable));
+        addNode(std::make_shared<LookForChair>());
+        addNode(std::make_shared<EatAtTable>());
     }
 
     LookForChairThenEatAtTable::~LookForChairThenEatAtTable()

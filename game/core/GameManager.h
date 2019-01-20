@@ -34,7 +34,8 @@ class GameManager : public std::enable_shared_from_this<GameManager> {
 
         bool testSpawn();
 
-        const std::shared_ptr<map::Region> region() const;
+        std::shared_ptr<map::Region> region() const;
+        std::shared_ptr<AIDirector> aiDirector() const;
 
         void update(const float& dt);
 

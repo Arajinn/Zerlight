@@ -28,7 +28,7 @@ namespace properties {
         {
             if (tree_item.first=="TerrainSprites")
             {
-                std::shared_ptr<TerrainSprites> newTerrainSprite=std::shared_ptr<TerrainSprites>(new TerrainSprites());
+                std::shared_ptr<TerrainSprites> newTerrainSprite=std::make_shared<TerrainSprites>();
                 newTerrainSprite->Key=tree_item.second.get("Key","");
 
                 for (auto const& state_item : tree_item.second.get_child("Value"))

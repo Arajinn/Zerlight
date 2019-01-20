@@ -9,6 +9,9 @@
 
 namespace game {
     struct HealthStatusEffect {
+        HealthStatusEffect();
+        HealthStatusEffect(const HealthStatusAilment& aAilment,const float& aAmount, const float& aRecoveryRate);
+
         HealthStatusAilment Ailment;
         float Amount;
         float RecoveryRate;

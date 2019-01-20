@@ -18,7 +18,7 @@
 namespace gui
 {
     std::shared_ptr<Font> ZWidget::mGlobalFont = nullptr;
-    std::shared_ptr<DefaultFont> ZWidget::mDefaultFont = std::shared_ptr<DefaultFont>(new DefaultFont);
+    std::shared_ptr<DefaultFont> ZWidget::mDefaultFont = std::make_shared<DefaultFont>();
     std::list<std::shared_ptr<ZWidget>> ZWidget::mWidgetInstances;
 
     ZWidget::ZWidget()

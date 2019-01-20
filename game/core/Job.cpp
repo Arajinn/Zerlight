@@ -32,12 +32,13 @@ namespace game
 
     bool Job::isClaimed(std::shared_ptr<Item> item) const
     {
-        auto iter=std::find_if(std::begin(mClaimedComponents),std::end(mClaimedComponents),[&item](std::shared_ptr<Item> const& value)
+        auto iter=std::find_if(mClaimedComponents.begin(),mClaimedComponents.end(),
+                [&item](std::shared_ptr<Item> const& elem)
         {
-            return value->ID()==item->ID();
+            return elem->ID()==item->ID();
         });
 
-        return (iter!=std::end(mClaimedComponents));
+        return (iter!=mClaimedComponents.end());
     }
 
     bool Job::componentInPosition(std::shared_ptr<Item> item) const
@@ -58,11 +59,15 @@ namespace game
     {
         for (auto item : mClaimedComponents)
         {
-            if (!this->componentInPosition(item))
+            if (!componentInPosition(item))
                 return item;
         }
 
         return nullptr;
     }
 
+    void Job::removeJob()
+    {
+
+    }
 }

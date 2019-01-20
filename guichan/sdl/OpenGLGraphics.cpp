@@ -338,7 +338,8 @@ namespace sdl_interface
                                    int dstY,
                                    int width,
                                    int height,
-                                   const gui::ZColor& color)
+                                   const gui::ZColor& color,
+                                   bool xFlip)
     {
         auto srcImage = std::dynamic_pointer_cast<const OpenGLImage>(image);
 
@@ -358,9 +359,19 @@ namespace sdl_interface
         dstY += top.yOffset;
 
         // Find OpenGL texture coordinates
-        float texX1 = 0.0f;
+        float texX1,texX2;
+        if (xFlip)
+        {
+            texX1=1.0f;
+            texX2=0.0f;
+        }
+        else
+        {
+            texX1=0.0f;
+            texX2=1.0f;
+        }
+
         float texY1 = 0.0f;
-        float texX2 = 1.0f;
         float texY2 = 1.0f;
 
         glEnable(GL_TEXTURE_2D);

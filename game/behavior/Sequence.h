@@ -11,7 +11,7 @@ namespace behavior {
     class Sequence : public CompositeNode {
     public:
         Sequence();
-        ~Sequence();
+        virtual ~Sequence();
 
         TaskResult execute(std::shared_ptr<game::Character>, float dt, std::shared_ptr<Node> node=nullptr) override;
     };

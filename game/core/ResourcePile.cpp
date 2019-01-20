@@ -19,7 +19,7 @@ namespace game
 
     std::shared_ptr<ResourcePile> ResourcePile::create(const map::vector3& position, std::string id, std::string materialID, std::shared_ptr<properties::ItemDefinition> aItemDef)
     {
-        std::shared_ptr<ResourcePile> ptr=std::shared_ptr<ResourcePile>(new ResourcePile(position));
+        auto ptr=std::make_shared<ResourcePile>(position);
         ptr->init(id, materialID,aItemDef);
         return ptr;
     }

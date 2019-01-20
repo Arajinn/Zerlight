@@ -4,6 +4,7 @@
 
 #include "ItemSettings.h"
 #include "game/core/Item.h"
+#include "game/core/StringConstants.h"
 
 #include <algorithm>
 
@@ -40,21 +41,21 @@ namespace properties
     {
         std::string materialID=item->materialID();
 
-        auto iter_material=std::find_if(std::begin(items),std::end(items),[&materialID](ItemsByMaterialInfo const& value)
+        auto iter_material=std::find_if(items.begin(),items.end(),[&materialID](ItemsByMaterialInfo const& value)
         {
             return (value.materialID==materialID);
         });
 
-        if (iter_material==std::end(items))
+        if (iter_material==items.end())
             return false;
         else
         {
-            auto iter=std::find_if(std::begin(iter_material->items),std::end(iter_material->items),[&item](std::shared_ptr<game::Item> const& value)
+            auto iter=std::find_if(iter_material->items.begin(),iter_material->items.end(),[&item](std::shared_ptr<game::Item> const& value)
             {
                 return (value->ID()==item->ID());
             });
 
-            return !(iter==std::end(iter_material->items));
+            return !(iter==iter_material->items.end());
         }
     }
 
@@ -77,5 +78,54 @@ namespace properties
         }
 
         return result;
+    }
+
+    ItemSettings::ItemSettings()
+    {
+
+    }
+
+    ItemSettings::~ItemSettings()
+    {
+
+    }
+
+    std::vector<std::string> ItemSettings::containersByAmmoItemID(const std::string& id) const
+    {
+        auto iter=std::find_if(mAmmoContainersByAmmoItemID.begin(),mAmmoContainersByAmmoItemID.end(),[&id](AmmoContainerByAmmoItemID const& item)
+        {
+            return item.ammoItemID==id;
+        });
+
+        if (iter!=mAmmoContainersByAmmoItemID.end())
+            return iter->ammoContainers;
+        else
+            return std::vector<std::string>();
+    }
+
+    std::string ItemSettings::itemIDToAmmoID(const std::string& itemID) const
+    {
+        auto iter=std::find_if(mItemIDToAmmoID.begin(),mItemIDToAmmoID.end(),[&itemID](ItemIDToAmmoID const& item)
+        {
+            return item.itemID==itemID;
+        });
+
+        if (iter!=mItemIDToAmmoID.end())
+            return iter->ammoID;
+        else
+            return AMMOID_NONE;
+    }
+
+    std::string ItemSettings::bodyPartToItemID(const std::string& bodyPartID) const
+    {
+        auto iter=std::find_if(mBodyPartIDToItemID.begin(),mBodyPartIDToItemID.end(),[&bodyPartID](BodyPartIDToItemID const& item)
+        {
+            return item.bodyPartID==bodyPartID;
+        });
+
+        if (iter!=mBodyPartIDToItemID.end())
+            return iter->itemID;
+        else
+            return ITEMID_NONE;
     }
 }

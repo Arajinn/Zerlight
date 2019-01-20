@@ -12,6 +12,9 @@ namespace properties
         CombatRatingModifier=0.0f;
         EquippedJobPenalty=0.0f;
         EquippedMovePenalty=0.0f;
+        WeaponSize=0.0f;
+        TwoHanded=false;
+        ItemWeaponDef= nullptr;
     }
 
     ItemDefinition::~ItemDefinition()
@@ -26,22 +29,22 @@ namespace properties
 
     bool ItemDefinition::hasEffect(game::ItemEffectType effectType) const
     {
-        auto iter=std::find_if(std::begin(Effects),std::end(Effects),[&effectType](ItemEffect const& value)
+        auto iter=std::find_if(Effects.begin(),Effects.end(),[&effectType](ItemEffect const& value)
         {
             return (effectType==value.Effect);
         });
 
-        return (iter!=std::end(Effects));
+        return (iter!=Effects.end());
     }
 
     float ItemDefinition::effectAmount(game::ItemEffectType type) const
     {
-        auto iter=std::find_if(std::begin(Effects),std::end(Effects),[&type](ItemEffect const& value)
+        auto iter=std::find_if(Effects.begin(),Effects.end(),[&type](ItemEffect const& value)
         {
             return (type==value.Effect);
         });
 
-        if (iter!=std::end(Effects))
+        if (iter!=Effects.end())
             return iter->Amount;
         else
             return 0.0f;

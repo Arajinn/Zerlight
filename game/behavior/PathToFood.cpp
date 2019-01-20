@@ -13,8 +13,8 @@ namespace behavior
     PathToFood::PathToFood()
         :Selector()
     {
-        addNode(std::shared_ptr<Condition>(new Condition(&PathToFood::pathingToFood)));
-        addNode(std::shared_ptr<Action>(new Action(&PathToFood::pathTo)));
+        addNode(std::make_shared<Condition>(&PathToFood::pathingToFood));
+        addNode(std::make_shared<Action>(&PathToFood::pathTo));
     }
 
     PathToFood::~PathToFood()

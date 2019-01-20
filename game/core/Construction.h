@@ -19,7 +19,7 @@ namespace game {
     class Construction : public GameEntity{
     public:
         Construction(const map::vector3& position);
-        ~Construction();
+        virtual ~Construction();
 
         static std::shared_ptr<Construction> create(const map::vector3& position, std::string constructionID, ConstructOrientation orientation=ConstructOrientation::FrontLeft);
 

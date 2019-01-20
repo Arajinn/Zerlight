@@ -29,7 +29,7 @@ namespace sdl_interface
             throw GCN_EXCEPTION( std::string("Not enough memory to load: ") + filename);
         }
 
-        std::shared_ptr<gui::ZImage> image = std::shared_ptr<SDLImage>(new SDLImage(surface, true));
+        std::shared_ptr<gui::ZImage> image = std::make_shared<SDLImage>(surface, true);
 
         if (convertToDisplayFormat)
         {

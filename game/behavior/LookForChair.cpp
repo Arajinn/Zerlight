@@ -12,8 +12,8 @@ namespace behavior
     LookForChair::LookForChair()
             :Selector()
     {
-        addNode(std::shared_ptr<Condition>(new Condition(&LookForChair::haveChair)));
-        addNode(std::shared_ptr<Action>(new Action(&LookForChair::findChair)));
+        addNode(std::make_shared<Condition>(&LookForChair::haveChair));
+        addNode(std::make_shared<Action>(&LookForChair::findChair));
     }
 
     LookForChair::~LookForChair()

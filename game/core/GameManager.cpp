@@ -9,6 +9,7 @@
 #include "Item.h"
 #include "AIDirector.h"
 #include "Stairs.h"
+#include "CreateWorldOptions.h"
 #include "game/map/Region.h"
 #include "game/map/Map.h"
 #include "game/map/MapCell.h"
@@ -31,7 +32,7 @@ namespace game
 
     std::shared_ptr<GameManager> GameManager::create()
     {
-        std::shared_ptr<GameManager> ptr=std::shared_ptr<GameManager>(new GameManager());
+        auto ptr=std::make_shared<GameManager>();
         ptr->init();
         return ptr;
     }
@@ -42,8 +43,8 @@ namespace game
         mNextNodeID=0;
         mNextNavGraphID=0;
 
-        mRegion=std::shared_ptr<map::Region>(new map::Region());
-        mAIDirector=std::shared_ptr<AIDirector>(new AIDirector(shared_from_this()));
+        mRegion=std::make_shared<map::Region>();
+        mAIDirector=std::make_shared<AIDirector>(shared_from_this());
     }
 
     unsigned int GameManager::nextNavNodeID()
@@ -60,16 +61,24 @@ namespace game
 
     bool GameManager::testSpawn()
     {
+        const auto worldOptions=std::make_shared<CreateWorldOptions>();
+        worldOptions->KingdomName="Test kingdom";
+        mAIDirector->generateStartingFactions(worldOptions);
+
 //        map::vector3 groundPosStair(20,20,20);
 //        auto entStair=Stairs::create(groundPosStair,"SoilStairs");
 //        this->addToSpawnList(entStair);
 
-        map::vector3 groundPosSettler(56,43,20);
+        const map::vector3 groundPosSettler(56,43,20);
         properties::SettlerSettings settlerSettings;
         settlerSettings.RaceID="Gnome";
         settlerSettings.offset=map::vector3(0,0,0);
         settlerSettings.Profession="";
         mAIDirector->createSettler(groundPosSettler,settlerSettings);
+
+        const map::vector3 groundPosBear(15,43,20);
+        const map::vector3 groundOffsetBear(0,0,0);
+        mAIDirector->createWildAnimal(groundPosBear,groundOffsetBear,"Bear");
 
         map::vector3 groundPosDrink1(45,40,20);
         mAIDirector->createItem(groundPosDrink1,"Wine","Apple");
@@ -98,14 +107,14 @@ namespace game
 
     void GameManager::addToDeleteList(std::shared_ptr<GameEntity> ent)
     {
-        auto iter=std::find_if(std::begin(mDeleteList),std::end(mDeleteList),[&ent](std::shared_ptr<GameEntity> const& value)
+        auto iter=std::find_if(mDeleteList.begin(),mDeleteList.end(),[&ent](std::shared_ptr<GameEntity> const& elem)
         {
-            return (ent->ID()==value->ID());
+            return (ent->ID()==elem->ID());
         });
 
-        if (iter==std::end(mDeleteList))
+        if (iter==mDeleteList.end())
         {
-            ent->pre_delete();
+            //ent->pre_delete();
 
             mDeleteList.push_back(ent);
 
@@ -119,9 +128,14 @@ namespace game
         }
     }
 
-    const std::shared_ptr<map::Region> GameManager::region() const
+    std::shared_ptr<map::Region> GameManager::region() const
     {
         return mRegion;
+    }
+
+    std::shared_ptr<AIDirector> GameManager::aiDirector() const
+    {
+        return mAIDirector;
     }
 
     void GameManager::processSpawn()
@@ -182,30 +196,33 @@ namespace game
         {
             if (ent->isUpdatable())
             {
-                auto iter = std::find_if(std::begin(mActiveList), std::end(mActiveList),
-                                         [&ent](std::shared_ptr<GameEntity> const &value) {
-                                             return ent->ID() == value->ID();
+                auto iter = std::find_if(mActiveList.begin(), mActiveList.end(),
+                                         [&ent](std::shared_ptr<GameEntity> const &elem)
+                                         {
+                                             return ent->ID() == elem->ID();
                                          });
 
-                if (iter != std::end(mActiveList)) {
-                    //int index = std::distance(std::begin(mActiveList), iter);
+                if (iter != mActiveList.end())
+                {
                     mActiveList.erase(iter);
                 }
             }
             else
             {
-                auto iter = std::find_if(std::begin(mNonActiveList), std::end(mNonActiveList),
-                                         [&ent](std::shared_ptr<GameEntity> const &value) {
-                                             return ent->ID() == value->ID();
+                auto iter = std::find_if(mNonActiveList.begin(), mNonActiveList.end(),
+                                         [&ent](std::shared_ptr<GameEntity> const &elem)
+                                         {
+                                             return ent->ID() == elem->ID();
                                          });
 
-                if (iter != std::end(mNonActiveList)) {
-                    //int index = std::distance(std::begin(mNonActiveList), iter);
+                if (iter != mNonActiveList.end())
+                {
                     mNonActiveList.erase(iter);
                 }
             }
 
             auto mapCell=this->region()->map()->cell(ent->position());
+            ent->pre_delete();
             ent->destroy(mapCell);
         }
 

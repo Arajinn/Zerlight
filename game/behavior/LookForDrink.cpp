@@ -6,6 +6,7 @@
 #include "Condition.h"
 #include "Action.h"
 #include "game/core/Character.h"
+#include "game/core/Body.h"
 
 #include <iostream>
 
@@ -14,8 +15,8 @@ namespace behavior
     LookForDrink::LookForDrink()
             :Selector()
     {
-        addNode(std::shared_ptr<Condition>(new Condition(&LookForDrink::haveDrink)));
-        addNode(std::shared_ptr<Action>(new Action(&LookForDrink::findDrink)));
+        addNode(std::make_shared<Condition>(&LookForDrink::haveDrink));
+        addNode(std::make_shared<Action>(&LookForDrink::findDrink));
     }
 
     LookForDrink::~LookForDrink()
@@ -44,7 +45,7 @@ namespace behavior
             return TaskResult::Failure;
 
         std::cout << "Drink!!!!!" << std::endl;
-        character->setLookingForDrink();
+        character->body()->setLookingForDrink();
 
         return TaskResult::Success;
     }

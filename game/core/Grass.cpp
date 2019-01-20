@@ -3,3 +3,17 @@
 //
 
 #include "Grass.h"
+
+namespace game
+{
+    Grass::Grass(const map::vector3& position)
+        :GameEntity(position)
+    {
+
+    }
+
+    Grass::~Grass()
+    {
+
+    }
+}

@@ -62,9 +62,38 @@ namespace properties {
         ItemsByMaterial itemsOfQualityOrHigher(game::ItemQuality itemQuality);
     };
 
+    struct AmmoContainerByAmmoItemID
+    {
+        std::string ammoItemID;
+        std::vector<std::string> ammoContainers;
+    };
+
+    struct ItemIDToAmmoID
+    {
+        std::string itemID;
+        std::string ammoID;
+    };
+
+    struct BodyPartIDToItemID
+    {
+        std::string bodyPartID;
+        std::string itemID;
+    };
+
     struct ItemSettings {
     public:
+        ItemSettings();
+        ~ItemSettings();
 
+        std::vector<std::string> containersByAmmoItemID(const std::string& id) const;
+        std::string itemIDToAmmoID(const std::string& itemID) const;
+        std::string bodyPartToItemID(const std::string& bodyPartID) const;
+
+        std::string LimbItemID,CorpseItemID;
+    private:
+        std::vector<AmmoContainerByAmmoItemID> mAmmoContainersByAmmoItemID;
+        std::vector<ItemIDToAmmoID> mItemIDToAmmoID;
+        std::vector<BodyPartIDToItemID> mBodyPartIDToItemID;
     };
 }
 

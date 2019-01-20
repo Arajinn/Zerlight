@@ -16,7 +16,7 @@ namespace behavior {
     class Condition : public Node {
     public:
         Condition(task_ptr ptr, float start=0.0f);
-        ~Condition();
+        virtual ~Condition();
 
         TaskResult execute(std::shared_ptr<game::Character> character, float dt, std::shared_ptr<Node> node) override;
     private:

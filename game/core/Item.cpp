@@ -11,6 +11,7 @@
 #include "game/properties/GameDefinition.h"
 #include "game/properties/ItemDefinition.h"
 #include "game/properties/MaterialDef.h"
+#include "game/map/MapCell.h"
 
 #include <iostream>
 
@@ -35,7 +36,7 @@ namespace game
     std::shared_ptr<Item> Item::create(const map::vector3& position, std::string id, std::string materialID,
             std::shared_ptr<const properties::ItemDefinition> aItemDef)
     {
-        std::shared_ptr<Item> ptr=std::shared_ptr<Item>(new Item(position));
+        auto ptr=std::make_shared<Item>(position);
         ptr->init(id, materialID,aItemDef);
         return ptr;
     }
@@ -46,13 +47,25 @@ namespace game
         mCharacter=nullptr;
         mInStockpile=false;
         mParent=nullptr;
+        mDamageTaken=0.0f;
 
-        mHistory=std::shared_ptr<ItemHistory>(new ItemHistory(id, materialID));
+        mHistory=std::make_shared<ItemHistory>(std::dynamic_pointer_cast<Item>(shared_from_this()), id, materialID);
+    }
+
+    void Item::pre_delete()
+    {
+        //mItemDef= nullptr;
+        mCharacter=nullptr;
+        mParent=nullptr;
+
+        mHistory->pre_delete();
+        //mHistory=nullptr;
     }
 
     void Item::spawn(std::shared_ptr<map::MapCell> mapCell)
     {
-        GameEntity::spawn(mapCell);
+        //GameEntity::spawn(mapCell);
+        mapCell->addObject(shared_from_this());
     }
 
     std::string Item::itemID() const
@@ -132,6 +145,34 @@ namespace game
 
         GMINSTANCE->region()->fortress()->removeItem(std::dynamic_pointer_cast<Item>(shared_from_this()));
         GMINSTANCE->addToDeleteList(std::dynamic_pointer_cast<Item>(shared_from_this()));
+
+        for (const auto& component : mHistory->components())
+        {
+            component->setParent(nullptr);
+            component->toDestroy();
+        }
+
+        mHistory->clearComponents();
+    }
+
+    void Item::toDeconstruct()
+    {
+        if (!this->isValid())
+            return;
+
+        mParent=nullptr;
+
+        GMINSTANCE->region()->fortress()->removeItem(std::dynamic_pointer_cast<Item>(shared_from_this()));
+        GMINSTANCE->addToDeleteList(std::dynamic_pointer_cast<Item>(shared_from_this()));
+
+        for (const auto& component : mHistory->components())
+        {
+            component->setParent(nullptr);
+            component->moveTo(position(),false);
+            GMINSTANCE->region()->fortress()->addItem(component);
+        }
+
+        mHistory->clearComponents();
     }
 
     float Item::combatValue() const
@@ -151,7 +192,7 @@ namespace game
         return mItemDef->EquippedJobPenalty;
     }
 
-    void Item::moveTo(map::vector3 new_position)
+    void Item::moveTo(map::vector3 new_position, bool stop_pathing)
     {
         GameEntity::moveTo(new_position);
     }
@@ -170,7 +211,7 @@ namespace game
         {
             properties::TileDef info;
             info.DrawOrder=order;
-            if (item.spriteIDByMaterialID.size()==0)
+            if (item.spriteIDByMaterialID.empty())
             {
                 info.SpriteID=item.spriteID;
             }
@@ -205,4 +246,43 @@ namespace game
         return result;
     }
 
+    std::string Item::materialName() const
+    {
+        return mHistory->materialName();
+    }
+
+    std::string Item::name() const
+    {
+        return mHistory->name();
+    }
+
+    bool Item::hasUniqueName() const
+    {
+        return mHistory->hasUniqueName();
+    }
+
+    std::shared_ptr<const properties::ItemDefinition> Item::itemDef() const
+    {
+        return mItemDef;
+    }
+
+    float Item::damageTaken() const
+    {
+        return mDamageTaken;
+    }
+
+    void Item::setDamageTaken(const float& value)
+    {
+        mDamageTaken=value;
+    }
+
+    std::shared_ptr<game::ItemHistory> Item::history() const
+    {
+        return mHistory;
+    }
+
+    void Item::repair()
+    {
+        mDamageTaken=0.0f;
+    }
 }

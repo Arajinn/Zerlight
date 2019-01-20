@@ -12,8 +12,8 @@ namespace behavior
     GetFed::GetFed()
         :Sequence()
     {
-        addNode(std::shared_ptr<Condition>(new Condition(&GetFed::noGrip)));
-        addNode(std::shared_ptr<PathToNeedGoal>(new PathToNeedGoal));
+        addNode(std::make_shared<Condition>(&GetFed::noGrip));
+        addNode(std::make_shared<PathToNeedGoal>());
     }
 
     GetFed::~GetFed()

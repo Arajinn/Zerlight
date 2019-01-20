@@ -11,8 +11,8 @@ namespace behavior
     StopStarvationOrEatAtTable::StopStarvationOrEatAtTable()
             :Selector()
     {
-        addNode(std::shared_ptr<LookingForFood>(new LookingForFood));
-        addNode(std::shared_ptr<GetFedOrFeedSelf>(new GetFedOrFeedSelf));
+        addNode(std::make_shared<LookingForFood>());
+        addNode(std::make_shared<GetFedOrFeedSelf>());
     }
 
     StopStarvationOrEatAtTable::~StopStarvationOrEatAtTable()

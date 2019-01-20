@@ -16,8 +16,8 @@ namespace behavior
     LookForFood::LookForFood()
             :Selector()
     {
-        addNode(std::shared_ptr<Condition>(new Condition(&LookForFood::haveFood)));
-        addNode(std::shared_ptr<Action>(new Action(&LookForFood::findFood)));
+        addNode(std::make_shared<Condition>(&LookForFood::haveFood));
+        addNode(std::make_shared<Action>(&LookForFood::findFood));
     }
 
     LookForFood::~LookForFood()

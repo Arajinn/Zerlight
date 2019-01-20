@@ -3,6 +3,7 @@
 //
 
 #include "PlayerCharacterBehavior.h"
+#include "SenseThreats.h"
 #include "SatisfyDyingOfThirst.h"
 #include "SatisfyStarvation.h"
 #include "SatisfyThirst.h"
@@ -14,11 +15,12 @@ namespace behavior
     PlayerCharacterBehavior::PlayerCharacterBehavior()
             :Selector()
     {
-        addNode(std::shared_ptr<SatisfyDyingOfThirst>(new SatisfyDyingOfThirst()));
-        addNode(std::shared_ptr<SatisfyStarvation>(new SatisfyStarvation()));
-        addNode(std::shared_ptr<SatisfyThirst>(new SatisfyThirst()));
-        addNode(std::shared_ptr<SatisfyHunger>(new SatisfyHunger()));
-        addNode(std::shared_ptr<WanderInGeneral>(new WanderInGeneral()));
+        addNode(std::make_shared<SenseThreats>());
+        addNode(std::make_shared<SatisfyDyingOfThirst>());
+        addNode(std::make_shared<SatisfyStarvation>());
+        addNode(std::make_shared<SatisfyThirst>());
+        addNode(std::make_shared<SatisfyHunger>());
+        addNode(std::make_shared<WanderInGeneral>());
     }
 
     PlayerCharacterBehavior::~PlayerCharacterBehavior()

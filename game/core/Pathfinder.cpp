@@ -45,7 +45,7 @@ namespace game
 
     bool Pathfinder::pathing() const
     {
-        return (mPath.size()>0);
+        return (!mPath.empty());
     }
 
     const map::vector3& Pathfinder::nextPosition() const
@@ -95,7 +95,7 @@ namespace game
         return false;
     }
 
-    bool Pathfinder::canReach(const map::vector3& start, const map::vector3& end, bool adjacent)
+    bool Pathfinder::canReach(const map::vector3& start, const map::vector3& end, bool adjacent) const
     {
         auto map=WORLD_MAP;
 
@@ -292,23 +292,24 @@ namespace game
         std::vector<PriorityQueueNavGraphPathNode> priority_queue;
         std::vector<std::shared_ptr<NavGraphPathNode>> sortedDictionary1,sortedDictionary2;
 
-        std::shared_ptr<NavGraphPathNode> key1=std::shared_ptr<NavGraphPathNode>(new NavGraphPathNode(start_cell->navGraphNode()));
+        std::shared_ptr<NavGraphPathNode> key1=std::make_shared<NavGraphPathNode>(start_cell->navGraphNode());
         key1->distanceCost=0.0f;
         key1->heuristicCost=map::vector3::distance(start,end)+float(std::abs(start.x()*end.y()-start.y()*end.z()-start.z()*end.x()))/1000.0f;
         key1->closestPoint=start;
 
-        std::shared_ptr<NavGraphPathNode> other= (end_cell==nullptr) ? nullptr : std::shared_ptr<NavGraphPathNode>(new NavGraphPathNode(end_cell->navGraphNode()));
+        std::shared_ptr<NavGraphPathNode> other= (end_cell==nullptr) ? nullptr : std::make_shared<NavGraphPathNode>(end_cell->navGraphNode());
 
         priority_queue.push_back(PriorityQueueNavGraphPathNode(key1->distanceCost+key1->heuristicCost,key1));
 
         sortedDictionary1.push_back(key1);
 
         int k=0;
-        while (sortedDictionary1.size()>0)
+        while (!sortedDictionary1.empty())
         {
             k++;
 
-            std::sort(std::begin(priority_queue),std::end(priority_queue),[](const PriorityQueueNavGraphPathNode& left,const PriorityQueueNavGraphPathNode& right)
+            std::sort(priority_queue.begin(),priority_queue.end(),
+                    [](const PriorityQueueNavGraphPathNode& left,const PriorityQueueNavGraphPathNode& right)
             {
                 return left.priority<right.priority;
             });
@@ -316,12 +317,13 @@ namespace game
             std::shared_ptr<NavGraphPathNode> key2=priority_queue.front().node;
             priority_queue.erase(priority_queue.begin());
             {
-                auto iter = std::find_if(std::begin(sortedDictionary1), std::end(sortedDictionary1), [&key2](std::shared_ptr<NavGraphPathNode> const &value)
+                auto iter = std::find_if(sortedDictionary1.begin(), sortedDictionary1.end(),
+                        [&key2](std::shared_ptr<NavGraphPathNode> const &elem)
                 {
-                    return (key2->node->nodeNavID() == value->node->nodeNavID());
+                    return (key2->node->nodeNavID() == elem->node->nodeNavID());
                 });
 
-                if (iter != std::end(sortedDictionary1))
+                if (iter != sortedDictionary1.end())
                     sortedDictionary1.erase(iter);
             }
 
@@ -330,28 +332,30 @@ namespace game
             auto connections=key2->node->connections();
             for (auto connection : connections)
             {
-                std::shared_ptr<NavGraphPathNode> pathfinderNode=std::shared_ptr<NavGraphPathNode>(new NavGraphPathNode(connection));
+                std::shared_ptr<NavGraphPathNode> pathfinderNode=std::make_shared<NavGraphPathNode>(connection);
                 pathfinderNode->closestPoint=pathfinderNode->node->closestPoint(key2->closestPoint);
                 pathfinderNode->distanceCost=key2->distanceCost+map::vector3::distance(pathfinderNode->closestPoint,key2->closestPoint);
                 pathfinderNode->heuristicCost=map::vector3::distance(pathfinderNode->closestPoint,mEndPos);
 
-                auto iter2 = std::find_if(std::begin(sortedDictionary2), std::end(sortedDictionary2),[&pathfinderNode](std::shared_ptr<NavGraphPathNode> const &value)
+                auto iter2 = std::find_if(sortedDictionary2.begin(), sortedDictionary2.end(),
+                        [&pathfinderNode](std::shared_ptr<NavGraphPathNode> const &elem)
                 {
-                    return pathfinderNode->node->nodeNavID() == value->node->nodeNavID();
+                    return pathfinderNode->node->nodeNavID() == elem->node->nodeNavID();
                 });
 
                 // node not contain int sortedDictionary2
-                if (iter2 == std::end(sortedDictionary2))
+                if (iter2 == sortedDictionary2.end())
                 {
                     pathfinderNode->next=key2;
 
-                    auto iter1 = std::find_if(std::begin(sortedDictionary1), std::end(sortedDictionary1),[&pathfinderNode](std::shared_ptr<NavGraphPathNode> const &value)
+                    auto iter1 = std::find_if(sortedDictionary1.begin(), sortedDictionary1.end(),
+                            [&pathfinderNode](std::shared_ptr<NavGraphPathNode> const &elem)
                     {
-                        return pathfinderNode->node->nodeNavID() == value->node->nodeNavID();
+                        return pathfinderNode->node->nodeNavID() == elem->node->nodeNavID();
                     });
 
                     // node not contain int sortedDictionary1
-                    if (iter1 == std::end(sortedDictionary1))
+                    if (iter1 == sortedDictionary1.end())
                     {
                         if ((pathfinderNode->equals(other)) || (mAdjacentPos && Pathfinder::isAdjacent(pathfinderNode->node,mEndPos)))
                         {
@@ -367,17 +371,18 @@ namespace game
                     }
                     else
                     {
-                        auto index=std::distance(std::begin(sortedDictionary1),iter1);
+                        const auto index=std::distance(sortedDictionary1.begin(),iter1);
                         if (sortedDictionary1.at(index)->distanceCost > pathfinderNode->distanceCost)
                         {
                             {
                                 auto nodeId = sortedDictionary1.at(index)->node->nodeNavID();
-                                auto iter = std::find_if(std::begin(priority_queue), std::end(priority_queue),
-                                                         [&nodeId](PriorityQueueNavGraphPathNode const &value) {
-                                                             return value.node->node->nodeNavID() == nodeId;
+                                auto iter = std::find_if(priority_queue.begin(), priority_queue.end(),
+                                                         [&nodeId](PriorityQueueNavGraphPathNode const &elem)
+                                                         {
+                                                             return elem.node->node->nodeNavID() == nodeId;
                                                          });
 
-                                if (iter != std::end(priority_queue))
+                                if (iter != priority_queue.end())
                                     priority_queue.erase(iter);
                             }
 
@@ -403,10 +408,10 @@ namespace game
 
     bool Pathfinder::stepPath()
     {
-        if (mPath.size()==0)
+        if (mPath.empty())
             return false;
 
-        if (mNavPath.size()==0)
+        if (mNavPath.empty())
             return false;
 
         auto pos=mPath.at(0);
@@ -414,7 +419,7 @@ namespace game
         mPath.erase(mPath.begin());
         if (mNavPath.size()>2)
         {
-            if (mNavPath.at(1)->contains(pos)==false)
+            if (!mNavPath.at(1)->contains(pos))
                 return true;
 
             mNavPath.erase(mNavPath.begin());
@@ -501,7 +506,7 @@ namespace game
         std::vector<PriorityQueuePathfinderNode> priority_queue;
         std::vector<std::shared_ptr<PathfinderNode>> sortedDictionary1,sortedDictionary2;
 
-        std::shared_ptr<PathfinderNode> key1=std::shared_ptr<PathfinderNode>(new PathfinderNode(start));
+        std::shared_ptr<PathfinderNode> key1=std::make_shared<PathfinderNode>(start);
         key1->distanceCost=0.0f;
         key1->heuristicCost=map::vector3::distance(start,end)+float(std::abs(start.x()*end.y()-start.y()*end.z()-start.z()*end.x()))/1000.0f;
 
@@ -516,11 +521,11 @@ namespace game
             navGraphNode2=mNavPath.at(1);
 
         int k=0;
-        while (sortedDictionary1.size()>0)
+        while (!sortedDictionary1.empty())
         {
             k++;
 
-            std::sort(std::begin(priority_queue),std::end(priority_queue),[](const PriorityQueuePathfinderNode& left,const PriorityQueuePathfinderNode& right)
+            std::sort(priority_queue.begin(),priority_queue.end(),[](const PriorityQueuePathfinderNode& left,const PriorityQueuePathfinderNode& right)
             {
                 return left.priority<right.priority;
             });
@@ -528,11 +533,12 @@ namespace game
             std::shared_ptr<PathfinderNode> key2=priority_queue.front().node;
             priority_queue.erase(priority_queue.begin());
             {
-                auto iter = std::find_if(std::begin(sortedDictionary1), std::end(sortedDictionary1),
-                                         [&key2](std::shared_ptr<PathfinderNode> const &value) {
-                                             return (key2->position == value->position);
+                auto iter = std::find_if(sortedDictionary1.begin(), sortedDictionary1.end(),
+                                         [&key2](std::shared_ptr<PathfinderNode> const &elem)
+                                         {
+                                             return (key2->position == elem->position);
                                          });
-                if (iter != std::end(sortedDictionary1))
+                if (iter != sortedDictionary1.end())
                     sortedDictionary1.erase(iter);
             }
 
@@ -540,7 +546,7 @@ namespace game
 
             for (auto shift : vectorArrayFindPath)
             {
-                std::shared_ptr<PathfinderNode> pathfinderNode=std::shared_ptr<PathfinderNode>(new PathfinderNode(key2->position+shift));
+                std::shared_ptr<PathfinderNode> pathfinderNode=std::make_shared<PathfinderNode>(key2->position+shift);
                 if (!navGraphNode1->contains(pathfinderNode->position))
                 {
                     if (navGraphNode2->contains2D(pathfinderNode->position))
@@ -579,23 +585,25 @@ namespace game
                         -pathfinderNode->position.y()*end.z()-pathfinderNode->position.z()*end.x()))/1000.0f;
                 pathfinderNode->distanceCost=key2->distanceCost+map::vector3::distance(pathfinderNode->position,key2->position);
 
-                auto iter2 = std::find_if(std::begin(sortedDictionary2), std::end(sortedDictionary2),[&pathfinderNode](std::shared_ptr<PathfinderNode> const &value)
+                auto iter2 = std::find_if(sortedDictionary2.begin(), sortedDictionary2.end(),
+                        [&pathfinderNode](std::shared_ptr<PathfinderNode> const &elem)
                         {
-                            return pathfinderNode->position == value->position;
+                            return pathfinderNode->position == elem->position;
                         });
 
                 // node not contain int sortedDictionary2
-                if (iter2 == std::end(sortedDictionary2))
+                if (iter2 == sortedDictionary2.end())
                 {
                     pathfinderNode->next=key2;
 
-                    auto iter1 = std::find_if(std::begin(sortedDictionary1), std::end(sortedDictionary1),[&pathfinderNode](std::shared_ptr<PathfinderNode> const &value)
+                    auto iter1 = std::find_if(sortedDictionary1.begin(), sortedDictionary1.end(),
+                            [&pathfinderNode](std::shared_ptr<PathfinderNode> const &elem)
                     {
-                        return pathfinderNode->position == value->position;
+                        return pathfinderNode->position == elem->position;
                     });
 
                     // node not contain int sortedDictionary1
-                    if (iter1 == std::end(sortedDictionary1))
+                    if (iter1 == sortedDictionary1.end())
                     {
                         if ((mAdjacentPos) && (mEndPos==end))
                         {
@@ -622,6 +630,106 @@ namespace game
                         {
                             sortedDictionary2.push_back(pathfinderNode);
                         }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    bool Pathfinder::findDryLand(const map::vector3& start)
+    {
+        mNavPath.clear();
+        mAdjacentPos=false;
+        mPathing=false;
+
+        auto map=WORLD_MAP;
+
+        auto cell=map->cell(start);
+        if ((cell==nullptr) || (cell->navGraphNode()==nullptr))
+            return false;
+
+        auto position=map::vector3_one;
+        if (cell->navGraphNode()->hasDryLand(position))
+        {
+            mEndPos=position;
+            mNavPath.push_back(cell->navGraphNode());
+            return findPath(start,mEndPos);
+        }
+
+        std::vector<PriorityQueueNavGraphPathNode> priority_queue;
+        std::vector<std::shared_ptr<NavGraphPathNode>> sortedDictionary1,sortedDictionary2;
+
+        std::shared_ptr<NavGraphPathNode> key1=std::make_shared<NavGraphPathNode>(cell->navGraphNode());
+        key1->distanceCost=0.0f;
+        key1->heuristicCost=0.0f;
+        key1->closestPoint=start;
+
+        priority_queue.push_back(PriorityQueueNavGraphPathNode(key1->distanceCost+key1->heuristicCost,key1));
+
+        sortedDictionary1.push_back(key1);
+
+        while (!sortedDictionary1.empty())
+        {
+            std::sort(priority_queue.begin(),priority_queue.end(),[](const PriorityQueueNavGraphPathNode& left,const PriorityQueueNavGraphPathNode& right)
+            {
+                return left.priority<right.priority;
+            });
+
+            std::shared_ptr<NavGraphPathNode> key2=priority_queue.front().node;
+            priority_queue.erase(priority_queue.begin());
+            {
+                auto iter = std::find_if(sortedDictionary1.begin(), sortedDictionary1.end(),
+                                         [&key2](std::shared_ptr<NavGraphPathNode> const &elem)
+                                         {
+                                             return (key2->node->navGraphID() == elem->node->navGraphID());
+                                         });
+
+                if (iter != sortedDictionary1.end())
+                    sortedDictionary1.erase(iter);
+            }
+
+            sortedDictionary2.push_back(key2);
+
+            auto connections=key2->node->connections();
+            for (auto connection : connections)
+            {
+                std::shared_ptr<NavGraphPathNode> pathfinderNode=std::make_shared<NavGraphPathNode>(connection);
+                pathfinderNode->closestPoint=pathfinderNode->node->closestPoint(key2->closestPoint);
+                pathfinderNode->distanceCost=key2->distanceCost+map::vector3::distance(pathfinderNode->closestPoint,key2->closestPoint);
+                pathfinderNode->heuristicCost=0.0f;
+
+                auto iter2 = std::find_if(sortedDictionary2.begin(), sortedDictionary2.end(),
+                        [&pathfinderNode](std::shared_ptr<NavGraphPathNode> const &elem)
+                {
+                    return pathfinderNode->node->nodeNavID() == elem->node->nodeNavID();
+                });
+
+                // node not contain int sortedDictionary2
+                if (iter2 == sortedDictionary2.end())
+                {
+                    pathfinderNode->next=key2;
+
+                    auto iter1 = std::find_if(sortedDictionary1.begin(), sortedDictionary1.end(),
+                            [&pathfinderNode](std::shared_ptr<NavGraphPathNode> const &elem)
+                    {
+                        return pathfinderNode->node->nodeNavID() == elem->node->nodeNavID();
+                    });
+
+                    // node not contain int sortedDictionary1
+                    if (iter1 == sortedDictionary1.end())
+                    {
+                        if (connection->hasDryLand(position))
+                        {
+                            mEndPos=position;
+                            createNavPath(pathfinderNode);
+                            return findPath(start,endPosition());
+                        }
+
+                        priority_queue.push_back(PriorityQueueNavGraphPathNode(pathfinderNode->distanceCost+pathfinderNode->heuristicCost,
+                                pathfinderNode));
+                        sortedDictionary1.push_back(pathfinderNode);
                     }
                 }
             }

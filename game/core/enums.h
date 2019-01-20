@@ -22,8 +22,7 @@ namespace game
         Curiosity = 2,
         Focus = 3,
         Charm = 4,
-        Undef=5,
-        Size
+        Undef=5
     };
 
     enum class HealthStatusAilment
@@ -169,98 +168,6 @@ namespace game
         Count = 12
     };
 
-    enum class Material
-    {
-        Air = 0,
-        Grass = 1,
-        Dirt = 2,
-        Clay = 3,
-        Granite = 4,
-        Basalt = 5,
-        Marble = 6,
-        Sandstone = 7,
-        Bauxite = 8,
-        Serpentine = 9,
-        LapisLazuli = 10,
-        Obsidian = 11,
-        Brick = 12,
-        Water = 13,
-        Lava = 14,
-        Oak = 15,
-        AppleWood = 16,
-        Birch = 17,
-        Coal = 18,
-        Copper = 19,
-        Malachite = 20,
-        Tin = 21,
-        Bronze = 22,
-        Iron = 23,
-        Steel = 24,
-        Lead = 25,
-        Silver = 26,
-        Gold = 27,
-        RoseGold = 28,
-        Platinum = 29,
-        GreenGem = 30,
-        BlueGem = 31,
-        Strawberry = 32,
-        Apple = 33,
-        Wheat = 34,
-        Cotton = 35,
-        Wool = 36,
-        StandardBone = 37,
-        StandardShell = 38,
-        ThinChitin = 39,
-        ThickChitin = 40,
-        StandardSkin = 41,
-        YakHide = 42,
-        BearHide = 43,
-        StandardWeakFlesh = 44,
-        StandardStrongFlesh = 45,
-        Milk = 46,
-        Egg = 47,
-        OgreHide = 48,
-        ToughOgreHide = 49,
-        ThinMantChitin = 50,
-        ThickMantChitin = 51,
-        AlpacaHide = 52,
-        EmuHide = 53,
-        HoneyBadgerHide = 54,
-        MonitorLizardHide = 55,
-        YakFlesh = 56,
-        AlpacaFlesh = 57,
-        EmuFlesh = 58,
-        HoneyBadgerFlesh = 59,
-        MonitorLizardFlesh = 60,
-        BearFlesh = 61,
-        OgreFlesh = 62,
-        TwoHeadedOgreFlesh = 63,
-        YakBone = 64,
-        AlpacaBone = 65,
-        EmuBone = 66,
-        HoneyBadgerBone = 67,
-        MonitorLizardBone = 68,
-        BearBone = 69,
-        OgreBone = 70,
-        TwoHeadedOgreBone = 71,
-        YakSkull = 72,
-        AlpacaSkull = 73,
-        EmuSkull = 74,
-        HoneyBadgerSkull = 75,
-        MonitorLizardSkull = 76,
-        BearSkull = 77,
-        OgreSkull = 78,
-        TwoHeadedOgreSkull = 79,
-        Grape = 80,
-        Orange = 81,
-        OrangeWood = 82,
-        Mushroom = 83,
-        Silica = 84,
-        Ceramic = 85,
-        Glass = 86,
-        Count = 87
-    };
-
     enum class BodyPartStatus
     {
         Good = 0,
@@ -278,10 +185,11 @@ namespace game
         Good = 0,
         Destroyed = 1,
         Missing = 2,
-        Bleeding = 4,
-        StruckArtery = 8,
-        InternalBleeding = 16,
-        Artificial = 32,
+        Bleeding = 3,
+        StruckArtery = 4,
+        InternalBleeding = 5,
+        Artificial = 6,
+        Undef
     };
 
     enum class BodySymmetricalType
@@ -295,7 +203,85 @@ namespace game
     {
         Neuter = 0,
         Male = 1,
-        Female = 2
+        Female = 2,
+        Undef
+    };
+
+    enum class FactionType
+    {
+        PlayerCiv = 0,
+        FriendlyCiv = 1,
+        Neutral = 2,
+        Wild = 3,
+        Subteranean = 4,
+        EnemyCiv = 5,
+        EnemySmall = 6,
+        Mant = 7,
+        Beetle = 8,
+        Undead = 9,
+        Undef
+    };
+
+    enum class AttackType
+    {
+        Swing = 0,
+        Thrust = 1,
+        HandToHand = 2,
+        Projectile = 3,
+        Temperature = 4,
+        Gas = 5,
+        Mental = 6,
+        Undef
+    };
+
+    enum class FormationPerk
+    {
+        None,
+        KeepYourEyesOpen,
+        ShieldWall,
+        BestDefense,
+        FiringSquad,
+        FireAtWill,
+        SuppressiveFire,
+    };
+
+    enum class DamageType
+    {
+        Slash = 0,
+        Pierce = 1,
+        Blunt = 2,
+        Heat = 3,
+        Cold = 4,
+        Poison = 5,
+        Undef
+    };
+
+    enum class WeaponStatusEffectType
+    {
+        None = 0,
+        ZombieVirus = 1
+    };
+
+    enum class SquadType
+    {
+        Attack = 0,
+        MantScout = 1,
+        Merchant = 2,
+        Ambassador = 3,
+        GoblinRaider = 4,
+        GoblinTunneler = 5,
+        Automaton = 6,
+        BeetleCocoon = 7,
+        Golem = 8,
+        Undef
+    };
+
+    enum class EnvoyState
+    {
+        Departing,
+        OnLocation,
+        Returning,
+        Finished
     };
 }
 

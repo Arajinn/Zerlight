@@ -31,7 +31,7 @@ namespace map {
         void createConnections(std::shared_ptr<NavGraphNode> node);
         void mergeNavGraphIDs(std::shared_ptr<NavGraphNode> node);
         bool mergeSquareNodeWithNeighbours(std::shared_ptr<NavGraphNode> node);
-        void propagateNavGraphID(std::shared_ptr<NavGraphNode> node, unsigned int id);
+        void propagateNavGraphID(std::shared_ptr<NavGraphNode> node, size_t id);
 
         void setNewNodeOnCells(const rectangle2& area, const int& level, std::shared_ptr<NavGraphNode> node);
         void setNewNodeOnCells(std::shared_ptr<NavGraphNode> oldNode, std::shared_ptr<NavGraphNode> newNode);

@@ -11,8 +11,8 @@ namespace behavior
     FindDrink::FindDrink()
             :Sequence()
     {
-        addNode(std::shared_ptr<LookForDrink>(new LookForDrink()));
-        addNode(std::shared_ptr<DrinkItem>(new DrinkItem()));
+        addNode(std::make_shared<LookForDrink>());
+        addNode(std::make_shared<DrinkItem>());
     }
 
     FindDrink::~FindDrink()

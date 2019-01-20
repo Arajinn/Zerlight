@@ -90,7 +90,8 @@ namespace sdl_interface {
                                     int dstY,
                                     int width,
                                     int height,
-                                    const gui::ZColor& color);
+                                    const gui::ZColor& color,
+                                    bool xFlip);
 
         virtual void drawPoint(int x, int y);
 

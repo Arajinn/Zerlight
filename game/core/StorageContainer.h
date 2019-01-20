@@ -12,12 +12,19 @@ namespace game {
     {
     public:
         StorageContainer(const map::vector3& position);
-        ~StorageContainer();
+        virtual ~StorageContainer();
 
-        static std::shared_ptr<StorageContainer> create(const map::vector3& position, std::string id, std::string materialID, std::shared_ptr<properties::ItemDefinition> aItemDef);
+        static std::shared_ptr<StorageContainer> create(const map::vector3& position, std::string id, std::string materialID,
+                std::shared_ptr<const properties::ItemDefinition> aItemDef);
 
+        std::vector<std::shared_ptr<Item>> containedResources() const;
+        int containedResourcesCount() const;
+
+        void removeItem(std::shared_ptr<Item> item);
     protected:
-        virtual void init(std::string id, std::string materialID, std::shared_ptr<properties::ItemDefinition> aItemDef);
+        virtual void init(std::string id, std::string materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef);
+
+        std::vector<std::shared_ptr<Item>> mContainedResources;
     };
 }
 

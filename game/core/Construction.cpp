@@ -29,9 +29,10 @@ namespace game
 
     }
 
-    std::shared_ptr<Construction> Construction::create(const map::vector3& position, std::string constructionID, ConstructOrientation orientation)
+    std::shared_ptr<Construction> Construction::create(const map::vector3& position, std::string constructionID,
+            ConstructOrientation orientation)
     {
-        std::shared_ptr<Construction> ptr=std::shared_ptr<Construction>(new Construction(position));
+        auto ptr=std::make_shared<Construction>(position);
         ptr->init(constructionID, orientation);
         return ptr;
     }
@@ -48,7 +49,7 @@ namespace game
     {
         mapCell->setEmbeddedWall(std::dynamic_pointer_cast<Construction>(shared_from_this()));
 
-        if (mConstructionDef->hasFlag(ConstructionProperty::BlocksMovement)==true)
+        if (mConstructionDef->hasFlag(ConstructionProperty::BlocksMovement))
         {
             WORLD_MAP->navGraph()->removeTile(mapCell);
 
@@ -57,17 +58,17 @@ namespace game
                 GMINSTANCE->addToDeleteList(std::dynamic_pointer_cast<GameEntity>(liquid));
         }
 
-        GameEntity::spawn(mapCell);
+        //GameEntity::spawn(mapCell);
     }
 
     bool Construction::hasFlag(ConstructionProperty prop) const
     {
-        auto iter=std::find_if(std::begin(mProperties),std::end(mProperties),[&prop](ConstructionProperty const& value)
+        auto iter=std::find_if(mProperties.begin(),mProperties.end(),[&prop](ConstructionProperty const& elem)
         {
-           return (value==prop);
+           return (elem==prop);
         });
 
-        return (iter!=std::end(mProperties));
+        return (iter!=mProperties.end());
     }
 
     bool Construction::isUpdatable() const

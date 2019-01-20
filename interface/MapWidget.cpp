@@ -256,9 +256,9 @@ bool MapWidget::isPixelInWindow(const int& x, const int& y) const
 }
 
 void MapWidget::drawImage(std::shared_ptr<gui::Graphics> graphics, std::shared_ptr<const gui::ZImage> image,
-                             const int& xPlot, const int& yPlot, const int& imageSize, const gui::ZColor& color)
+                             const int& xPlot, const int& yPlot, const int& imageSize, const gui::ZColor& color, bool xFlip)
 {
-    graphics->drawImageScale(image, xPlot, yPlot, xPlot+imageSize, yPlot+imageSize, imageSize, imageSize, color);
+    graphics->drawImageScale(image, xPlot, yPlot, xPlot+imageSize, yPlot+imageSize, imageSize, imageSize, color, xFlip);
 }
 
 void MapWidget::draw_item(std::shared_ptr<gui::Graphics> graphics)
@@ -345,8 +345,8 @@ void MapWidget::draw_item(std::shared_ptr<gui::Graphics> graphics)
             for (int plotYIndex = 0; plotYIndex < jSize; plotYIndex++,yIndex=yIndex+dyIndex,
                     xWallPlot += dxWall,yWallPlot += dyWall,xFloorPlot += dxFloor,yFloorPlot += dyFloor)
             {
-                if ((isPixelInWindow(xWallPlot,yWallPlot)==false)
-                    && (isPixelInWindow(xWallPlot+imageSize,yWallPlot+imageSize)==false))
+                if ((!isPixelInWindow(xWallPlot,yWallPlot))
+                    && (!isPixelInWindow(xWallPlot+imageSize,yWallPlot+imageSize)))
                     continue;
 
                 std::shared_ptr<const map::MapCell> cell=nullptr;
@@ -410,7 +410,7 @@ void MapWidget::draw_item(std::shared_ptr<gui::Graphics> graphics)
 
                     if (cell->getObjectsCount()>0)
                     {
-                        std::vector<std::shared_ptr<game::GameEntity>> objects=cell->getObjects();
+                        auto objects=cell->getObjects();
 
                         for (auto object : objects)
                         {
@@ -424,7 +424,57 @@ void MapWidget::draw_item(std::shared_ptr<gui::Graphics> graphics)
                                 }
                             }
 
-                            if (draw_infos.size()==0)
+                            if (draw_infos.empty())
+                            {
+                                int t=0;
+                            }
+                        }
+                    }
+
+                    if (cell->getCharactersCount()>0)
+                    {
+                        auto objects=cell->getCharacters();
+
+                        for (auto object : objects)
+                        {
+                            std::vector<properties::TileDef> draw_infos=object->get_draw_info(xIndex,yIndex,zIndex,mOrientation);
+
+                            auto delta_pos=object->delta_position();
+
+                            //std::cout << "pos: " << delta_pos.x() << " " << delta_pos.y() << std::endl;
+
+                            bool xFlip=false;
+                            if (mOrientation==game::view_orientation::front_left)
+                            {
+                                if (delta_pos.y()==-1)
+                                    xFlip=true;
+                            }
+                            else if (mOrientation==game::view_orientation::front_right)
+                            {
+                                if (delta_pos.x()==1)
+                                    xFlip=true;
+                            }
+                            else if (mOrientation==game::view_orientation::back_right)
+                            {
+                                if (delta_pos.y()==1)
+                                    xFlip=true;
+                            }
+                            else if (mOrientation==game::view_orientation::back_left)
+                            {
+                                if (delta_pos.x()==-1)
+                                    xFlip=true;
+                            }
+
+                            for (const auto& draw_info : draw_infos)
+                            {
+                                if (!draw_info.SpriteID.empty())
+                                {
+                                    std::shared_ptr<const properties::SpriteDef> spriteDef=GAME_DEFINITIONS->spriteDefinition(draw_info.SpriteID);
+                                    drawImage(graphics, spriteDef->Image, xWallPlot, yWallPlot, imageSize, draw_info.Color, xFlip);
+                                }
+                            }
+
+                            if (draw_infos.empty())
                             {
                                 int t=0;
                             }

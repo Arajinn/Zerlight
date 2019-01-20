@@ -152,4 +152,24 @@
 	<SpriteID>GnomeMaleBeard2</SpriteID>
 	<Source>gnome_beard_male_2.png</Source>
 </Item>
+<Item>
+	<SpriteID>BearTorso</SpriteID>
+	<Source>bear_torso.png</Source>
+</Item>
+<Item>
+	<SpriteID>BearHead</SpriteID>
+	<Source>bear_head.png</Source>
+</Item>
+<Item>
+	<SpriteID>BearArmRight</SpriteID>
+	<Source>bear_arm_right.png</Source>
+</Item>
+<Item>
+	<SpriteID>BearArmLeft</SpriteID>
+	<Source>bear_arm_left.png</Source>
+</Item>
+<Item>
+	<SpriteID>BearFootRight</SpriteID>
+	<Source>bear_foot_right.png</Source>
+</Item>
 </Sprites>

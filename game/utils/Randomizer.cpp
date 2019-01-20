@@ -25,7 +25,7 @@ namespace utils {
 
         if (!self)
         {
-            self = std::shared_ptr<Randomizer>(new Randomizer());
+            self = std::make_shared<Randomizer>();
         }
 
         return self;
@@ -54,6 +54,13 @@ namespace utils {
     {
         std::uniform_real_distribution<float> dis(min,max);
         float result=dis(gen);
+        return result;
+    }
+
+    int Randomizer::rand(int min,int max)
+    {
+        std::uniform_int_distribution<int> dis(min,max);
+        int result=dis(gen);
         return result;
     }
 }

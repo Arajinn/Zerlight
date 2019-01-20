@@ -15,9 +15,9 @@ namespace behavior
     GeneralWander::GeneralWander()
         :Selector()
     {
-        addNode(std::shared_ptr<Condition>(new Condition(&GeneralWander::pathing)));
-        addNode(std::shared_ptr<Condition>(new Condition(&GeneralWander::wait,1.0f)));
-        addNode(std::shared_ptr<Action>(new Action(&GeneralWander::pathToNeighbourNode)));
+        addNode(std::make_shared<Condition>(&GeneralWander::pathing));
+        addNode(std::make_shared<Condition>(&GeneralWander::wait,1.0f));
+        addNode(std::make_shared<Action>(&GeneralWander::pathToNeighbourNode));
 
         time=1.0f;
     }

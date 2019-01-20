@@ -12,7 +12,7 @@ namespace behavior
     class Selector : public CompositeNode {
     public:
         Selector();
-        ~Selector();
+        virtual ~Selector();
 
         TaskResult execute(std::shared_ptr<game::Character> character, float dt, std::shared_ptr<Node> node=nullptr) override;
     };

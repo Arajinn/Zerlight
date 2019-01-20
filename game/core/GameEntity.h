@@ -22,21 +22,22 @@ namespace game {
     class GameEntity : public std::enable_shared_from_this<GameEntity> {
     public:
         GameEntity(const map::vector3& position);
-        ~GameEntity();
+        virtual ~GameEntity();
 
         virtual void pre_update();
         virtual void update(float dt);
         virtual void post_update();
-        virtual void moveTo(map::vector3 new_position);
-        virtual void spawn(std::shared_ptr<map::MapCell> mapCell);
+        virtual void moveTo(map::vector3 new_position, bool stopPathing=false);
+        virtual void spawn(std::shared_ptr<map::MapCell> mapCell) = 0;
         virtual void destroy(std::shared_ptr<map::MapCell> mapCell);
         virtual void pre_delete();
 
-        void setID(const int& value);
+        virtual void setID(const int& value);
         const int& ID() const;
 
         map::vector3 position() const;
         map::vector3 new_position() const;
+        map::vector3 delta_position() const;
         void update_position();
 
         std::shared_ptr<map::MapCell> cell() const;
@@ -57,7 +58,7 @@ namespace game {
     private:
         int mGameObjectID;
         bool mValid;
-        map::vector3 mPosition, mPosition0;
+        map::vector3 mPosition, mPosition0, mDeltaPosition;
         bool mToBeMoved;
     };
 }

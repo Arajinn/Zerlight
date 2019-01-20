@@ -18,11 +18,11 @@ namespace properties {
 
     bool ConstructionDef::hasFlag(game::ConstructionProperty flag) const
     {
-        auto iter=std::find_if(std::begin(Properties),std::end(Properties),[&flag](game::ConstructionProperty const& value)
+        auto iter=std::find_if(Properties.begin(),Properties.end(),[&flag](game::ConstructionProperty const& value)
         {
             return (flag==value);
         });
 
-        return (iter!=std::end(Properties));
+        return (iter!=Properties.end());
     }
 }

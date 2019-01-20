@@ -20,7 +20,7 @@ namespace properties {
         std::string ID;
         std::string Name;
         std::string BodyPartID;
-        game::Material MaterialID;
+        std::string MaterialID;
         game::EquipmentType EquipType;
 
         float ToHitWeight;
@@ -38,6 +38,8 @@ namespace properties {
         int DrawOrder;
         std::vector<std::string> Decorations,DecorationsRight,DecorationsLeft;
         std::vector<std::vector<std::string>> AdditionalDecoration,AdditionalDecorationMale,AdditionalDecorationFemale;
+
+        int TemplateMaterialIndex;
     };
 }
 

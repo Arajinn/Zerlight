@@ -28,6 +28,7 @@ namespace map {
         vector3& operator=(const vector3& value);
 
         const float lengthSquared() const;
+        const float length() const;
 
         static float distance(const vector3& start, const vector3& end);
 

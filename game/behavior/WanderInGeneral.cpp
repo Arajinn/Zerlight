@@ -12,8 +12,8 @@ namespace behavior
     WanderInGeneral::WanderInGeneral()
             :Sequence()
     {
-        addNode(std::shared_ptr<Condition>(new Condition(&WanderInGeneral::notClaimed)));
-        addNode(std::shared_ptr<GeneralWander>(new GeneralWander()));
+        addNode(std::make_shared<Condition>(&WanderInGeneral::notClaimed));
+        addNode(std::make_shared<GeneralWander>());
     }
 
     WanderInGeneral::~WanderInGeneral()

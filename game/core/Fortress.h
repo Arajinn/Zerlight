@@ -15,6 +15,7 @@ namespace game
     class Item;
     class GameEntity;
     class StockManager;
+    class Military;
 }
 
 namespace game {
@@ -36,6 +37,8 @@ namespace game {
         void removeItem(std::shared_ptr<Item> item);
 
         std::vector<std::shared_ptr<GameEntity>> getEntities(ItemEffectType type);
+
+        std::shared_ptr<Military> military() const;
     private:
         std::shared_ptr<StockManager> mStockManager;
         unsigned int mStockWealth;
@@ -54,6 +57,8 @@ namespace game {
 
         void addItemToContainer(std::shared_ptr<Item> item);
         void removeItemFromContainer(std::shared_ptr<Item> item);
+
+        std::shared_ptr<Military> mMilitary;
     };
 }
 

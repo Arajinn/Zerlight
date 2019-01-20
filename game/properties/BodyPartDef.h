@@ -11,6 +11,11 @@
 #include <vector>
 #include <memory>
 
+namespace properties
+{
+    struct NaturalWeaponDef;
+}
+
 namespace properties {
     struct BodyPartDef {
         BodyPartDef();
@@ -18,7 +23,7 @@ namespace properties {
 
         std::string ID;
         std::string Name;
-        game::Material MaterialID;
+        std::string MaterialID;
         std::vector<game::BodyPartProperty> BodyProperties;
         bool Symmetrical;
         std::vector<std::shared_ptr<const BodyPartDef>> ContainedParts;
@@ -29,6 +34,10 @@ namespace properties {
 
         std::string HarvestedItem;
         int HarvestedQuantity;
+
+        std::shared_ptr<NaturalWeaponDef> NaturalWeapon;
+
+        int TemplateMaterialIndex;
     };
 }
 

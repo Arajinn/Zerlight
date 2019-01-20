@@ -6,14 +6,15 @@
 #include "Condition.h"
 #include "GetDrinkOrDrinkSelf.h"
 #include "game/core/Character.h"
+#include "game/core/Body.h"
 
 namespace behavior
 {
     SatisfyThirst::SatisfyThirst()
             :Sequence()
     {
-        addNode(std::shared_ptr<Condition>(new Condition(&SatisfyThirst::thirsty)));
-        addNode(std::shared_ptr<GetDrinkOrDrinkSelf>(new GetDrinkOrDrinkSelf));
+        addNode(std::make_shared<Condition>(&SatisfyThirst::thirsty));
+        addNode(std::make_shared<GetDrinkOrDrinkSelf>());
     }
 
     SatisfyThirst::~SatisfyThirst()
@@ -23,6 +24,6 @@ namespace behavior
 
     TaskResult SatisfyThirst::thirsty(std::shared_ptr<game::Character> character, float dt, std::shared_ptr<Node> node)
     {
-        return character->isThirsty() ? TaskResult::Success : TaskResult::Failure;
+        return character->body()->isThirsty() ? TaskResult::Success : TaskResult::Failure;
     }
 }

@@ -84,6 +84,12 @@ namespace map
         return mX*mX+mY*mY+mZ*mZ;
     }
 
+    const float vector3::length() const
+    {
+        const float d2=lengthSquared();
+        return sqrt(d2);
+    }
+
     float vector3::distance(const vector3& start, const vector3& end)
     {
         float deltaX=float(start.x()-end.x());

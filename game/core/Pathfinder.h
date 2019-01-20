@@ -41,10 +41,12 @@ namespace game {
 
         bool findNavPath(const map::vector3& start, const map::vector3& end, bool adjacent);
 
-        bool canReach(const map::vector3& start, const map::vector3& end, bool adjacent);
+        bool canReach(const map::vector3& start, const map::vector3& end, bool adjacent) const;
 
         static bool isAdjacent(std::shared_ptr<map::NavGraphNode> node, const map::vector3& pos);
         static bool isAdjacent(const map::vector3& pos1, const map::vector3& pos2);
+
+        bool findDryLand(const map::vector3& start);
     private:
         std::shared_ptr<Character> owner;
 

@@ -19,13 +19,15 @@ namespace game {
     class Job {
     public:
         Job(const map::vector3& position);
-        ~Job();
+        virtual ~Job();
 
         const std::shared_ptr<Character>& requiredCharacter();
 
         bool isClaimed(std::shared_ptr<Item> item) const;
 
         virtual std::shared_ptr<Item> nextComponent() const;
+
+        virtual void removeJob();
     protected:
         virtual bool componentInPosition(std::shared_ptr<Item> item) const;
     private:

@@ -32,7 +32,7 @@ namespace gui
              mClickCount(1),
              mLastMouseDragButton(0)
     {
-        mFocusHandler = std::shared_ptr<FocusHandler>(new FocusHandler());
+        mFocusHandler = std::make_shared<FocusHandler>();
     }
 
     Gui::~Gui()

@@ -27,7 +27,7 @@ namespace sdl_interface
             throw GCN_EXCEPTION(std::string("Not enough memory to load: ") + filename);
         }
 
-        auto image = std::shared_ptr<OpenGLImage>(new OpenGLImage((unsigned int*)surface->pixels, surface->w, surface->h, convertToDisplayFormat));
+        auto image = std::make_shared<OpenGLImage>((unsigned int*)surface->pixels, surface->w, surface->h, convertToDisplayFormat);
         surface=nullptr;
 
         return image;

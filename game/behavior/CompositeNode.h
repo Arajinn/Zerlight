@@ -16,7 +16,7 @@ namespace behavior
     {
     public:
         CompositeNode();
-        ~CompositeNode();
+        virtual ~CompositeNode();
 
         void addNode(std::shared_ptr<Node> child);
 

@@ -20,6 +20,7 @@ namespace game
     GameEntity::GameEntity(const map::vector3& position)
             :mPosition(position)
             ,mPosition0(position)
+            ,mDeltaPosition(0,0,0)
             ,mValid(true)
             ,mToBeMoved(false)
     {
@@ -61,9 +62,15 @@ namespace game
         return mPosition;
     }
 
+    map::vector3 GameEntity::delta_position() const
+    {
+        return mDeltaPosition;
+    }
+
     void GameEntity::update_position()
     {
-        std::cout << "from " << mPosition0.x() << " " << mPosition0.y() << " " << mPosition0.z() << " to " << mPosition.x() << " " << mPosition.y() << " " << mPosition.z() << std::endl;
+        //std::cout << "from " << mPosition0.x() << " " << mPosition0.y() << " " << mPosition0.z() << " to " << mPosition.x() << " " << mPosition.y() << " " << mPosition.z() << std::endl;
+        mDeltaPosition=mPosition-mPosition0;
         mPosition0=mPosition;
         mToBeMoved=false;
     }
@@ -83,7 +90,7 @@ namespace game
 
     }
 
-    void GameEntity::moveTo(map::vector3 new_position)
+    void GameEntity::moveTo(map::vector3 new_position, bool stop_pathing)
     {
         if (new_position!=mPosition0)
         {
@@ -102,10 +109,10 @@ namespace game
         return WORLD_MAP->cell(mPosition0);
     }
 
-    void GameEntity::spawn(std::shared_ptr<map::MapCell> mapCell)
-    {
-        mapCell->addObject(shared_from_this());
-    }
+//    void GameEntity::spawn(std::shared_ptr<map::MapCell> mapCell)
+//    {
+//        mapCell->addObject(shared_from_this());
+//    }
 
     void GameEntity::destroy(std::shared_ptr<map::MapCell> mapCell)
     {

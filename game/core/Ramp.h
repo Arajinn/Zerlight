@@ -11,7 +11,7 @@ namespace game {
     class Ramp : public Construction{
     public:
         Ramp(const map::vector3& position);
-        ~Ramp();
+        virtual ~Ramp();
 
         static std::shared_ptr<Ramp> create(const map::vector3& position, std::string constructionID, const int& materialIndex,
                 ConstructOrientation orientation=ConstructOrientation::FrontLeft);

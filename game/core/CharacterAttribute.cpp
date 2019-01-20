@@ -6,18 +6,40 @@
 
 namespace game {
     CharacterAttribute::CharacterAttribute()
-            :AttributeLevel(0)
-            ,StartingAttributeLevel(0)
-            ,Experience(0.0f)
+            :mAttributeLevel(0)
+            ,mStartingAttributeLevel(0)
+            ,mExperience(0.0f)
     {
 
     }
 
     CharacterAttribute::CharacterAttribute(int AttributeLevel)
-            :AttributeLevel(AttributeLevel)
-            ,StartingAttributeLevel(AttributeLevel)
-            ,Experience(0.0f)
+            :mAttributeLevel(AttributeLevel)
+            ,mStartingAttributeLevel(AttributeLevel)
+            ,mExperience(0.0f)
     {
 
+    }
+
+    int CharacterAttribute::attributeLevel() const
+    {
+        return mAttributeLevel;
+    }
+
+    int CharacterAttribute::startingAttributeLevel() const
+    {
+        return mStartingAttributeLevel;
+    }
+
+    bool CharacterAttribute::increase(const float& xp)
+    {
+        mExperience+=xp;
+        const float threshold=10.0f+(mAttributeLevel-mStartingAttributeLevel)*5.0f;
+        if (mExperience<threshold)
+            return false;
+
+        mAttributeLevel++;
+        mExperience-=threshold;
+        return true;
     }
 }

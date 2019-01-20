@@ -13,8 +13,8 @@ namespace behavior
     PathToNeedGoal::PathToNeedGoal()
             :Selector()
     {
-        addNode(std::shared_ptr<Condition>(new Condition(&PathToNeedGoal::pathingToNeed)));
-        addNode(std::shared_ptr<Action>(new Action(&PathToNeedGoal::pathTo)));
+        addNode(std::make_shared<Condition>(&PathToNeedGoal::pathingToNeed));
+        addNode(std::make_shared<Action>(&PathToNeedGoal::pathTo));
     }
 
     PathToNeedGoal::~PathToNeedGoal()

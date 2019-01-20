@@ -22,16 +22,18 @@ namespace game {
     class Item : public GameEntity{
     public:
         Item(const map::vector3& position);
-        ~Item();
+        virtual ~Item();
 
         static std::shared_ptr<Item> create(const map::vector3& position, std::string id, std::string materialID,
                 std::shared_ptr<const properties::ItemDefinition> aItemDef);
 
         virtual void spawn(std::shared_ptr<map::MapCell> mapCell) override;
 
-        virtual void moveTo(map::vector3 new_position) override;
+        virtual void moveTo(map::vector3 new_position, bool stopPathing=false) override;
 
         virtual void toDestroy();
+        virtual void toDeconstruct();
+        virtual void pre_delete();
 
         std::string itemID() const;
         std::string materialID() const;
@@ -62,6 +64,19 @@ namespace game {
 
         virtual std::vector<properties::TileDef> get_draw_info(const int& x, const int& y, const int& z,
                                                      const view_orientation& orientation) const;
+
+        std::string materialName() const;
+        std::string name() const;
+        bool hasUniqueName() const;
+
+        std::shared_ptr<const properties::ItemDefinition> itemDef() const;
+
+        float damageTaken() const;
+        void setDamageTaken(const float& value);
+
+        std::shared_ptr<game::ItemHistory> history() const;
+
+        void repair();
     protected:
         virtual void init(std::string id, std::string materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef);
 
@@ -73,6 +88,8 @@ namespace game {
         std::shared_ptr<Character> mCharacter;
 
         bool mInStockpile;
+
+        float mDamageTaken;
     };
 }
 

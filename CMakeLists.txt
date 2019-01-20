@@ -112,6 +112,7 @@ add_executable(Zerlight main.cpp
         game/core/PriorityQueue.cpp game/core/PriorityQueue.h
         game/core/Job.cpp game/core/Job.h
         game/core/StockManager.cpp game/core/StockManager.h
+        game/core/Formation.cpp game/core/Formation.h
         game/behavior/TaskResult.h
         game/behavior/Node.cpp game/behavior/Node.h
         game/behavior/Action.cpp game/behavior/Action.h
@@ -172,7 +173,32 @@ add_executable(Zerlight main.cpp
         game/utils/Randomizer.cpp game/utils/Randomizer.h
         game/utils/math_utils.h game/core/defines.h
         game/GameContainer.cpp game/GameContainer.h
-        game/core/String2Enums.cpp game/core/String2Enums.h game/properties/TerrainSprites.cpp game/properties/TerrainSprites.h game/properties/SpriteDef.cpp game/properties/SpriteDef.h game/properties/TileDef.cpp game/properties/TileDef.h)
+        game/core/String2Enums.cpp
+        game/core/String2Enums.h
+        game/properties/TerrainSprites.cpp game/properties/TerrainSprites.h
+        game/properties/SpriteDef.cpp game/properties/SpriteDef.h
+        game/properties/TileDef.cpp game/properties/TileDef.h
+        game/behavior/SatisfyBreathing.cpp game/behavior/SatisfyBreathing.h
+        game/behavior/PathToDryLand.cpp game/behavior/PathToDryLand.h
+        game/behavior/PickupWeapon.cpp game/behavior/PickupWeapon.h
+        game/core/Military.cpp game/core/Military.h
+        game/properties/FactionDef.cpp game/properties/FactionDef.h
+        game/properties/RaceClassDef.cpp game/properties/RaceClassDef.h
+        game/core/Weapon.cpp game/core/Weapon.h
+        game/properties/WeaponDef.cpp game/properties/WeaponDef.h
+        game/core/CharacterSkill.cpp game/core/CharacterSkill.h
+        game/properties/AttackDef.cpp game/properties/AttackDef.h
+        game/properties/UniformSettings.cpp game/properties/UniformSettings.h
+        game/behavior/RunFromTarget.cpp game/behavior/RunFromTarget.h
+        game/behavior/PathToEnemy.cpp game/behavior/PathToEnemy.h
+        game/behavior/GetInPosition.cpp game/behavior/GetInPosition.h
+        game/properties/TargetedAttackDef.cpp game/properties/TargetedAttackDef.h
+        game/core/Enums2Str.cpp game/core/Enums2Str.h
+        game/core/Attack.cpp game/core/Attack.h
+        game/properties/AmmoDef.cpp game/properties/AmmoDef.h
+        game/core/StringConstants.h
+        game/core/Designation.cpp game/core/Designation.h
+        game/core/Stockpile.cpp game/core/Stockpile.h game/core/StockItemJob.cpp game/core/StockItemJob.h game/core/TrainOrder.cpp game/core/TrainOrder.h game/properties/GenderDef.cpp game/properties/GenderDef.h game/properties/CharacterSettings.cpp game/properties/CharacterSettings.h game/properties/DefendDef.cpp game/properties/DefendDef.h game/properties/DamageDef.cpp game/properties/DamageDef.h game/properties/NaturalWeaponDef.cpp game/properties/NaturalWeaponDef.h game/core/Automaton.cpp game/core/Automaton.h game/core/BodyPartItem.cpp game/core/BodyPartItem.h game/behavior/EngageTarget.cpp game/behavior/EngageTarget.h game/behavior/HandleTarget.cpp game/behavior/HandleTarget.h game/behavior/AttackEnemy.cpp game/behavior/AttackEnemy.h game/behavior/PathToLastEnemyLocation.cpp game/behavior/PathToLastEnemyLocation.h game/behavior/TrackEnemy.cpp game/behavior/TrackEnemy.h game/behavior/SenseThreats.cpp game/behavior/SenseThreats.h game/properties/SquadDef.cpp game/properties/SquadDef.h game/behavior/WildAnimalBehavior.cpp game/behavior/WildAnimalBehavior.h game/core/Faction.cpp game/core/Faction.h game/core/CreateWorldOptions.cpp game/core/CreateWorldOptions.h game/core/MilitaryStation.cpp game/core/MilitaryStation.h game/core/TrainingStation.cpp game/core/TrainingStation.h game/core/Ambassador.cpp game/core/Ambassador.h game/core/Envoy.cpp game/core/Envoy.h)
 
 TARGET_LINK_LIBRARIES(${PROJECT_NAME}
         ${SDL2_LIBRARIES}

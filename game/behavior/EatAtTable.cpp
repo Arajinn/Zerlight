@@ -13,9 +13,9 @@ namespace behavior
     EatAtTable::EatAtTable()
             :Sequence()
     {
-        addNode(std::shared_ptr<PathToChair>(new PathToChair));
-        addNode(std::shared_ptr<Action>(new Action(&EatAtTable::wait,3.0f)));
-        addNode(std::shared_ptr<Action>(new Action(&EatAtTable::eatInComfort)));
+        addNode(std::make_shared<PathToChair>());
+        addNode(std::make_shared<Action>(&EatAtTable::wait,3.0f));
+        addNode(std::make_shared<Action>(&EatAtTable::eatInComfort));
     }
 
     EatAtTable::~EatAtTable()
@@ -38,7 +38,7 @@ namespace behavior
     TaskResult EatAtTable::eatInComfort(std::shared_ptr<game::Character> character, float dt, std::shared_ptr<Node> node)
     {
         auto list=character->heldItems();
-        for (auto item : list)
+        for (const auto& item : list)
         {
             if (item->effectAmount(game::ItemEffectType::Food)>0.0f)
                 character->eatFoot(item);

@@ -20,6 +20,8 @@ namespace utils {
 
         float norm(float min, float max, float mean, float coeff=3.0f);
         float uniform(float min=0.0f,float max=1.0f);
+
+        int rand(int min=0,int max=1);
     private:
         std::mt19937 gen;
         //std::normal_distribution<float> dis;

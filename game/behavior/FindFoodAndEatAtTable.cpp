@@ -12,9 +12,9 @@ namespace behavior
     FindFoodAndEatAtTable::FindFoodAndEatAtTable()
         :Sequence()
     {
-        addNode(std::shared_ptr<LookForFood>(new LookForFood));
-        addNode(std::shared_ptr<GetFood>(new GetFood));
-        addNode(std::shared_ptr<LookForChairThenEatAtTable>(new LookForChairThenEatAtTable));
+        addNode(std::make_shared<LookForFood>());
+        addNode(std::make_shared<GetFood>());
+        addNode(std::make_shared<LookForChairThenEatAtTable>());
     }
 
     FindFoodAndEatAtTable::~FindFoodAndEatAtTable()

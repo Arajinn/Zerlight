@@ -71,7 +71,7 @@ namespace map
         int xMax=bounds.right();
         int yMax=bounds.bottom();
 
-        std::shared_ptr<NavGraphNode> node=std::shared_ptr<NavGraphNode>(new NavGraphNode(GMINSTANCE->nextNavID()));
+        std::shared_ptr<NavGraphNode> node=std::make_shared<NavGraphNode>(GMINSTANCE->nextNavID());
         auto map=WORLD_MAP;
         map->cell(x,y,level)->setNavGraphNode(node);
 
@@ -87,7 +87,7 @@ namespace map
             for (int iy=yMin;iy<=y;iy++)
             {
                 auto mapCell=map->cell(x,iy,level);
-                if ((mapCell->isWalkable()==false) || (mapCell->navGraphNode()!= nullptr))
+                if ((!mapCell->isWalkable()) || (mapCell->navGraphNode()!= nullptr))
                 {
                     x--;
                     flag=false;
@@ -108,7 +108,7 @@ namespace map
                 for (int ix=xMin;ix<=x;ix++)
                 {
                     auto mapCell=map->cell(ix,y,level);
-                    if ((mapCell->isWalkable()==false) || (mapCell->navGraphNode()!= nullptr))
+                    if ((!mapCell->isWalkable()) || (mapCell->navGraphNode()!= nullptr))
                     {
                         x--;
                         y--;
@@ -153,20 +153,20 @@ namespace map
                     auto mapCell=map->cell(node->area().left()-1,iy,node->level());
                     if (mapCell!= nullptr)
                     {
-                        if (mapCell->hasSupport()==true)
+                        if (mapCell->hasSupport())
                         {
                             auto temp_cell=map->cell(node->area().left()-1,iy,node->level()-1);
                             if (temp_cell!= nullptr)
                             {
-                                if ((temp_cell->isWalkable()==true) && (temp_cell->navGraphNode()!= nullptr) && (this_cell->hasRamp()==true))
+                                if ((temp_cell->isWalkable()) && (temp_cell->navGraphNode()!= nullptr) && (this_cell->hasRamp()))
                                     mapCell=temp_cell;
                             }
                         }
-                        else if (mapCell->hasFloor()==false)
+                        else if (!mapCell->hasFloor())
                         {
                             auto temp_cell=map->cell(node->area().left()-1,iy,node->level()+1);
                             if (temp_cell!=nullptr) {
-                                if ((upper_cell->hasSupport()==true) && (temp_cell->isWalkable()==true) && (temp_cell->navGraphNode()!=nullptr) && (temp_cell->hasRamp()==true))
+                                if ((upper_cell->hasSupport()) && (temp_cell->isWalkable()) && (temp_cell->navGraphNode()!=nullptr) && (temp_cell->hasRamp()))
                                     mapCell=temp_cell;
                             }
                         }
@@ -183,21 +183,21 @@ namespace map
                     auto mapCell=map->cell(node->area().right()+1,iy,node->level());
                     if (mapCell!=nullptr)
                     {
-                        if (mapCell->hasSupport()==true)
+                        if (mapCell->hasSupport())
                         {
                             auto temp_cell=map->cell(node->area().right()+1,iy,node->level()-1);
                             if (temp_cell!= nullptr)
                             {
-                                if ((temp_cell->isWalkable()==true) && (temp_cell->navGraphNode()!= nullptr) && (this_cell->hasRamp()==true))
+                                if ((temp_cell->isWalkable()) && (temp_cell->navGraphNode()!= nullptr) && (this_cell->hasRamp()))
                                     mapCell=temp_cell;
                             }
                         }
-                        else if (mapCell->hasFloor()==false)
+                        else if (!mapCell->hasFloor())
                         {
                             auto temp_cell=map->cell(node->area().right()+1,iy,node->level()+1);
                             if (temp_cell!= nullptr)
                             {
-                                if ((upper_cell->hasSupport()==true) && (temp_cell->isWalkable()==true) && (temp_cell->navGraphNode()!=nullptr) && (temp_cell->hasRamp()==true))
+                                if ((upper_cell->hasSupport()) && (temp_cell->isWalkable()) && (temp_cell->navGraphNode()!=nullptr) && (temp_cell->hasRamp()))
                                     mapCell=temp_cell;
                             }
                         }
@@ -214,21 +214,21 @@ namespace map
                     auto mapCell=map->cell(ix,node->area().top()-1,node->level());
                     if (mapCell!= nullptr)
                     {
-                        if (mapCell->hasSupport()==true)
+                        if (mapCell->hasSupport())
                         {
                             auto temp_cell=map->cell(ix,node->area().top()-1,node->level()-1);
                             if (temp_cell!=nullptr)
                             {
-                                if ((temp_cell->isWalkable()==true) && (temp_cell->navGraphNode()!= nullptr) && (this_cell->hasRamp()))
+                                if ((temp_cell->isWalkable()) && (temp_cell->navGraphNode()!= nullptr) && (this_cell->hasRamp()))
                                     mapCell=temp_cell;
                             }
                         }
-                        else if (mapCell->hasFloor()==false)
+                        else if (!mapCell->hasFloor())
                         {
                             auto temp_cell=map->cell(ix,node->area().top()-1,node->level()+1);
                             if (temp_cell!=nullptr)
                             {
-                                if ((upper_cell->hasSupport() == true) && (temp_cell->isWalkable()==true) && (temp_cell->navGraphNode()!=nullptr) && (temp_cell->hasRamp()==true))
+                                if ((upper_cell->hasSupport()) && (temp_cell->isWalkable()) && (temp_cell->navGraphNode()!=nullptr) && (temp_cell->hasRamp()))
                                     mapCell=temp_cell;
                             }
                         }
@@ -245,21 +245,21 @@ namespace map
                     auto mapCell=map->cell(ix,node->area().bottom()+1,node->level());
                     if (mapCell!= nullptr)
                     {
-                        if (mapCell->hasSupport()==true)
+                        if (mapCell->hasSupport())
                         {
                             auto temp_cell=map->cell(ix,node->area().bottom()+1,node->level()-1);
                             if (temp_cell!= nullptr)
                             {
-                                if ((temp_cell->isWalkable()==true) && (temp_cell->navGraphNode()!= nullptr) && (this_cell->hasRamp()==true))
+                                if ((temp_cell->isWalkable()) && (temp_cell->navGraphNode()!= nullptr) && (this_cell->hasRamp()))
                                     mapCell=temp_cell;
                             }
                         }
-                        else if (mapCell->hasFloor()==false)
+                        else if (!mapCell->hasFloor())
                         {
                             auto temp_cell=map->cell(ix,node->area().bottom()+1,node->level()+1);
                             if (temp_cell!=nullptr)
                             {
-                                if ((upper_cell->hasSupport() == true) && (temp_cell->isWalkable()==true) && (temp_cell->navGraphNode()!=nullptr) && (temp_cell->hasRamp()==true))
+                                if ((upper_cell->hasSupport()) && (temp_cell->isWalkable()) && (temp_cell->navGraphNode()!=nullptr) && (temp_cell->hasRamp()))
                                     mapCell=temp_cell;
                             }
                         }
@@ -271,25 +271,25 @@ namespace map
                     }
                 }
 
-                if (this_cell->hasStairs()==true)
+                if (this_cell->hasStairs())
                 {
                     auto down_cell=map->cell(ix,iy,node->level()-1);
                     if (down_cell!= nullptr)
                     {
-                        if ((down_cell->hasNaturalFloor()==false) && (down_cell->navGraphNode()!= nullptr))
+                        if ((!down_cell->hasNaturalFloor()) && (down_cell->navGraphNode()!= nullptr))
                         {
                             NavGraphNode::makeConnection(node, down_cell->navGraphNode());
                         }
 
-                        if ((this_cell->hasScaffolding()==true) && (upper_cell->hasScaffolding()==true) && (upper_cell->navGraphNode()!=nullptr))
+                        if ((this_cell->hasScaffolding()) && (upper_cell->hasScaffolding()) && (upper_cell->navGraphNode()!=nullptr))
                         {
                             NavGraphNode::makeConnection(node, upper_cell->navGraphNode());
                         }
                     }
                 }
-                else if (upper_cell->hasStairs()==true)
+                else if (upper_cell->hasStairs())
                 {
-                    if ((this_cell->hasNaturalFloor()==false) && (upper_cell->navGraphNode()!= nullptr))
+                    if ((!this_cell->hasNaturalFloor()) && (upper_cell->navGraphNode()!= nullptr))
                     {
                         NavGraphNode::makeConnection(node, upper_cell->navGraphNode());
                     }
@@ -311,20 +311,20 @@ namespace map
         {
             auto idList=node->connectionsID();
 
-            if (idList.size()>0)
+            if (!idList.empty())
             {
-                auto id=idList.at(0);
-                auto connectionsList=node->connections();
-                for (auto connection : connectionsList)
+                const auto id=idList.at(0);
+                const auto connectionsList=node->connections();
+                for (const auto& connection : connectionsList)
                 {
                     if (connection->navGraphID()!=id)
-                        this->propagateNavGraphID(connection,id);
+                        propagateNavGraphID(connection,id);
                 }
             }
         }
     }
 
-    void NavGraph::propagateNavGraphID(std::shared_ptr<NavGraphNode> node, unsigned int id)
+    void NavGraph::propagateNavGraphID(std::shared_ptr<NavGraphNode> node, size_t id)
     {
         std::vector<std::shared_ptr<NavGraphNode>> source;
         std::vector<std::shared_ptr<NavGraphNode>> navGraphNodeSet1;
@@ -333,17 +333,18 @@ namespace map
         source.push_back(node);
         navGraphNodeSet1.push_back(node);
 
-        while (source.size()>0)
+        while (!source.empty())
         {
             auto navGraphNode=source[0];
             source.erase(source.begin());
 
-            auto iter=std::find_if(std::begin(navGraphNodeSet1),std::end(navGraphNodeSet1),[&navGraphNode](std::shared_ptr<NavGraphNode> const& value)
+            auto iter=std::find_if(navGraphNodeSet1.begin(),navGraphNodeSet1.end(),
+                    [&navGraphNode](std::shared_ptr<NavGraphNode> const& elem)
             {
-                return navGraphNode==value;
+                return navGraphNode==elem;
             });
 
-            if (iter!=std::end(navGraphNodeSet1))
+            if (iter!=navGraphNodeSet1.end())
                 navGraphNodeSet1.erase(iter);
 
             navGraphNodeSet2.push_back(navGraphNode);
@@ -355,17 +356,19 @@ namespace map
             {
                 if (connection->navGraphID()!=id)
                 {
-                    auto iter1=std::find_if(std::begin(navGraphNodeSet1),std::end(navGraphNodeSet1),[&connection](std::shared_ptr<NavGraphNode> const& value)
+                    auto iter1=std::find_if(navGraphNodeSet1.begin(),navGraphNodeSet1.end(),
+                            [&connection](std::shared_ptr<NavGraphNode> const& elem)
                     {
-                        return connection==value;
+                        return connection==elem;
                     });
 
-                    auto iter2=std::find_if(std::begin(navGraphNodeSet2),std::end(navGraphNodeSet2),[&connection](std::shared_ptr<NavGraphNode> const& value)
+                    auto iter2=std::find_if(navGraphNodeSet2.begin(),navGraphNodeSet2.end(),
+                            [&connection](std::shared_ptr<NavGraphNode> const& elem)
                     {
-                        return connection==value;
+                        return connection==elem;
                     });
 
-                    if ((iter1==std::end(navGraphNodeSet1)) && (iter2==std::end(navGraphNodeSet2)))
+                    if ((iter1==navGraphNodeSet1.end()) && (iter2==navGraphNodeSet2.end()))
                     {
                         source.push_back(connection);
                         navGraphNodeSet1.push_back(connection);
@@ -409,20 +412,20 @@ namespace map
             this->setNewNodeOnCells(navGraphNode,nullptr);
             this->subdivideIntoAllowedAreas(navGraphNode->area(),navGraphNode->level(),navGraphNode->level()+1);
 
-            std::vector<unsigned int> idList;
+            std::vector<size_t> idList;
             for (auto node : navGraphNodeList)
             {
                 auto nodeID=node->navGraphID();
-                auto iter=std::find_if(std::begin(idList),std::end(idList),[&nodeID](unsigned int& value)
+                auto iter=std::find_if(idList.begin(),idList.end(),[&nodeID](size_t const& elem)
                 {
-                    return (nodeID==value);
+                    return (nodeID==elem);
                 });
 
-                if (iter==std::end(idList))
+                if (iter==idList.end())
                 {
                     auto id=GMINSTANCE->nextNavNodeID();
                     idList.push_back(id);
-                    this->propagateNavGraphID(node,id);
+                    propagateNavGraphID(node,id);
                 }
             }
         }
@@ -436,7 +439,7 @@ namespace map
         }
         else
         {
-            mapCell->setNavGraphNode(std::shared_ptr<NavGraphNode>(new NavGraphNode(GMINSTANCE->nextNavID())));
+            mapCell->setNavGraphNode(std::make_shared<NavGraphNode>(GMINSTANCE->nextNavID()));
             auto pos=mapCell->position();
             mapCell->navGraphNode()->setArea(rectangle2(pos.x(),pos.y(),0,0),pos.z());
             this->createConnections(mapCell->navGraphNode());
@@ -480,18 +483,18 @@ namespace map
             if (mapCell== nullptr)
                 return false;
 
-            if (mapCell->isWalkable()==false)
+            if (!mapCell->isWalkable())
                 return false;
 
             auto node=mapCell->navGraphNode();
             if (node!=nullptr)
             {
-                auto iter=std::find_if(std::begin(victimNodes),std::end(victimNodes),[&node](std::shared_ptr<NavGraphNode> const& value)
+                auto iter=std::find_if(victimNodes.begin(),victimNodes.end(),[&node](std::shared_ptr<NavGraphNode> const& elem)
                 {
-                    return (node==value);
+                    return (node==elem);
                 });
 
-                if (iter==std::end(victimNodes))
+                if (iter==victimNodes.end())
                     victimNodes.push_back(node);
             }
         }
@@ -507,18 +510,18 @@ namespace map
         {
             auto mapCell=map->cell(left,index,level);
 
-            if (mapCell->isWalkable()==false)
+            if (!mapCell->isWalkable())
                 return false;
 
             auto node=mapCell->navGraphNode();
             if (node!=nullptr)
             {
-                auto iter=std::find_if(std::begin(victimNodes),std::end(victimNodes),[&node](std::shared_ptr<NavGraphNode> const& value)
+                auto iter=std::find_if(victimNodes.begin(),victimNodes.end(),[&node](std::shared_ptr<NavGraphNode> const& elem)
                 {
-                    return (node==value);
+                    return (node==elem);
                 });
 
-                if (iter==std::end(victimNodes))
+                if (iter==victimNodes.end())
                     victimNodes.push_back(node);
             }
         }
@@ -534,18 +537,18 @@ namespace map
         {
             auto mapCell=map->cell(index,top,level);
 
-            if (mapCell->isWalkable()==false)
+            if (!mapCell->isWalkable())
                 return false;
 
             auto node=mapCell->navGraphNode();
             if (node!=nullptr)
             {
-                auto iter=std::find_if(std::begin(victimNodes),std::end(victimNodes),[&node](std::shared_ptr<NavGraphNode> const& value)
+                auto iter=std::find_if(victimNodes.begin(),victimNodes.end(),[&node](std::shared_ptr<NavGraphNode> const& elem)
                 {
-                    return (node==value);
+                    return (node==elem);
                 });
 
-                if (iter==std::end(victimNodes))
+                if (iter==victimNodes.end())
                     victimNodes.push_back(node);
             }
         }
@@ -564,18 +567,18 @@ namespace map
             if (mapCell==nullptr)
                 return false;
 
-            if (mapCell->isWalkable()==false)
+            if (!mapCell->isWalkable())
                 return false;
 
             auto node=mapCell->navGraphNode();
             if (node!=nullptr)
             {
-                auto iter=std::find_if(std::begin(victimNodes),std::end(victimNodes),[&node](std::shared_ptr<NavGraphNode> const& value)
+                auto iter=std::find_if(victimNodes.begin(),victimNodes.end(),[&node](std::shared_ptr<NavGraphNode> const& elem)
                 {
-                    return (node==value);
+                    return (node==elem);
                 });
 
-                if (iter==std::end(victimNodes))
+                if (iter==victimNodes.end())
                     victimNodes.push_back(node);
             }
         }
@@ -642,12 +645,13 @@ namespace map
             {
                 for (auto victimNode : victimNodes)
                 {
-                    auto iter=std::find_if(std::begin(navGraphNodeList),std::end(navGraphNodeList),[&victimNode](std::shared_ptr<NavGraphNode> const& value)
+                    auto iter=std::find_if(navGraphNodeList.begin(),navGraphNodeList.end(),
+                            [&victimNode](std::shared_ptr<NavGraphNode> const& elem)
                     {
-                        return (victimNode==value);
+                        return (victimNode==elem);
                     });
 
-                    if (iter==std::end(navGraphNodeList))
+                    if (iter==navGraphNodeList.end())
                         navGraphNodeList.push_back(victimNode);
                 }
             }
@@ -701,22 +705,22 @@ namespace map
             mapCell->navGraphNode()->clearConnections();
             this->createConnections(mapCell->navGraphNode());
 
-            std::vector<unsigned int> idList;
-            for (auto node : navGraphNodeList)
+            std::vector<size_t> idList;
+            for (const auto& node : navGraphNodeList)
             {
                 auto node_id=node->navGraphID();
-                auto iter1=std::find_if(std::begin(idList),std::end(idList),[&node_id](unsigned int& value)
+                auto iter1=std::find_if(idList.begin(),idList.end(),[&node_id](size_t const& elem)
                 {
-                    return (value==node_id);
+                    return (elem==node_id);
                 });
 
                 auto connections=mapCell->navGraphNode()->connections();
-                auto iter2=std::find_if(std::begin(connections),std::end(connections),[&node](std::shared_ptr<NavGraphNode> const& value)
+                auto iter2=std::find_if(connections.begin(),connections.end(),[&node](std::shared_ptr<NavGraphNode> const& elem)
                 {
-                    return (value==node);
+                    return (elem==node);
                 });
 
-                if ((iter1==std::end(idList)) && (iter2==std::end(connections)))
+                if ((iter1==idList.end()) && (iter2==connections.end()))
                 {
                     auto id=GMINSTANCE->nextNavNodeID();
                     idList.push_back(id);
@@ -727,7 +731,7 @@ namespace map
             if (mapCell->navGraphNode()->connectionsCount()==0)
                 return;
 
-            this->propagateNavGraphID(mapCell->navGraphNode(),mapCell->navGraphNode()->connections().at(0)->navGraphID());
+            propagateNavGraphID(mapCell->navGraphNode(),mapCell->navGraphNode()->connections().at(0)->navGraphID());
         }
     }
 }

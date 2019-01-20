@@ -13,8 +13,8 @@ namespace behavior
     DrinkItem::DrinkItem()
             :Sequence()
     {
-        addNode(std::shared_ptr<PathToDrink>(new PathToDrink()));
-        addNode(std::shared_ptr<Action>(new Action(&DrinkItem::drink)));
+        addNode(std::make_shared<PathToDrink>());
+        addNode(std::make_shared<Action>(&DrinkItem::drink));
     }
 
     DrinkItem::~DrinkItem()

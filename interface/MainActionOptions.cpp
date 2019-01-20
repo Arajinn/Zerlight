@@ -238,7 +238,7 @@ void MainActionListener::initOptions()
     mResolutionListBox->setBaseColor(0x105555);
     mResolutionListBox->setSelectionColor(0x204545);
 
-    mResolutionListModel = std::shared_ptr<ResolutionListModel>(new ResolutionListModel());
+    mResolutionListModel = std::make_shared<ResolutionListModel>();
 
     mResolution = gui::WidgetFactory::create_zdropdown(mResolutionListModel,mResolutionScrollArea,mResolutionListBox);
     mResolution->setWidth(200);

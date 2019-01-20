@@ -109,23 +109,23 @@ void MainActionListener::init()
 
 void MainActionListener::initGui()
 {
-    mOpenGLImageLoader = std::shared_ptr<sdl_interface::OpenGLSDLImageLoader>(new sdl_interface::OpenGLSDLImageLoader());
+    mOpenGLImageLoader = std::make_shared<sdl_interface::OpenGLSDLImageLoader>();
     gui::ZImage::setImageLoader(mOpenGLImageLoader);
-    mOpenGLGraphics = std::shared_ptr<sdl_interface::OpenGLGraphics>(new sdl_interface::OpenGLGraphics());
+    mOpenGLGraphics = std::make_shared<sdl_interface::OpenGLGraphics>();
     mOpenGLGraphics->setTargetPlane(mWidth, mHeight);
-    mSDLInput = std::shared_ptr<sdl_interface::SDLInput>(new sdl_interface::SDLInput());
+    mSDLInput = std::make_shared<sdl_interface::SDLInput>();
 
     mTop = gui::WidgetFactory::create_zcontainer();
     mTop->setOpaque(false);
-    mGui = std::shared_ptr<gui::Gui>(new gui::Gui());
+    mGui = std::make_shared<gui::Gui>();
     mGui->setTabbingEnabled(false);
     mGui->setGraphics(mOpenGLGraphics);
     mGui->setInput(mSDLInput);
 
-    mFont = std::shared_ptr<gui::ImageFont>(new gui::ImageFont(          "../images/interface/techyfontbig2.png",        " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`'*#=[]\""));
-    mHighLightFont = std::shared_ptr<gui::ImageFont>(new gui::ImageFont( "../images/interface/techyfontbighighlight.png"," abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`'*#=[]\""));
-    mSmallBlackFont = std::shared_ptr<gui::ImageFont>(new gui::ImageFont("../images/interface/techyfontblack.png",       " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`'*#=[]\""));
-    mWhiteFont = std::shared_ptr<gui::ImageFont>(new gui::ImageFont(     "../images/interface/techyfontwhite.png",       " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`'*#=[]\""));
+    mFont = std::make_shared<gui::ImageFont>("../images/interface/techyfontbig2.png",        " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`'*#=[]\"");
+    mHighLightFont = std::make_shared<gui::ImageFont>("../images/interface/techyfontbighighlight.png"," abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`'*#=[]\"");
+    mSmallBlackFont = std::make_shared<gui::ImageFont>("../images/interface/techyfontblack.png",       " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`'*#=[]\"");
+    mWhiteFont = std::make_shared<gui::ImageFont>("../images/interface/techyfontwhite.png",       " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`'*#=[]\"");
     gui::ZWidget::setGlobalFont(mWhiteFont);
 
     mTitleLabel = gui::WidgetFactory::create_ztextbox("Gnomoria");
@@ -589,7 +589,8 @@ void MainActionListener::displayMainWindow()
 
 void MainActionListener::drawSpace()
 {
-    int y = -200;
+    //int y = -200;
+    int y=0;
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
@@ -605,11 +606,14 @@ void MainActionListener::drawSpace()
     glTexCoord2f(0.0f, 0.0f);
     glVertex3i(0,y,0);
     glTexCoord2f(1.0f, 0.0f);
-    glVertex3i(mStarsImage->getWidth(),y,0);
+    //glVertex3i(mStarsImage->getWidth(),y,0);
+    glVertex3i(mWidth,y,0);
     glTexCoord2f(1.0f, 1.0f);
-    glVertex3i(mStarsImage->getWidth(),mStarsImage->getHeight()+y,0);
+    //glVertex3i(mStarsImage->getWidth(),mStarsImage->getHeight()+y,0);
+    glVertex3i(mWidth,mHeight+y,0);
     glTexCoord2f(0.0f, 1.0f);
-    glVertex3i(0,mStarsImage->getHeight()+y,0);
+    //glVertex3i(0,mStarsImage->getHeight()+y,0);
+    glVertex3i(0,mHeight+y,0);
     glEnd();
     glDisable(GL_TEXTURE_2D);
 
@@ -733,13 +737,17 @@ void MainActionListener::displayGenerateNewWordProgress()
 
 void MainActionListener::displayWorldMapContainer()
 {
-    std::cout << "display new world " << mDeltaTime << std::endl;
+    //std::cout << "display new world " << mDeltaTime << std::endl;
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    GMINSTANCE->update(0.1f);
 
     mGui->draw();
 
     SDL_GL_SwapWindow(mWindow.get());
+
+
 
     if (mDeltaTime==0)
         SDL_Delay(100);

@@ -11,7 +11,7 @@ namespace game {
     class Liquid : public GameEntity{
     public:
         Liquid(const map::vector3& position);
-        ~Liquid();
+        virtual ~Liquid();
 
         const float& amount() const;
         const std::string& materialID() const;

@@ -17,9 +17,10 @@ namespace game
 
     }
 
-    std::shared_ptr<ConstructedTerrain> ConstructedTerrain::create(const map::vector3& position, std::string constructionID, ConstructOrientation orientation)
+    std::shared_ptr<ConstructedTerrain> ConstructedTerrain::create(const map::vector3& position, std::string constructionID,
+            ConstructOrientation orientation)
     {
-        std::shared_ptr<ConstructedTerrain> ptr=std::shared_ptr<ConstructedTerrain>(new ConstructedTerrain(position));
+        auto ptr=std::make_shared<ConstructedTerrain>(position);
         ptr->init(constructionID, orientation);
         return ptr;
     }

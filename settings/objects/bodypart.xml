@@ -87,13 +87,13 @@
     <Name>guts</Name>
     <MaterialID>StandardWeakFlesh</MaterialID>
     <BodyFunction>InternalOrgan</BodyFunction>
-    <BodyProperties>HasBlood, HasArtery, Nauseates</BodyProperties>
+    <BodyProperties>HasBlood,HasArtery,Nauseates</BodyProperties>
   </Item>
   <Item>
     <ID>GnomeAbdominalMuscles</ID>
     <Name>abdominal muscles</Name>
     <MaterialID>StandardStrongFlesh</MaterialID>
-    <BodyProperties>HasBlood, HasArtery</BodyProperties>
+    <BodyProperties>HasBlood,HasArtery</BodyProperties>
     <Contains>
       <Item>GnomeGuts</Item>
     </Contains>
@@ -149,7 +149,7 @@
     <Name>jaw</Name>
     <MaterialID>StandardBone</MaterialID>
     <NaturalWeapon>
-      <Name/>
+      <Name>mouth</Name>
       <MaterialID>StandardBone</MaterialID>
       <Size>5</Size>
       <WeaponDef>
@@ -177,7 +177,7 @@
     <ID>GnomeNeck</ID>
     <Name>skin</Name>
     <MaterialID>StandardSkin</MaterialID>
-    <BodyProperties>HasBlood, HasArtery</BodyProperties>
+    <BodyProperties>HasBlood,HasArtery</BodyProperties>
     <Contains>
     <Item>GnomeThroat</Item>
     </Contains>
@@ -195,7 +195,7 @@
     <Name>muscle</Name>
     <MaterialID>StandardStrongFlesh</MaterialID>
     <BodyFunction>Motor</BodyFunction>
-    <BodyProperties>HasBlood, HasArtery</BodyProperties>
+    <BodyProperties>HasBlood,HasArtery</BodyProperties>
     <HarvestedItem>Giblets</HarvestedItem>
     <HarvestedQuantity>1</HarvestedQuantity>
     <Contains>
@@ -251,7 +251,7 @@
     <Item>GnomeStandardBone2</Item>
     </Contains>
     <NaturalWeapon>
-      <Name/>
+      <Name>hand</Name>
       <MaterialID>StandardBone</MaterialID>
       <Size>15</Size>
       <WeaponDef>
@@ -292,7 +292,7 @@
     <Item>GnomeStandardBone3</Item>
     </Contains>
     <NaturalWeapon>
-      <Name/>
+      <Name>foot</Name>
       <MaterialID>StandardBone</MaterialID>
       <Size>30</Size>
       <WeaponDef>
@@ -306,8 +306,255 @@
       </WeaponDef>
     </NaturalWeapon>
   </Item>
- 
-  
-  
+ <Item>
+    <ID>BearLung</ID>
+    <Name>lung</Name>
+    <MaterialID>StandardWeakFlesh</MaterialID>
+    <BodyFunction>Breathe</BodyFunction>
+    <Symmetrical>true</Symmetrical>
+  </Item>
+  <Item>
+    <ID>BearHeart</ID>
+    <Name>heart</Name>
+    <MaterialID>StandardWeakFlesh</MaterialID>
+    <BodyFunction>Circulation</BodyFunction>
+    <ToHitWeight>0.5</ToHitWeight>
+  </Item>
+  <Item>
+    <ID>BearRibs</ID>
+    <Name>ribs</Name>
+    <MaterialID>StandardBone</MaterialID>
+    <BodyProperties>Splinters</BodyProperties>
+    <HarvestedItem>Bone</HarvestedItem>
+    <HarvestedQuantity>6</HarvestedQuantity>
+    <Contains>
+        <Item>BearLung</Item>
+        <Item>BearHeart</Item>
+      </Contains>
+  </Item>
+  <!-- BearUpperBody -->
+  <Item>
+    <ID>BearUpperBody</ID>
+    <Name>hide</Name>
+    <MaterialID>BearHide</MaterialID>
+    <BodyProperties>HasBlood</BodyProperties>
+    <HarvestedItem>RawHide</HarvestedItem>
+    <HarvestedQuantity>3</HarvestedQuantity>
+    <Contains>
+      <Item>BearRibs</Item>
+    </Contains>
+  </Item>
+  <Item>
+    <ID>BearGuts</ID>
+    <Name>guts</Name>
+    <MaterialID>StandardWeakFlesh</MaterialID>
+    <BodyFunction>InternalOrgan</BodyFunction>
+    <BodyProperties>HasBlood,HasArtery,Nauseates</BodyProperties>
+  </Item>
+  <Item>
+    <ID>BearAbdominalMuscles</ID>
+    <Name>abdominal muscles</Name>
+    <MaterialID>StandardStrongFlesh</MaterialID>
+    <BodyProperties>HasBlood,HasArtery</BodyProperties>
+    <Contains>
+      <Item>BearGuts</Item>
+    </Contains>
+  </Item>
+  <!-- BearLowerBody -->
+  <Item>
+    <ID>BearLowerBody</ID>
+    <Name>hide</Name>
+    <MaterialID>BearHide</MaterialID>
+    <BodyProperties>HasBlood</BodyProperties>
+    <HarvestedItem>RawHide</HarvestedItem>
+    <HarvestedQuantity>3</HarvestedQuantity>
+    <Contains>
+    <Item>BearAbdominalMuscles</Item>
+    </Contains>
+  </Item>
+  <Item>
+    <ID>BearBrain</ID>
+    <Name>brain</Name>
+    <MaterialID>StandardWeakFlesh</MaterialID>
+    <BodyFunction>Thought</BodyFunction>
+  </Item>
+  <Item>
+    <ID>BearSkull</ID>
+    <Name>skull</Name>
+    <MaterialID>StandardShell</MaterialID>
+    <BodyFunction>Structure</BodyFunction>
+    <HarvestedItem>Skull</HarvestedItem>
+    <HarvestedQuantity>1</HarvestedQuantity>
+    <Contains>
+    <Item>BearBrain</Item>
+    </Contains>
+  </Item>
+  <!-- BearHead -->
+  <Item>
+    <ID>BearHead</ID>
+    <Name>hide</Name>
+    <MaterialID>BearHide</MaterialID>
+    <BodyProperties>HasBlood</BodyProperties>
+    <Contains>
+    <Item>BearSkull</Item>
+    </Contains>
+  </Item>
+  <!-- BearMouth -->
+  <Item>
+    <ID>BearMouth</ID>
+    <Name>jaw</Name>
+    <MaterialID>StandardBone</MaterialID>
+    <NaturalWeapon>
+      <Name>mouth</Name>
+      <MaterialID>StandardBone</MaterialID>
+      <Size>60</Size>
+      <WeaponDef>
+        <Skill>NaturalAttack</Skill>
+        <AttackMove>
+          <Verb>bites</Verb>
+          <AttackType>HandToHand</AttackType>
+          <Damage>Pierce</Damage>
+          <Damage>Blunt</Damage>
+        </AttackMove>
+        <Point>1</Point>
+        <PenetrationDepth>1</PenetrationDepth>
+        <BluntModifier>1.0</BluntModifier>
+        <VelocityModifier>1.0</VelocityModifier>
+      </WeaponDef>
+    </NaturalWeapon>
+  </Item>
+  <Item>
+    <ID>BearThroat</ID>
+    <Name>throat</Name>
+    <MaterialID>StandardWeakFlesh</MaterialID>
+    <BodyFunction>Throat</BodyFunction>
+  </Item>
+  <!-- BearNeck -->
+  <Item>
+    <ID>BearNeck</ID>
+    <Name>hide</Name>
+    <MaterialID>BearHide</MaterialID>
+    <BodyProperties>HasBlood,HasArtery</BodyProperties>
+    <Contains>
+    <Item>BearThroat</Item>
+    </Contains>
+  </Item>
+  <Item>
+    <ID>BearStandardBone1</ID>
+    <Name>bone</Name>
+    <MaterialID>StandardBone</MaterialID>
+    <BodyFunction>Structure</BodyFunction>
+    <HarvestedItem>Bone</HarvestedItem>
+    <HarvestedQuantity>1</HarvestedQuantity>
+  </Item>
+  <Item>
+    <ID>BearStandardMuscle1</ID>
+    <Name>muscle</Name>
+    <MaterialID>StandardStrongFlesh</MaterialID>
+    <BodyFunction>Motor</BodyFunction>
+    <BodyProperties>HasBlood,HasArtery</BodyProperties>
+    <HarvestedItem>Meat</HarvestedItem>
+    <HarvestedQuantity>3</HarvestedQuantity>
+    <Contains>
+    <Item>BearStandardBone1</Item>
+    </Contains>
+  </Item>
+  <!-- BearArm -->
+  <Item>
+    <ID>BearArm</ID>
+    <Name>hide</Name>
+    <MaterialID>BearHide</MaterialID>
+    <BodyProperties>HasBlood</BodyProperties>
+    <Symmetrical>true</Symmetrical>
+    <HarvestedItem>RawHide</HarvestedItem>
+    <HarvestedQuantity>1</HarvestedQuantity>
+    <Contains>
+    <Item>BearStandardMuscle1</Item>
+    </Contains>
+  </Item>
+  <!-- BearLeg -->
+  <Item>
+    <ID>BearLeg</ID>
+    <Name>hide</Name>
+    <MaterialID>BearHide</MaterialID>
+    <BodyProperties>HasBlood</BodyProperties>
+    <Symmetrical>true</Symmetrical>
+    <HarvestedItem>RawHide</HarvestedItem>
+    <HarvestedQuantity>1</HarvestedQuantity>
+    <Contains>
+    <Item>BearStandardMuscle1</Item>
+    </Contains>
+  </Item>  
+  <Item>
+    <ID>BearStandardMuscle2</ID>
+    <Name>muscle</Name>
+    <MaterialID>StandardStrongFlesh</MaterialID>
+    <BodyProperties>HasBlood</BodyProperties>
+  </Item>
+  <Item>
+    <ID>BearStandardBone2</ID>
+    <Name>bone</Name>
+    <MaterialID>StandardBone</MaterialID>
+    <BodyFunction>Structure</BodyFunction>
+    <BodyProperties>Splinters</BodyProperties>
+    <Contains>
+    <Item>BearStandardMuscle2</Item>
+    </Contains>
+  </Item>
+  <!-- BearHand -->
+  <Item>
+    <ID>BearHand</ID>
+    <Name>hide</Name>
+    <MaterialID>BearHide</MaterialID>
+    <BodyProperties>HasBlood</BodyProperties>
+    <Contains>
+    <Item>BearStandardBone2</Item>
+    </Contains>
+    <NaturalWeapon>
+      <Name>front raw</Name>
+      <MaterialID>StandardBone</MaterialID>
+      <Size>30</Size>
+      <WeaponDef>
+        <Skill>NaturalAttack</Skill>
+        <AttackMove>
+          <Verb>punches</Verb>
+          <AttackType>HandToHand</AttackType>
+          <Damage>Blunt,Slash,Pierce</Damage>
+        </AttackMove>
+        <Point>0.5</Point>
+        <PenetrationDepth>1</PenetrationDepth>
+        <Edge>1</Edge>
+        <BluntModifier>0.75</BluntModifier>
+        <VelocityModifier>1</VelocityModifier>
+      </WeaponDef>
+    </NaturalWeapon>
+  </Item>
+  <Item>
+    <ID>BearStandardMuscle3</ID>
+    <Name>muscle</Name>
+    <MaterialID>StandardStrongFlesh</MaterialID>
+    <BodyFunction>Stand</BodyFunction>
+    <BodyProperties>HasBlood</BodyProperties>
+  </Item>
+  <Item>
+    <ID>BearStandardBone3</ID>
+    <Name>bone</Name>
+    <MaterialID>StandardBone</MaterialID>
+    <BodyFunction>Structure</BodyFunction>
+    <BodyProperties>Splinters</BodyProperties>
+    <Contains>
+    <Item>BearStandardMuscle3</Item>
+    </Contains>
+  </Item>
+  <!-- BearFoot -->
+  <Item>
+    <ID>BearFoot</ID>
+    <Name>hide</Name>
+    <MaterialID>BearHide</MaterialID>
+    <BodyProperties>HasBlood</BodyProperties>
+    <Contains>
+    <Item>BearStandardBone3</Item>
+    </Contains>
+  </Item>
   
   </BodyParts>

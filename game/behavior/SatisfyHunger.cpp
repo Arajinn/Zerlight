@@ -12,8 +12,8 @@ namespace behavior
     SatisfyHunger::SatisfyHunger()
             :Sequence()
     {
-        addNode(std::shared_ptr<Condition>(new Condition(&SatisfyHunger::hungry)));
-        addNode(std::shared_ptr<GetFedOrFeedSelfAtTable>(new GetFedOrFeedSelfAtTable));
+        addNode(std::make_shared<Condition>(&SatisfyHunger::hungry));
+        addNode(std::make_shared<GetFedOrFeedSelfAtTable>());
     }
 
     SatisfyHunger::~SatisfyHunger()

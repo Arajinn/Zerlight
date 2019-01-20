@@ -11,7 +11,7 @@ namespace game{
     class Stairs : public Construction{
     public:
         Stairs(const map::vector3& position);
-        ~Stairs();
+        virtual ~Stairs();
 
         static std::shared_ptr<Stairs> create(const map::vector3& position, std::string constructionID, ConstructOrientation orientation=ConstructOrientation::FrontLeft);
 

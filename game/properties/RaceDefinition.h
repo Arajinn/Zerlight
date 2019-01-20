@@ -10,6 +10,12 @@
 
 #include <string>
 #include <vector>
+#include <memory>
+
+namespace properties
+{
+    struct GenderDef;
+}
 
 namespace properties {
     struct RaceDefinition {
@@ -19,13 +25,15 @@ namespace properties {
 
         std::string ID;
         std::string Name;
+        std::string LanguageID;
         std::string BodyID;
 
         float MoveSpeed;
-
+        float Size;
         float TiredLevel;
         float RestTime;
         float ExhaustionTime;
+        float PassOutLevel;
 
         float ThirstRate;
         float ThirstLevel;
@@ -38,14 +46,29 @@ namespace properties {
         float FoodRatio;
 
         float BloodLossRate;
+        std::string HealingItemID;
+
+        float SightRadius;
+        float CastLightRadius;
+        float CombatSightRadius;
 
         std::vector<AttributeDef> Attributes;
-        std::vector<std::pair<std::string,float>> AdditionalDiet;
 
+        std::vector<std::pair<std::string,float>> AdditionalDiet;
         float additionalDietValue(std::string itemID) const;
 
-        std::vector<std::pair<game::GenderType,float>> Genders;
+        std::vector<std::shared_ptr<GenderDef>> Genders;
         game::GenderType generateGender() const;
+        std::shared_ptr<const GenderDef> gender(const game::GenderType& type) const;
+
+        float BaseAttackDelay;
+        float DodgeTime;
+
+        bool ZombieVirusCarrier;
+
+        bool Livestock;
+        int PastureSpace;
+        float GestationTimeMin,GestationTimeMax;
     };
 }
 

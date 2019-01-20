@@ -9,8 +9,11 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 
 namespace properties {
+    struct WeaponDef;
+
     struct ItemDefinition {
     public:
         ItemDefinition();
@@ -18,6 +21,8 @@ namespace properties {
 
         std::string ID;
         std::string Name;
+        std::string Prefix;
+        std::string Suffix;
 
         float EquippedJobPenalty;
         float EquippedMovePenalty;
@@ -31,7 +36,13 @@ namespace properties {
         static float effectModifier(game::ItemQuality quality);
         static float effectModifierForFoodAndDrink(game::ItemQuality quality);
 
+        std::shared_ptr<WeaponDef> ItemWeaponDef;
+        game::EquipmentType EquipSlot;
+        bool TwoHanded;
         float CombatRatingModifier;
+        float WeaponSize;
+
+        float Thickness;
 
         struct SpriteID
         {

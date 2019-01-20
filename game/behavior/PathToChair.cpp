@@ -13,8 +13,8 @@ namespace behavior
     PathToChair::PathToChair()
             :Selector()
     {
-        addNode(std::shared_ptr<Condition>(new Condition(&PathToChair::pathingToChair)));
-        addNode(std::shared_ptr<Action>(new Action(&PathToChair::pathTo)));
+        addNode(std::make_shared<Condition>(&PathToChair::pathingToChair));
+        addNode(std::make_shared<Action>(&PathToChair::pathTo));
     }
 
     PathToChair::~PathToChair()

@@ -6,12 +6,20 @@
 #define ZERL_CHARACTERATTRIBUTE_H
 
 namespace game {
-    struct CharacterAttribute {
+    class CharacterAttribute
+    {
+    public:
         CharacterAttribute();
         CharacterAttribute(int AttributeLevel);
-        int AttributeLevel;
-        int StartingAttributeLevel;
-        float Experience;
+
+        bool increase(const float& xp);
+
+        int attributeLevel() const;
+        int startingAttributeLevel() const;
+    private:
+        int mAttributeLevel;
+        int mStartingAttributeLevel;
+        float mExperience;
     };
 }
 

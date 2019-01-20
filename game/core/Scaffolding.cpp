@@ -19,7 +19,7 @@ namespace game
 
     std::shared_ptr<Scaffolding> Scaffolding::create(const map::vector3& position, std::string constructionID, ConstructOrientation orientation)
     {
-        std::shared_ptr<Scaffolding> ptr=std::shared_ptr<Scaffolding>(new Scaffolding(position));
+        std::shared_ptr<Scaffolding> ptr=std::make_shared<Scaffolding>(position);
         ptr->init(constructionID, orientation);
         return ptr;
     }

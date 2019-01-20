@@ -17,6 +17,8 @@ namespace game
     class Ramp;
     class Liquid;
     class Job;
+    class Stairs;
+    class Designation;
 }
 
 namespace map
@@ -39,6 +41,8 @@ namespace map {
 
         void addCharacter(std::shared_ptr<game::Character> character);
         void removeCharacter(std::shared_ptr<game::Character> character);
+        int getCharactersCount() const;
+        std::vector<std::shared_ptr<game::Character>> getCharacters() const;
 
         void setEmbeddedWall(std::shared_ptr<game::GameEntity> ent);
         void setEmbeddedFloor(std::shared_ptr<game::GameEntity> ent);
@@ -88,9 +92,20 @@ namespace map {
 
         bool isAir() const;
 
-
         int naturalWall() const;
         int naturalFloor() const;
+
+        std::shared_ptr<const game::Stairs> stairs() const;
+
+        std::shared_ptr<game::Designation> designation() const;
+
+        void setVisibility(const float& value);
+        bool visibility() const;
+
+        bool areEnemiesVisible() const;
+
+        bool blocksLOS() const;
+        bool blocksVerticalLOS() const;
     private:
         map::vector3 mPosition;
 
@@ -113,7 +128,13 @@ namespace map {
 
         std::shared_ptr<map::NavGraphNode> mNavGraphNode;
 
+        std::shared_ptr<game::Designation> mDesignation;
+
         bool mIsVisible, mOutside;
+        float mVisibility;
+
+        float ambientLight() const;
+        float totalVisibility() const;
     };
 }
 

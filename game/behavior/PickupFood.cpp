@@ -14,9 +14,9 @@ namespace behavior
     PickupFood::PickupFood()
             :Sequence()
     {
-        addNode(std::shared_ptr<PathToFood>(new PathToFood));
-        addNode(std::shared_ptr<FreeHandsForItem>(new FreeHandsForItem));
-        addNode(std::shared_ptr<Action>(new Action(&PickupFood::pickup)));
+        addNode(std::make_shared<PathToFood>());
+        addNode(std::make_shared<FreeHandsForItem>());
+        addNode(std::make_shared<Action>(&PickupFood::pickup));
     }
 
     PickupFood::~PickupFood()

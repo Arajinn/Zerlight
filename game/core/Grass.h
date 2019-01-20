@@ -10,8 +10,8 @@
 namespace game {
     class Grass : public GameEntity {
     public:
-        Grass();
-        ~Grass();
+        Grass(const map::vector3& position);
+        virtual ~Grass();
 
     };
 }

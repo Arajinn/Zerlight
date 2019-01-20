@@ -55,12 +55,12 @@ namespace map
 
     void NavGraphNode::addConnection(std::shared_ptr<NavGraphNode> node)
     {
-        auto iter=std::find_if(std::begin(mConnections),std::end(mConnections),[&node](std::shared_ptr<NavGraphNode> const& value)
+        auto iter=std::find_if(mConnections.begin(),mConnections.end(),[&node](std::shared_ptr<NavGraphNode> const& elem)
         {
-           return node->mNodeID==value->mNodeID;
+           return node->mNodeID==elem->mNodeID;
         });
 
-        if (iter==std::end(mConnections))
+        if (iter==mConnections.end())
             mConnections.push_back(node);
     }
 
@@ -79,7 +79,7 @@ namespace map
         mNavGraphID=id;
     }
 
-    int NavGraphNode::connectionsCount() const
+    size_t NavGraphNode::connectionsCount() const
     {
         return mConnections.size();
     }
@@ -87,9 +87,9 @@ namespace map
     std::vector<unsigned int> NavGraphNode::connectionsID()
     {
         std::vector<unsigned int> result;
-        for (int i=0,isize=mConnections.size();i<isize;i++)
+        for (size_t i=0,isize=mConnections.size();i<isize;i++)
         {
-            auto id=mConnections.at(i)->navGraphID();
+            const auto id=mConnections.at(i)->navGraphID();
             if (id!=-1)
                 result.push_back(id);
         }
@@ -104,12 +104,12 @@ namespace map
 
     void NavGraphNode::removeConnection(std::shared_ptr<NavGraphNode> node)
     {
-        auto iter=std::find_if(std::begin(mConnections),std::end(mConnections),[&node](std::shared_ptr<NavGraphNode> const& value)
+        auto iter=std::find_if(mConnections.begin(),mConnections.end(),[&node](std::shared_ptr<NavGraphNode> const& elem)
         {
-            return node->mNodeID==value->mNodeID;
+            return node->mNodeID==elem->mNodeID;
         });
 
-        if (iter!=std::end(mConnections))
+        if (iter!=mConnections.end())
             mConnections.erase(iter);
     }
 
@@ -170,6 +170,25 @@ namespace map
                 auto cell=map->cell(i+mArea.left(),j+mArea.top(),mLevel);
                 if (!cell->willSuffocate() && !cell->hasLava())
                     return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool NavGraphNode::hasDryLand(map::vector3& position) const
+    {
+        auto map=WORLD_MAP;
+        for (int i=0,isize=mArea.height();i<isize;i++)
+        {
+            for (int j=0,jsize=mArea.width();j<jsize;j++)
+            {
+                auto cell=map->cell(i+mArea.left(),j+mArea.top(),mLevel);
+                if (!cell->willSuffocate() && !cell->hasLava())
+                {
+                    position=map::vector3(j+mArea.left(),i+mArea.top(),mLevel);
+                    return true;
+                }
             }
         }
 

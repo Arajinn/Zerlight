@@ -172,7 +172,8 @@ class Graphics : public std::enable_shared_from_this<Graphics> {
                            int dstY,
                            int width,
                            int height,
-                           const gui::ZColor& color) = 0;
+                           const gui::ZColor& color,
+                           bool xFlip) = 0;
 
         /**
          * Draws a single point/pixel.

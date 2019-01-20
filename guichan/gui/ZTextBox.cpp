@@ -23,7 +23,7 @@ namespace gui
         mEditable=true;
         mOpaque=true;
 
-        mText=std::shared_ptr<ZText>(new ZText());
+        mText=std::make_shared<ZText>();
 
         setFocusable(true);
 
@@ -39,7 +39,7 @@ namespace gui
         mEditable=true;
         mOpaque=true;
 
-        mText=std::shared_ptr<ZText>(new ZText(text));
+        mText=std::make_shared<ZText>(text);
 
         setFocusable(true);
 

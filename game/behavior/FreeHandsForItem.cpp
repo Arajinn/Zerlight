@@ -15,9 +15,9 @@ namespace behavior
     FreeHandsForItem::FreeHandsForItem()
             :Selector()
     {
-        addNode(std::shared_ptr<Condition>(new Condition(&FreeHandsForItem::canCarry)));
-        addNode(std::shared_ptr<Action>(new Action(&FreeHandsForItem::sheathExtraItems)));
-        addNode(std::shared_ptr<Action>(new Action(&FreeHandsForItem::dropExraItems)));
+        addNode(std::make_shared<Condition>(&FreeHandsForItem::canCarry));
+        addNode(std::make_shared<Action>(&FreeHandsForItem::sheathExtraItems));
+        addNode(std::make_shared<Action>(&FreeHandsForItem::dropExraItems));
     }
 
     FreeHandsForItem::~FreeHandsForItem()

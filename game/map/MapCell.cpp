@@ -13,7 +13,9 @@
 #include "game/core/Grass.h"
 #include "game/core/Ramp.h"
 #include "game/core/Liquid.h"
+#include "game/core/Stairs.h"
 #include "game/core/ConstructedTerrain.h"
+#include "game/core/Character.h"
 #include "game/properties/GameDefinition.h"
 #include "game/properties/TerrainSettings.h"
 
@@ -35,6 +37,9 @@ namespace map
 
         mIsVisible=false;
         mOutside=false;
+        mVisibility=0.0f;
+
+        mDesignation=nullptr;
 
         this->updateWeight();
     }
@@ -55,6 +60,8 @@ namespace map
         mIsVisible=false;
         mOutside=false;
 
+        mDesignation=nullptr;
+
         this->updateWeight();
     }
 
@@ -74,6 +81,8 @@ namespace map
         mIsVisible=false;
         mOutside=false;
 
+        mDesignation=nullptr;
+
         this->updateWeight();
     }
 
@@ -84,6 +93,8 @@ namespace map
 
         mRamp=nullptr;
         mLiquid=nullptr;
+
+        mDesignation=nullptr;
     }
 
     bool MapCell::hasNaturalWall() const
@@ -146,7 +157,7 @@ namespace map
 
     bool MapCell::hasGrass() const
     {
-        auto castEmbeddedFloor=std::dynamic_pointer_cast<game::Grass>(mEmbeddedFloor);
+        std::shared_ptr<game::Grass> castEmbeddedFloor=std::dynamic_pointer_cast<game::Grass>(mEmbeddedFloor);
         return (castEmbeddedFloor!= nullptr);
     }
 
@@ -157,21 +168,19 @@ namespace map
 
     bool MapCell::hasGrassRampTop() const
     {
-        if ((this->hasGrass()) && (mRamp!= nullptr))
-        {
-            return (mRamp->cell()->position() != this->position());
-        }
+        if ((hasGrass()) && (mRamp!= nullptr))
+            return (mRamp->cell()->position() != position());
 
         return false;
     }
 
     bool MapCell::hasFloor() const
     {
-        if (this->hasNaturalFloor())
+        if (hasNaturalFloor())
             return true;
 
-        if (this->hasEmbeddedFloor())
-            return (!this->hasGrassRampTop());
+        if (hasEmbeddedFloor())
+            return (!hasGrassRampTop());
 
         return false;
     }
@@ -210,23 +219,23 @@ namespace map
 
     void MapCell::addObject(std::shared_ptr<game::GameEntity> ent)
     {
-        auto iter=std::find_if(std::begin(mObjects),std::end(mObjects),[&ent](std::shared_ptr<game::GameEntity> const& value)
+        auto iter=std::find_if(mObjects.begin(),mObjects.end(),[&ent](std::shared_ptr<game::GameEntity> const& elem)
         {
-            return ent->ID()==value->ID();
+            return ent->ID()==elem->ID();
         });
 
-        if (iter==std::end(mObjects))
+        if (iter==mObjects.end())
             mObjects.push_back(ent);
     }
 
     void MapCell::removeObject(std::shared_ptr<game::GameEntity> ent)
     {
-        auto iter=std::find_if(std::begin(mObjects),std::end(mObjects),[&ent](std::shared_ptr<game::GameEntity> const& value)
+        auto iter=std::find_if(mObjects.begin(),mObjects.end(),[&ent](std::shared_ptr<game::GameEntity> const& elem)
         {
-            return ent->ID()==value->ID();
+            return ent->ID()==elem->ID();
         });
 
-        if (iter!=std::end(mObjects))
+        if (iter!=mObjects.end())
             mObjects.erase(iter);
     }
 
@@ -242,27 +251,38 @@ namespace map
 
     void MapCell::addCharacter(std::shared_ptr<game::Character> character)
     {
-        auto iter=std::find_if(std::begin(mCharacters),std::end(mCharacters),[&character](std::shared_ptr<game::Character> const& value)
+        auto iter=std::find_if(mCharacters.begin(),mCharacters.end(),
+                [&character](std::shared_ptr<game::Character> const& elem)
         {
-            return character->ID()==value->ID();
+            return character->ID()==elem->ID();
         });
 
-        if (iter==std::end(mCharacters))
+        if (iter==mCharacters.end())
             mCharacters.push_back(character);
     }
 
     void MapCell::removeCharacter(std::shared_ptr<game::Character> character)
     {
-        auto iter=std::find_if(std::begin(mCharacters),std::end(mCharacters),[&character](std::shared_ptr<game::Character> const& value)
+        auto iter=std::find_if(mCharacters.begin(),mCharacters.end(),[&character](std::shared_ptr<game::Character> const& elem)
         {
-            return character->ID()==value->ID();
+            return character->ID()==elem->ID();
         });
 
-        if (iter==std::end(mCharacters))
+        if (iter!=mCharacters.end())
             mCharacters.erase(iter);
 
-        if ((mCharacters.size()!=0) || (mEmbeddedWall== nullptr))
+        if ((!mCharacters.empty()) || (mEmbeddedWall== nullptr))
             return;
+    }
+
+    int MapCell::getCharactersCount() const
+    {
+        return mCharacters.size();
+    }
+
+    std::vector<std::shared_ptr<game::Character>> MapCell::getCharacters() const
+    {
+        return mCharacters;
     }
 
     bool MapCell::isWalkable() const
@@ -278,10 +298,10 @@ namespace map
         if (upper_cell==nullptr)
             return false;
 
-        if (upper_cell->hasStairs()==true)
+        if (upper_cell->hasStairs())
             return true;
 
-        if (upper_cell->hasEmbeddedFloor()==false)
+        if (!upper_cell->hasEmbeddedFloor())
             return false;
 
         return true;
@@ -405,5 +425,79 @@ namespace map
     std::shared_ptr<const game::Ramp> MapCell::ramp() const
     {
         return mRamp;
+    }
+
+    std::shared_ptr<const game::Stairs> MapCell::stairs() const
+    {
+        return std::dynamic_pointer_cast<game::Stairs>(mEmbeddedWall);
+    }
+
+    std::shared_ptr<game::Designation> MapCell::designation() const
+    {
+        return mDesignation;
+    }
+
+    void MapCell::setVisibility(const float& value)
+    {
+        mVisibility=value;
+    }
+
+    bool MapCell::visibility() const
+    {
+        return mVisibility;
+    }
+
+    float MapCell::ambientLight() const
+    {
+        if (mOutside)
+            return REGION->outsideLight();
+
+        return REGION->insideLight();
+    }
+
+    float MapCell::totalVisibility() const
+    {
+        return ambientLight()+mVisibility;
+    }
+
+    bool MapCell::areEnemiesVisible() const
+    {
+        return (totalVisibility()>0.75f);
+    }
+
+    bool MapCell::blocksLOS() const
+    {
+        if (hasNaturalWall())
+            return true;
+
+        if (!hasEmbeddedWall())
+            return false;
+
+        const auto construction=std::dynamic_pointer_cast<game::Construction>(mEmbeddedWall);
+        if (construction==nullptr)
+            return false;
+
+        //TODO
+        return construction->hasFlag(game::ConstructionProperty::BlocksLOS);
+    }
+
+    bool MapCell::blocksVerticalLOS() const
+    {
+        if (blocksLOS())
+            return true;
+
+        //TODO
+
+        if (hasNaturalFloor())
+            return true;
+
+        if ((!hasEmbeddedFloor()) || (hasGrassRampTop()))
+            return false;
+
+        const auto construction=std::dynamic_pointer_cast<game::Construction>(mEmbeddedFloor);
+        if (construction==nullptr)
+            return false;
+
+        return construction->hasFlag(game::ConstructionProperty::BlocksLOS);
     }
 }

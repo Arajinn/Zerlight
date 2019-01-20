@@ -14,8 +14,21 @@ namespace game {
         ~SquadPosition();
 
         const SquadPositionPerk& perk() const;
+
+        const bool& attackSquadLeaderTarget() const;
+        const bool& stayAtMaxRange() const;
+        const bool& retreatWhenBleeding() const;
+        const bool& retreatToEquip() const;
+        const bool& retreatToFillAmmo() const;
+        const bool& pursueEnemies() const;
     private:
         SquadPositionPerk mPerk;
+        bool mAttackSquadLeaderTarget;
+        bool mStayAtMaxRange;
+        bool mRetreatWhenBleeding;
+        bool mRetreatToEquip;
+        bool mRetreatToFillAmmo;
+        bool mPursueEnemies;
     };
 }
 

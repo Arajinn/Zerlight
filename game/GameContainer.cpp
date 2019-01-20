@@ -14,7 +14,7 @@ namespace game
     GameContainer::GameContainer()
     {
         gameManager=GameManager::create();
-        gameDefinition=std::shared_ptr<properties::GameDefinition>(new properties::GameDefinition());
+        gameDefinition=std::make_shared<properties::GameDefinition>();
     }
 
     GameContainer::~GameContainer()

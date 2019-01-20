@@ -12,7 +12,7 @@ namespace game{
     {
     public:
         ResourcePile(const map::vector3& position);
-        ~ResourcePile();
+        virtual ~ResourcePile();
 
         static std::shared_ptr<ResourcePile> create(const map::vector3& position, std::string id, std::string materialID, std::shared_ptr<properties::ItemDefinition> aItemDef);
 

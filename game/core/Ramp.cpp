@@ -25,7 +25,7 @@ namespace game
     std::shared_ptr<Ramp> Ramp::create(const map::vector3& position, std::string constructionID, const int& materialIndex,
             ConstructOrientation orientation)
     {
-        std::shared_ptr<Ramp> ptr=std::shared_ptr<Ramp>(new Ramp(position));
+        auto ptr=std::make_shared<Ramp>(position);
         ptr->init(constructionID, materialIndex, orientation);
         return ptr;
     }

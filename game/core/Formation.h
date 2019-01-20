@@ -5,6 +5,8 @@
 #ifndef ZERL_FORMATION_H
 #define ZERL_FORMATION_H
 
+#include "game/core/enums.h"
+
 #include <vector>
 #include <memory>
 
@@ -19,9 +21,17 @@ namespace game {
         Formation();
         ~Formation();
 
-        friend class Squad;
+        const bool& avoidEnemies() const;
+        const bool& defendGnomes() const;
+
+        std::vector<std::shared_ptr<SquadPosition>> positions() const;
+
+        FormationPerk perk() const;
     private:
-        std::vector<std::shared_ptr<SquadPosition>> positions;
+        std::vector<std::shared_ptr<SquadPosition>> mPositions;
+        bool mAvoidEnemies;
+        FormationPerk mPerk;
+        bool mDefendGnomes;
     };
 }
 

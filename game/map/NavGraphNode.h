@@ -32,7 +32,7 @@ class NavGraphNode : public std::enable_shared_from_this<NavGraphNode> {
 
         void clearConnections();
 
-        int connectionsCount() const;
+        size_t connectionsCount() const;
         std::vector<unsigned int> connectionsID();
 
         std::vector<std::shared_ptr<NavGraphNode>> connections() const;
@@ -45,6 +45,7 @@ class NavGraphNode : public std::enable_shared_from_this<NavGraphNode> {
         map::vector3 closestPoint(const map::vector3& position) const;
 
         bool hasDryLand() const;
+        bool hasDryLand(map::vector3& position) const;
     private:
         int mNodeID;
         int mNavGraphID;

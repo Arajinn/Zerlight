@@ -3,6 +3,7 @@
 //
 
 #include "RaceDefinition.h"
+#include "GenderDef.h"
 #include "game/utils/Randomizer.h"
 #include <algorithm>
 
@@ -20,12 +21,12 @@ namespace properties
 
     float RaceDefinition::additionalDietValue(std::string itemID) const
     {
-        auto iter=std::find_if(std::begin(AdditionalDiet),std::end(AdditionalDiet),[&itemID](std::pair<std::string,float> const& value)
+        auto iter=std::find_if(AdditionalDiet.begin(),AdditionalDiet.end(),[&itemID](std::pair<std::string,float> const& value)
         {
             return value.first==itemID;
         });
 
-        if (iter==std::end(AdditionalDiet))
+        if (iter==AdditionalDiet.end())
             return 0.0f;
         else
             return iter->second;
@@ -36,20 +37,36 @@ namespace properties
         float rand=utils::Randomizer::instance()->uniform(0.0f,1.0f);
 
         float summ=0.0f;
-        for (int i=0,isize=Genders.size();i<isize;i++)
-            summ+=Genders.at(i).second;
+        for (size_t i=0,isize=Genders.size();i<isize;i++)
+            summ+=Genders.at(i)->RandomWeight;
 
         float threshold1=0.0f;
-        for (int i=0,isize=Genders.size();i<isize;i++)
+        for (size_t i=0,isize=Genders.size();i<isize;i++)
         {
-            float threshold2=threshold1+Genders.at(i).second/summ;
+            float threshold2=threshold1+Genders.at(i)->RandomWeight/summ;
 
             if (rand<threshold2)
-                return Genders.at(i).first;
+                return Genders.at(i)->Gender;
 
             threshold1=threshold2;
         }
 
         return game::GenderType::Neuter;
+    }
+
+    std::shared_ptr<const GenderDef> RaceDefinition::gender(const game::GenderType& type) const
+    {
+        auto iter=std::find_if(Genders.begin(),Genders.end(),[&type](std::shared_ptr<GenderDef> const& elem)
+        {
+            return elem->Gender==type;
+        });
+
+        if (iter!=Genders.end())
+        {
+            const auto index=std::distance(Genders.begin(),iter);
+            return Genders.at(index);
+        }
+        else
+            return nullptr;
     }
 }

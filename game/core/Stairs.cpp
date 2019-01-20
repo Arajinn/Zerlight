@@ -26,7 +26,7 @@ namespace game
     }
     std::shared_ptr<Stairs> Stairs::create(const map::vector3& position, std::string constructionID, ConstructOrientation orientation)
     {
-        std::shared_ptr<Stairs> ptr=std::shared_ptr<Stairs>(new Stairs(position));
+        auto ptr=std::make_shared<Stairs>(position);
         ptr->init(constructionID, orientation);
         return ptr;
     }
@@ -40,7 +40,7 @@ namespace game
     {
         auto map=WORLD_MAP;
 
-        auto down_cell=map->cell(this->position().x(),this->position().y(),this->position().z()-1);
+        auto down_cell=map->cell(position().x(),position().y(),position().z()-1);
         if (down_cell!=nullptr)
         {
             down_cell->setEmbeddedWall(shared_from_this());
@@ -56,7 +56,7 @@ namespace game
             }
         }
 
-        auto this_cell=map->cell(this->position());
+        auto this_cell=map->cell(position());
         if (this_cell!= nullptr)
         {
             map->navGraph()->reestablishConnections(this_cell);
@@ -67,10 +67,10 @@ namespace game
     {
         auto map=WORLD_MAP;
 
-        auto down_dell=map->cell(this->position().x(),this->position().y(),this->position().z()-1);
+        auto down_dell=map->cell(position().x(),position().y(),position().z()-1);
         down_dell->setEmbeddedWall(nullptr);
 
-        auto this_cell=map->cell(this->position());
+        auto this_cell=map->cell(position());
         this_cell->setEmbeddedWall(nullptr);
 
         Construction::pre_delete();

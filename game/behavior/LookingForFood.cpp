@@ -12,8 +12,8 @@ namespace behavior
     LookingForFood::LookingForFood()
             :Sequence()
     {
-        addNode(std::shared_ptr<Condition>(new Condition(&LookingForFood::isLookingForFood)));
-        addNode(std::shared_ptr<GetFedOrFeedSelfAtTable>(new GetFedOrFeedSelfAtTable));
+        addNode(std::make_shared<Condition>(&LookingForFood::isLookingForFood));
+        addNode(std::make_shared<GetFedOrFeedSelfAtTable>());
     }
 
     LookingForFood::~LookingForFood()

@@ -62,7 +62,7 @@ private:
     bool isPixelInWindow(const int& x, const int& y) const;
 
     void drawImage(std::shared_ptr<gui::Graphics> graphics, std::shared_ptr<const gui::ZImage> image,
-                              const int& xPlot, const int& yPlot, const int& imageSize, const gui::ZColor& color);
+                              const int& xPlot, const int& yPlot, const int& imageSize, const gui::ZColor& color, bool xFlip=false);
 };
 
 

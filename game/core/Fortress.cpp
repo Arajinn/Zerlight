@@ -7,6 +7,7 @@
 #include "GameManager.h"
 #include "Item.h"
 #include "StockManager.h"
+#include "Military.h"
 #include "game/properties/GameDefinition.h"
 #include "game/properties/ItemDefinition.h"
 
@@ -17,7 +18,8 @@ namespace game
     Fortress::Fortress()
         :mStockWealth(0)
     {
-        mStockManager=std::shared_ptr<StockManager>(new StockManager());
+        mStockManager=std::make_shared<StockManager>();
+        mMilitary=std::make_shared<Military>();
     }
 
     Fortress::~Fortress()
@@ -27,9 +29,9 @@ namespace game
 
     void Fortress::processSpawn()
     {
-        for (auto elem : mSpawnList)
+        for (const auto& elem : mSpawnList)
         {
-            this->addItemToContainer(elem);
+            addItemToContainer(elem);
         }
 
         mSpawnList.clear();
@@ -37,9 +39,9 @@ namespace game
 
     void Fortress::processDeletion()
     {
-        for (auto elem : mDeleteList)
+        for (const auto& elem : mDeleteList)
         {
-            this->removeItemFromContainer(elem);
+            removeItemFromContainer(elem);
         }
 
         mDeleteList.clear();
@@ -47,12 +49,13 @@ namespace game
 
     void Fortress::addEntity(ItemEffectType type, std::shared_ptr<GameEntity> ent)
     {
-        auto iter_effect=std::find_if(std::begin(mEntsWithEffects),std::end(mEntsWithEffects),[&type](entity_effect_info const& value)
+        auto iter_effect=std::find_if(mEntsWithEffects.begin(),mEntsWithEffects.end(),
+                [&type](entity_effect_info const& elem)
         {
-            return value.type==type;
+            return elem.type==type;
         });
 
-        if (iter_effect==std::end(mEntsWithEffects))
+        if (iter_effect==mEntsWithEffects.end())
         {
             entity_effect_info info;
             info.type=type;
@@ -61,12 +64,13 @@ namespace game
         }
         else
         {
-            auto iter_item=std::find_if(std::begin(iter_effect->entities),std::end(iter_effect->entities),[&ent](std::shared_ptr<GameEntity> const& value)
+            auto iter_item=std::find_if(iter_effect->entities.begin(),iter_effect->entities.end(),
+                    [&ent](std::shared_ptr<GameEntity> const& elem)
             {
-                return value->ID()==ent->ID();
+                return elem->ID()==ent->ID();
             });
 
-            if (iter_item==std::end(iter_effect->entities))
+            if (iter_item==iter_effect->entities.end())
                 iter_effect->entities.push_back(ent);
         }
     }
@@ -75,15 +79,15 @@ namespace game
     {
         auto itemDef = GAME_DEFINITIONS->itemDefinition(item->itemID());
         auto effects=itemDef->Effects;
-        for (auto effect : effects)
+        for (const auto& effect : effects)
         {
-            this->addEntity(effect.Effect,item);
+            addEntity(effect.Effect,item);
         }
     }
 
     void Fortress::trackItem(std::shared_ptr<Item> item)
     {
-        this->trackEntity(item);
+        trackEntity(item);
 
         if (mStockManager->isItemInStocks(item))
             return;
@@ -93,30 +97,30 @@ namespace game
 
     void Fortress::addItem(std::shared_ptr<Item> item)
     {
-        auto iter=std::find_if(std::begin(mSpawnList),std::end(mSpawnList),[&item](std::shared_ptr<Item> const& value)
+        auto iter=std::find_if(mSpawnList.begin(),mSpawnList.end(),[&item](std::shared_ptr<Item> const& elem)
         {
-            return item->ID()==value->ID();
+            return item->ID()==elem->ID();
         });
 
-        if (iter==std::end(mSpawnList))
+        if (iter==mSpawnList.end())
             mSpawnList.push_back(item);
     }
 
     void Fortress::addItemToContainer(std::shared_ptr<Item> item)
     {
-        this->trackItem(item);
+        trackItem(item);
         mStockManager->addItem(item);
     }
 
     std::vector<std::shared_ptr<GameEntity>> Fortress::getEntities(ItemEffectType type)
     {
-        auto iter_effect=std::find_if(std::begin(mEntsWithEffects),std::end(mEntsWithEffects),[&type](entity_effect_info const& value)
+        auto iter_effect=std::find_if(mEntsWithEffects.begin(),mEntsWithEffects.end(),[&type](entity_effect_info const& elem)
         {
-            return value.type==type;
+            return elem.type==type;
         });
 
         std::vector<std::shared_ptr<GameEntity>> result;
-        if (iter_effect==std::end(mEntsWithEffects))
+        if (iter_effect==mEntsWithEffects.end())
             return result;
         else
             return iter_effect->entities;
@@ -126,23 +130,25 @@ namespace game
     {
         for (auto effect : effects)
         {
-            auto iter_effect=std::find_if(std::begin(mEntsWithEffects),std::end(mEntsWithEffects),[&effect](entity_effect_info const& value)
+            auto iter_effect=std::find_if(mEntsWithEffects.begin(),mEntsWithEffects.end(),
+                    [&effect](entity_effect_info const& elem)
             {
-                return value.type==effect.Effect;
+                return elem.type==effect.Effect;
             });
 
-            if (iter_effect!=std::end(mEntsWithEffects))
+            if (iter_effect!=mEntsWithEffects.end())
             {
-                auto iter_item=std::find_if(std::begin(iter_effect->entities),std::end(iter_effect->entities),[&ent](std::shared_ptr<GameEntity> const& value)
+                auto iter_item=std::find_if(iter_effect->entities.begin(),iter_effect->entities.end(),
+                        [&ent](std::shared_ptr<GameEntity> const& elem)
                 {
-                    return value->ID()==ent->ID();
+                    return elem->ID()==ent->ID();
                 });
 
-                if (iter_item!=std::end(iter_effect->entities))
+                if (iter_item!=iter_effect->entities.end())
                 {
-                    int index=std::distance(std::begin(mEntsWithEffects),iter_effect);
+                    const auto index=std::distance(mEntsWithEffects.begin(),iter_effect);
                     mEntsWithEffects[index].entities.erase(iter_item);
-                    if (mEntsWithEffects[index].entities.size()==0)
+                    if (mEntsWithEffects[index].entities.empty())
                     {
                         mEntsWithEffects.erase(iter_effect);
                     }
@@ -153,8 +159,9 @@ namespace game
 
     void Fortress::stopTrackingItem(std::shared_ptr<Item> item)
     {
-        auto itemDef=GAME_DEFINITIONS->itemDefinition(item->itemID());
-        this->stopTrackingEntity(item,itemDef->Effects);
+        //auto itemDef=GAME_DEFINITIONS->itemDefinition(item->itemID());
+        const auto itemDef=item->itemDef();
+        stopTrackingEntity(item,itemDef->Effects);
 
         if (!mStockManager->isItemInStocks(item))
             return;
@@ -164,18 +171,23 @@ namespace game
 
     void Fortress::removeItemFromContainer(std::shared_ptr<game::Item> item)
     {
-        this->stopTrackingItem(item);
+        stopTrackingItem(item);
         mStockManager->removeItem(item);
     }
 
     void Fortress::removeItem(std::shared_ptr<Item> item)
     {
-        auto iter=std::find_if(std::begin(mDeleteList),std::end(mDeleteList),[&item](std::shared_ptr<Item> const& value)
+        auto iter=std::find_if(mDeleteList.begin(),mDeleteList.end(),[&item](std::shared_ptr<Item> const& elem)
         {
-            return item->ID()==value->ID();
+            return item->ID()==elem->ID();
         });
 
-        if (iter==std::end(mDeleteList))
+        if (iter==mDeleteList.end())
             mDeleteList.push_back(item);
+    }
+
+    std::shared_ptr<Military> Fortress::military() const
+    {
+        return mMilitary;
     }
 }

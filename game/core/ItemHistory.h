@@ -7,19 +7,42 @@
 
 #include "enums.h"
 #include <string>
+#include <vector>
+#include <memory>
+
+namespace game
+{
+    class Item;
+    class Character;
+    class CharacterHistory;
+}
 
 namespace game {
     class ItemHistory {
     public:
-        ItemHistory(std::string aItemID, std::string aMaterialID, std::string aName="");
+        ItemHistory(std::shared_ptr<Item> aItem, std::string aItemID, std::string aMaterialID, std::string aName="");
         ~ItemHistory();
+
+        void pre_delete();
 
         const std::string& itemID() const;
         const std::string& materialID() const;
 
         const ItemQuality& quality() const;
+
+        std::string materialName() const;
+
+        bool hasUniqueName() const;
+        std::string name() const;
+
+        std::string materialAtIndex(const int& index) const;
+
+        std::vector<std::shared_ptr<Item>> components() const;
+        void clearComponents();
+
+        void killed(std::shared_ptr<Character> victim);
     private:
-        unsigned int mID;
+        std::shared_ptr<Item> mItem;
 
         std::string mItemID;
         std::string mMaterialID;
@@ -27,6 +50,11 @@ namespace game {
         std::string mName;
 
         ItemQuality mQuality;
+
+        std::vector<std::shared_ptr<Item>> mComponents;
+        std::shared_ptr<CharacterHistory> mCrafterHistory;
+
+        std::vector<std::shared_ptr<CharacterHistory>> mKills;
     };
 }
 

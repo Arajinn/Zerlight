@@ -54,22 +54,22 @@ namespace map
 
                     if (z<20)
                     {
-                        new_cell=std::shared_ptr<MapCell>(new MapCell(position,"Granite"));
+                        new_cell=std::make_shared<MapCell>(position,"Granite");
                     }
                     else if (z>21)
                     {
-                        new_cell=std::shared_ptr<MapCell>(new MapCell(position,"Air"));
+                        new_cell=std::make_shared<MapCell>(position,"Air");
                     }
                     else if (z==20)
                     {
                         if ((x<20) && (y<20))
                         //if (x<20)
                         {
-                            new_cell = std::shared_ptr<MapCell>(new MapCell(position, "Granite"));
+                            new_cell = std::make_shared<MapCell>(position, "Granite");
                         }
                         else
                             {
-                            new_cell = std::shared_ptr<MapCell>(new MapCell(position, "Air", "Granite"));
+                            new_cell = std::make_shared<MapCell>(position, "Air", "Granite");
                         }
                     }
                     else if (z==21)
@@ -77,11 +77,11 @@ namespace map
                         if ((x<20) && (y<20))
                         //if (x<20)
                         {
-                            new_cell = std::shared_ptr<MapCell>(new MapCell(position, "Air", "Granite"));
+                            new_cell = std::make_shared<MapCell>(position, "Air", "Granite");
                         }
                         else
                         {
-                            new_cell=std::shared_ptr<MapCell>(new MapCell(position,"Air"));
+                            new_cell=std::make_shared<MapCell>(position,"Air");
                         }
                     }
                     else
@@ -181,7 +181,7 @@ namespace map
 
     void Map::postInit()
     {
-        mNavGraph=std::shared_ptr<NavGraph>(new NavGraph());
+        mNavGraph=std::make_shared<NavGraph>();
     }
 
     const std::shared_ptr<NavGraph> Map::navGraph()
@@ -225,19 +225,19 @@ namespace map
         {
             auto delta_pos=pos+delta;
             auto delta_cell=cell(delta_pos);
-            if ((delta_cell!=nullptr) && (delta_cell->isVisible()==false) &&
-                    (((delta_pos.z()>=pos.z()) && (delta_cell->hasFloor()==false)) ||
-                    ((delta_pos.z()<=pos.z()) && (pos_cell->hasFloor()==false))))
+            if ((delta_cell!=nullptr) && (!delta_cell->isVisible()) &&
+                    (((delta_pos.z()>=pos.z()) && (!delta_cell->hasFloor())) ||
+                    ((delta_pos.z()<=pos.z()) && (!pos_cell->hasFloor()))))
             {
                 delta_cell->setIsVisible(true);
                 init_count++;
 
-                if (delta_cell->hasFloor()==false)
+                if (!delta_cell->hasFloor())
                     source.push_back(delta_pos);
             }
         }
 
-        while (source.size()>0)
+        while (!source.empty())
         {
             pos=source.back();
             source.erase(source.end());
@@ -246,15 +246,15 @@ namespace map
             {
                 auto delta_pos=pos+delta;
                 auto delta_cell=cell(delta_pos);
-                if ((delta_cell!=nullptr) && (delta_cell->isVisible()==false) &&
-                    (((delta_pos.z()>=pos.z()) && (delta_cell->hasFloor()==false)) ||
-                     ((delta_pos.z()<=pos.z()) && (pos_cell->hasFloor()==false))))
+                if ((delta_cell!=nullptr) && (!delta_cell->isVisible()) &&
+                    (((delta_pos.z()>=pos.z()) && (!delta_cell->hasFloor())) ||
+                     ((delta_pos.z()<=pos.z()) && (!pos_cell->hasFloor()))))
                 {
                     delta_cell->setIsVisible(true);
                     init_count++;
                     mInitProgress=0.5f+float(init_count)/float(cells_count)/2.0f;
 
-                    if (delta_cell->hasFloor()==false)
+                    if (!delta_cell->hasFloor())
                     {
                         auto iter=std::find_if(source.begin(),source.end(),[&delta_pos](vector3 const& item)
                         {

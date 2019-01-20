@@ -136,19 +136,119 @@ namespace game
             return EquipmentType::None;
     }
 
-    Material String2Enums::str2Material(const std::string& str)
+    AttackType String2Enums::str2AttackType(const std::string& str)
     {
-        if (str=="StandardBone")
-            return Material::StandardBone;
-        else if (str=="StandardShell")
-            return Material::StandardShell;
-        else if (str=="StandardSkin")
-            return Material::StandardSkin;
-        else if (str=="StandardWeakFlesh")
-            return Material::StandardWeakFlesh;
-        else if (str=="StandardStrongFlesh")
-            return Material::StandardStrongFlesh;
+        if (str=="Swing")
+            return AttackType::Swing;
+        else if (str=="Thrust")
+            return AttackType::Thrust;
+        else if (str=="HandToHand")
+            return AttackType::HandToHand;
+        else if (str=="Projectile")
+            return AttackType::Projectile;
+        else if (str=="Temperature")
+            return AttackType::Temperature;
+        else if (str=="Gas")
+            return AttackType::Gas;
+        else if (str=="Mental")
+            return AttackType::Mental;
         else
-            return Material::Count;
+            return AttackType::Undef;
+    }
+
+    DamageType String2Enums::str2DamageType(const std::string& str)
+    {
+        if (str=="Slash")
+            return DamageType::Slash;
+        else if (str=="Pierce")
+            return DamageType::Pierce;
+        else if (str=="Blunt")
+            return DamageType::Blunt;
+        else if (str=="Heat")
+            return DamageType::Heat;
+        else if (str=="Cold")
+            return DamageType::Cold;
+        else if (str=="Poison")
+            return DamageType::Poison;
+        else
+            return DamageType::Undef;
+    }
+
+    GenderType String2Enums::str2GenderType(const std::string& str)
+    {
+        if (str=="Male")
+            return GenderType::Male;
+        else if (str=="Female")
+            return GenderType::Female;
+        else if (str=="Neuter")
+            return GenderType::Neuter;
+        else
+            return GenderType::Undef;
+    }
+
+    CharacterAttributeType String2Enums::str2CharacterAttributeType(const std::string& str)
+    {
+        if (str=="Fitness")
+            return CharacterAttributeType::Fitness;
+        else if (str=="Nimbleness")
+            return CharacterAttributeType::Nimbleness;
+        else if (str=="Curiosity")
+            return CharacterAttributeType::Curiosity;
+        else if (str=="Focus")
+            return CharacterAttributeType::Focus;
+        else if (str=="Charm")
+            return CharacterAttributeType::Charm;
+        else
+            return CharacterAttributeType::Undef;
+    }
+
+    FactionType String2Enums::str2FactionType(const std::string& str)
+    {
+        if (str=="PlayerCiv")
+            return FactionType::PlayerCiv;
+        else if (str=="FriendlyCiv")
+            return FactionType::FriendlyCiv;
+        else if (str=="Neutral")
+            return FactionType::Neutral;
+        else if (str=="Wild")
+            return FactionType::Wild;
+        else if (str=="Subteranean")
+            return FactionType::Subteranean;
+        else if (str=="EnemyCiv")
+            return FactionType::EnemyCiv;
+        else if (str=="EnemySmall")
+            return FactionType::EnemySmall;
+        else if (str=="Mant")
+            return FactionType::Mant;
+        else if (str=="Beetle")
+            return FactionType::Beetle;
+        else if (str=="Undead")
+            return FactionType::Undead;
+        else
+            return FactionType::Undef;
+    }
+
+    SquadType String2Enums::str2SquadType(const std::string& str)
+    {
+        if (str=="Attack")
+            return SquadType::Attack;
+        else if (str=="MantScout")
+            return SquadType::MantScout;
+        else if (str=="Merchant")
+            return SquadType::Merchant;
+        else if (str=="Ambassador")
+            return SquadType::Ambassador;
+        else if (str=="GoblinRaider")
+            return SquadType::GoblinRaider;
+        else if (str=="GoblinTunneler")
+            return SquadType::GoblinTunneler;
+        else if (str=="Automaton")
+            return SquadType::Automaton;
+        else if (str=="BeetleCocoon")
+            return SquadType::BeetleCocoon;
+        else if (str=="Golem")
+            return SquadType::Golem;
+        else
+            return SquadType::Undef;
     }
 }

@@ -31,7 +31,7 @@ namespace gui
         mPushed = false;
         mIsDragged = false;
 
-        mInternalFocusHandler=std::shared_ptr<FocusHandler>(new FocusHandler());
+        mInternalFocusHandler=std::make_shared<FocusHandler>();
         setInternalFocusHandler(mInternalFocusHandler);
 
         mInternalScrollArea = (scrollArea == nullptr);
@@ -39,7 +39,7 @@ namespace gui
 
         if (mInternalScrollArea)
         {
-            mScrollArea = std::shared_ptr<ZScrollArea>(new ZScrollArea());
+            mScrollArea = std::make_shared<ZScrollArea>();
         }
         else
         {
@@ -48,7 +48,7 @@ namespace gui
 
         if (mInternalListBox)
         {
-            mListBox = std::shared_ptr<ZListBox>(new ZListBox());
+            mListBox = std::make_shared<ZListBox>();
         }
         else
         {

@@ -13,8 +13,8 @@ namespace behavior
     GetFood::GetFood()
             :Selector()
     {
-        addNode(std::shared_ptr<Condition>(new Condition(&GetFood::haveFood)));
-        addNode(std::shared_ptr<PickupFood>(new PickupFood));
+        addNode(std::make_shared<Condition>(&GetFood::haveFood));
+        addNode(std::make_shared<PickupFood>());
     }
 
     GetFood::~GetFood()
@@ -25,7 +25,7 @@ namespace behavior
     TaskResult GetFood::haveFood(std::shared_ptr<game::Character> character, float dt, std::shared_ptr<Node> node)
     {
         auto list=character->heldItems();
-        for (auto item : list)
+        for (const auto& item : list)
         {
             if (game::GameEntity::entityHasEffect(item,game::ItemEffectType::Food))
             {

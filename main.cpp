@@ -9,10 +9,10 @@ int main()
 {
     try
     {
-        std::shared_ptr<MainActionListener> fpsDemo=std::shared_ptr<MainActionListener>(new MainActionListener());
+        std::shared_ptr<MainActionListener> fpsDemo=std::make_shared<MainActionListener>();
         fpsDemo->init();
 
-        std::shared_ptr<game::GameContainer> gameContainer=std::shared_ptr<game::GameContainer>(new game::GameContainer());
+        std::shared_ptr<game::GameContainer> gameContainer=std::make_shared<game::GameContainer>();
 
         fpsDemo->run();
     }

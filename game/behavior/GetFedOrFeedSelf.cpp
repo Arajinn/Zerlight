@@ -11,8 +11,8 @@ namespace behavior
     GetFedOrFeedSelf::GetFedOrFeedSelf()
             :Selector()
     {
-        addNode(std::shared_ptr<GetFed>(new GetFed));
-        addNode(std::shared_ptr<FindFood>(new FindFood));
+        addNode(std::make_shared<GetFed>());
+        addNode(std::make_shared<FindFood>());
     }
 
     GetFedOrFeedSelf::~GetFedOrFeedSelf()

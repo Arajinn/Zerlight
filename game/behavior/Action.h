@@ -16,7 +16,7 @@ namespace behavior {
     class Action : public Node {
     public:
         Action(task_ptr ptr, float start=0.0f);
-        ~Action();
+        virtual ~Action();
 
         TaskResult execute(std::shared_ptr<game::Character> character, float dt, std::shared_ptr<Node> node) override;
 
