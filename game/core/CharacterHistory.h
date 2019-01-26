@@ -6,6 +6,7 @@
 #define ZERL_CHARACTERHISTORY_H
 
 #include "game/core/enums.h"
+#include "game/core/types.h"
 
 #include <string>
 #include <memory>
@@ -55,8 +56,8 @@ namespace game {
         std::string possessivePronoun() const;
         std::string pronoun() const;
 
-        std::string materialAtIndex(const int& index) const;
-        std::vector<std::string> templateMaterialIDs() const;
+        MaterialID_t materialAtIndex(const int& index) const;
+        std::vector<MaterialID_t> templateMaterialIDs() const;
 
         void killed(std::shared_ptr<Character> victim);
 
@@ -73,7 +74,7 @@ namespace game {
 
         std::string mName;
         GenderType mGender;
-        std::vector<std::string> mTemplateMaterialIDs;
+        std::vector<MaterialID_t> mTemplateMaterialIDs;
 
         std::vector<std::pair<std::string,std::shared_ptr<CharacterSkill>>> mSkills;
         std::vector<std::pair<CharacterAttributeType,std::shared_ptr<CharacterAttribute>>> mAttributes;

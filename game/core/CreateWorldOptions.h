@@ -9,7 +9,17 @@
 
 namespace game {
     struct CreateWorldOptions {
+        CreateWorldOptions(size_t aSizeX=128,size_t aSizeY=128,size_t aSizeZ=128);
+
         std::string KingdomName;
+        size_t SizeX, SizeY, SizeZ;
+        unsigned int Seed;
+
+        size_t OffsetX,OffsetY;
+
+        double GroundHeight;
+        double GroundFrequency;
+        int GroundOctave;
     };
 }
 

@@ -6,6 +6,7 @@
 #define ZERL_BODYSECTION_H
 
 #include "game/core/enums.h"
+#include "game/core/types.h"
 #include "game/properties/TileDef.h"
 
 #include <vector>
@@ -88,7 +89,7 @@ namespace game {
 
         void repairEquipment();
 
-        std::string materialID() const;
+        MaterialID_t materialID() const;
     private:
         void init(unsigned int &key, std::shared_ptr<Body> parent, std::shared_ptr<properties::BodySectionDef> sectionDef,
                 BodySymmetricalType symmetricalType);
@@ -114,7 +115,7 @@ namespace game {
         BodySymmetricalType mSymmetricalType;
         bool mLimb;
         float mBloodLossRate;
-        std::string mMaterialID;
+        MaterialID_t mMaterialID;
 
         std::vector<BodySectionStatus> mStatus;
         void addStatus(const BodySectionStatus& status);

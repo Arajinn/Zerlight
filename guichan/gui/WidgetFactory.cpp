@@ -39,83 +39,77 @@ namespace gui
 
     std::shared_ptr<ZCheckBox> WidgetFactory::create_zcheckbox()
     {
-        auto ptr=std::shared_ptr<ZCheckBox>(new ZCheckBox());
+        auto ptr=std::make_shared<ZCheckBox>();
         ptr->init();
         return ptr;
     }
 
     std::shared_ptr<ZCheckBox> WidgetFactory::create_zcheckbox(const std::string &caption, bool selected)
     {
-        auto ptr=std::shared_ptr<ZCheckBox>(new ZCheckBox());
+        auto ptr=std::make_shared<ZCheckBox>();
         ptr->init(caption,selected);
         return ptr;
     }
 
-    void DeleteZIcon(ZIcon* obj)
-    {
-        obj->shutdown();
-        std::cout << "Deleting ZIcon\n";
-    }
-
     std::shared_ptr<ZIcon> WidgetFactory::create_zicon()
     {
-        auto ptr=std::shared_ptr<ZIcon>(new ZIcon(),DeleteZIcon);
+        auto ptr=std::make_shared<ZIcon>();
         ptr->init();
         return ptr;
     }
 
     std::shared_ptr<ZIcon> WidgetFactory::create_zicon(const std::string& filename)
     {
-        auto ptr=std::shared_ptr<ZIcon>(new ZIcon(),DeleteZIcon);
+        auto ptr=std::make_shared<ZIcon>();
         ptr->init(filename);
         return ptr;
     }
 
     std::shared_ptr<ZIcon> WidgetFactory::create_zicon(std::shared_ptr<const ZImage> image)
     {
-        auto ptr=std::shared_ptr<ZIcon>(new ZIcon(),DeleteZIcon);
+        auto ptr=std::make_shared<ZIcon>();
         ptr->init(image);
         return ptr;
     }
 
     std::shared_ptr<ZTextBox> WidgetFactory::create_ztextbox()
     {
-        auto ptr=std::shared_ptr<ZTextBox>(new ZTextBox());
+        auto ptr=std::make_shared<ZTextBox>();
         ptr->init();
         return ptr;
     }
 
     std::shared_ptr<ZTextBox> WidgetFactory::create_ztextbox(const std::string& text)
     {
-        auto ptr=std::shared_ptr<ZTextBox>(new ZTextBox());
+        auto ptr=std::make_shared<ZTextBox>();
         ptr->init(text);
         return ptr;
     }
 
     std::shared_ptr<ZLabel> WidgetFactory::create_zlabel()
     {
-        auto ptr=std::shared_ptr<ZLabel>(new ZLabel());
+        auto ptr=std::make_shared<ZLabel>();
         ptr->init();
         return ptr;
     }
 
     std::shared_ptr<ZLabel> WidgetFactory::create_zlabel(const std::string& caption)
     {
-        auto ptr=std::shared_ptr<ZLabel>(new ZLabel());
+        auto ptr=std::make_shared<ZLabel>();
         ptr->init(caption);
         return ptr;
     }
 
     std::shared_ptr<ZScrollArea> WidgetFactory::create_zscrollarea()
     {
-        auto ptr=std::shared_ptr<ZScrollArea>(new ZScrollArea());
+        auto ptr=std::make_shared<ZScrollArea>();
         ptr->init();
         return ptr;
     }
 
     std::shared_ptr<ZScrollArea> WidgetFactory::create_zscrollarea(std::shared_ptr<ZWidget> content)
     {
-        auto ptr=std::shared_ptr<ZScrollArea>(new ZScrollArea());
+        auto ptr=std::make_shared<ZScrollArea>();
         ptr->init(content);
         return ptr;
     }
@@ -123,21 +117,21 @@ namespace gui
     std::shared_ptr<ZScrollArea> WidgetFactory::create_zscrollarea(std::shared_ptr<ZWidget> content,
                                                            ZScrollArea::ScrollPolicy hPolicy, ZScrollArea::ScrollPolicy vPolicy)
     {
-        auto ptr=std::shared_ptr<ZScrollArea>(new ZScrollArea());
+        auto ptr=std::make_shared<ZScrollArea>();
         ptr->init(content,hPolicy,vPolicy);
         return ptr;
     }
 
     std::shared_ptr<ZListBox> WidgetFactory::create_zlistbox()
     {
-        auto ptr=std::shared_ptr<ZListBox>(new ZListBox());
+        auto ptr=std::make_shared<ZListBox>();
         ptr->init();
         return ptr;
     }
 
     std::shared_ptr<ZListBox> WidgetFactory::create_zlistbox(std::shared_ptr<ListModel> listModel)
     {
-        auto ptr=std::shared_ptr<ZListBox>(new ZListBox());
+        auto ptr=std::make_shared<ZListBox>();
         ptr->init(listModel);
         return ptr;
     }
@@ -145,21 +139,21 @@ namespace gui
     std::shared_ptr<ZDropDown> WidgetFactory::create_zdropdown(std::shared_ptr<ListModel> listModel,
                                                 std::shared_ptr<ZScrollArea> scrollArea,std::shared_ptr<ZListBox> listBox)
     {
-        auto ptr=std::shared_ptr<ZDropDown>(new ZDropDown());
+        auto ptr=std::make_shared<ZDropDown>();
         ptr->init(listModel,scrollArea,listBox);
         return ptr;
     }
 
     std::shared_ptr<ZSlider> WidgetFactory::create_zslider(double scaleEnd)
     {
-        auto ptr=std::shared_ptr<ZSlider>(new ZSlider());
+        auto ptr=std::make_shared<ZSlider>();
         ptr->init(scaleEnd);
         return ptr;
     }
 
     std::shared_ptr<ZSlider> WidgetFactory::create_zslider(double scaleStart, double scaleEnd)
     {
-        auto ptr=std::shared_ptr<ZSlider>(new ZSlider());
+        auto ptr=std::make_shared<ZSlider>();
         ptr->init(scaleStart,scaleEnd);
         return ptr;
     }
@@ -179,7 +173,7 @@ namespace gui
 
     std::shared_ptr<ZContainer> WidgetFactory::create_zcontainer()
     {
-        auto ptr=std::shared_ptr<ZContainer>(new ZContainer());
+        auto ptr=std::make_shared<ZContainer>();
         ptr->init();
         return ptr;
     }

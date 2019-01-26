@@ -43,6 +43,8 @@ namespace game
         mNextNodeID=0;
         mNextNavGraphID=0;
 
+        mCurrentMode=CurrentMode::Uninitialize;
+
         mRegion=std::make_shared<map::Region>();
         mAIDirector=std::make_shared<AIDirector>(shared_from_this());
     }
@@ -242,9 +244,15 @@ namespace game
         mRegion->processDeletion();
     }
 
+    void GameManager::startGenerate()
+    {
+        mIsGenerateFinish=false;
+    }
+
     bool GameManager::generateNewWorld()
     {
         mIsGenerateFinish=false;
+        mCurrentMode=CurrentMode::GeneratingWorld;
 
         mRegion->map()->testMap();
 
@@ -254,6 +262,7 @@ namespace game
 
         this->update(0.0f);
 
+        mCurrentMode=CurrentMode::StandartWorld;
         mIsGenerateFinish=true;
     }
 
@@ -262,8 +271,29 @@ namespace game
         return mRegion->map()->getInitProgress();
     }
 
-    bool GameManager::getIsGenerateFinish() const
+    bool GameManager::isGenerateFinish() const
     {
+        //return false;
         return mIsGenerateFinish;
+    }
+
+    GameManager::CurrentMode GameManager::currentMode() const
+    {
+        return mCurrentMode;
+    }
+
+    bool GameManager::previewSpawn()
+    {
+        mIsGenerateFinish=false;
+        mCurrentMode=CurrentMode::GeneratingWorld;
+
+        const auto worldOptions=std::make_shared<CreateWorldOptions>(32,32,32);
+        worldOptions->KingdomName="Test kingdom";
+        mAIDirector->generateStartingFactions(worldOptions);
+
+        mRegion->map()->generateMap(worldOptions);
+
+        mCurrentMode=CurrentMode::PreviewWorld;
+        mIsGenerateFinish=true;
     }
 }

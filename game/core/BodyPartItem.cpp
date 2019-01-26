@@ -31,7 +31,7 @@ namespace game {
     void BodyPartItem::init(std::shared_ptr<Character> character, std::shared_ptr<BodySection> limb,
             std::string id, std::shared_ptr<const properties::ItemDefinition> aItemDef)
     {
-        std::string materialID;
+        MaterialID_t materialID;
         if (limb!=nullptr)
             materialID=limb->materialID();
         else

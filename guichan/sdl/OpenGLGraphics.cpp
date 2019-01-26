@@ -402,8 +402,8 @@ namespace sdl_interface
         glTexCoord2f(texX2, texY1);
         glVertex3f(dstX, srcY, 0);
 
-        glDisable(GL_TEXTURE_2D);
         glEnd();
+        glDisable(GL_TEXTURE_2D);
 
         // Don't disable blending if the color has alpha
         if (!mAlpha)

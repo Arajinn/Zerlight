@@ -5,6 +5,7 @@
 #ifndef ZERL_ITEM_H
 #define ZERL_ITEM_H
 
+#include "game/core/types.h"
 #include "game/core/GameEntity.h"
 
 namespace properties
@@ -24,7 +25,7 @@ namespace game {
         Item(const map::vector3& position);
         virtual ~Item();
 
-        static std::shared_ptr<Item> create(const map::vector3& position, std::string id, std::string materialID,
+        static std::shared_ptr<Item> create(const map::vector3& position, const std::string& id, const MaterialID_t& materialID,
                 std::shared_ptr<const properties::ItemDefinition> aItemDef);
 
         virtual void spawn(std::shared_ptr<map::MapCell> mapCell) override;
@@ -36,7 +37,7 @@ namespace game {
         virtual void pre_delete();
 
         std::string itemID() const;
-        std::string materialID() const;
+        MaterialID_t materialID() const;
 
         ItemQuality quality() const;
 
@@ -78,7 +79,7 @@ namespace game {
 
         void repair();
     protected:
-        virtual void init(std::string id, std::string materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef);
+        virtual void init(const std::string& id, const MaterialID_t& materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef);
 
     private:
         std::shared_ptr<game::ItemHistory> mHistory;

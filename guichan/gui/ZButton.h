@@ -86,6 +86,8 @@ namespace gui {
          * Adjusts the button's size to fit the caption.
          */
         void adjustSize();
+        void adjustWidth();
+        void adjustHeight();
 
 
         //Inherited from Widget

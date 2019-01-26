@@ -8,20 +8,34 @@
 #include "guichan/gui/ZContainer.h"
 #include "guichan/gui/MouseListener.h"
 #include "guichan/gui/KeyListener.h"
+#include "guichan/gui/ActionListener.h"
 #include "game/core/enums.h"
 
 namespace gui
 {
     class ZImage;
+    class ZButton;
+    class ImageFont;
 }
 
-class MapWidget : public gui::ZContainer, public gui::MouseListener, public gui::KeyListener{
+namespace interface
+{
+    class MainMenuWidget;
+    class NewGameWidget;
+    class CreateWorldLoadWidget;
+}
+
+class MapWidget : public gui::ZContainer, public gui::MouseListener, public gui::KeyListener, public gui::ActionListener{
 public:
     MapWidget();
     ~MapWidget();
 
     virtual void init();
     virtual void shutdown();
+
+    void action(const gui::ActionEvent& actionEvent);
+
+    void resize();
 
     virtual void draw_item(std::shared_ptr<gui::Graphics> graphics) override;
 
@@ -39,6 +53,17 @@ public:
     virtual void mouseDragged(gui::MouseEvent& mouseEvent);
 
 private:
+    enum class DisplayMode
+    {
+        MainMenuWidget,
+        NewGameWidget,
+        CreateWorldLoadWidget,
+        MapWidget
+    };
+
+    DisplayMode mDisplayMode;
+    void changeDisplayMode();
+
     int mMouseLeftButtonPressedXPos,mMouseLeftButtonPressedYPos;
     bool mIsCtrlButtonPressed;
     bool mIsMouseLeftButtonPressed;
@@ -63,6 +88,28 @@ private:
 
     void drawImage(std::shared_ptr<gui::Graphics> graphics, std::shared_ptr<const gui::ZImage> image,
                               const int& xPlot, const int& yPlot, const int& imageSize, const gui::ZColor& color, bool xFlip=false);
+
+    void initFonts();
+    void clearFonts();
+    std::shared_ptr<gui::ImageFont> mFont;
+    std::shared_ptr<gui::ImageFont> mSmallBlackFont;
+    std::shared_ptr<gui::ImageFont> mWhiteFont;
+    std::shared_ptr<gui::ImageFont> mHighLightFont;
+
+    void initMainMenuWidget();
+    void resizeMainMenuWidget();
+    void clearMainMenuWidget();
+    std::shared_ptr<interface::MainMenuWidget> mMainMenuWidget;
+
+    void initNewGameWidget();
+    void resizeNewGameWidget();
+    void clearNewGameWidget();
+    std::shared_ptr<interface::NewGameWidget> mNewGameWidget;
+
+    void initCreateWorldLoadWidget();
+    void resizeCreateWorldLoadWidget();
+    void clearCreateWorldLoadWidget();
+    std::shared_ptr<interface::CreateWorldLoadWidget> mCreateWorldLoadWidget;
 };
 
 

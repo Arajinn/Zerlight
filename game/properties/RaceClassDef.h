@@ -6,6 +6,7 @@
 #define ZERLIGHT_RACECLASSDEF_H
 
 #include "game/core/enums.h"
+#include "game/core/types.h"
 
 #include <vector>
 #include <string>
@@ -15,7 +16,7 @@ namespace properties {
         std::string RaceID;
         std::string Name;
         float BaseCombatValue;
-        std::vector<std::string> TemplateMaterialIDs;
+        std::vector<game::MaterialID_t> TemplateMaterialIDs;
     };
 }
 

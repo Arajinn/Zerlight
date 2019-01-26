@@ -118,6 +118,9 @@ namespace gui {
          */
         unsigned int getFrameSize() const;
 
+        void setFrameHighlightOnly(bool frameHighlightOnly);
+        bool getFrameHighlightOnly() const;
+
         /**
          * Called for all widgets in the gui each time Gui::logic is called.
          * You can do logic stuff here like playing an animation.
@@ -998,6 +1001,7 @@ namespace gui {
          * @since 0.8.0
          */
         void distributeActionEvent();
+        void distributeActionEvent(const std::string& eventId);
 
         /**
          * Distributes resized events to all of the widget's listeners.
@@ -1154,6 +1158,7 @@ namespace gui {
          * Holds the frame size of the widget.
          */
         unsigned int mFrameSize;
+        bool mFrameHighlightOnly;
 
         /**
          * Holds the action event of the widget.

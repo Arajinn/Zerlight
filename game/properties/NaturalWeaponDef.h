@@ -6,6 +6,7 @@
 #define ZERLIGHT_NATURALWEAPONDEF_H
 
 #include "game/core/enums.h"
+#include "game/core/types.h"
 
 #include <string>
 #include <memory>
@@ -20,7 +21,7 @@ namespace properties {
         std::string Name;
         float Size;
         int TemplateMaterialIndex;
-        std::string MaterialID;
+        game::MaterialID_t MaterialID;
         std::shared_ptr<WeaponDef> weaponDef{nullptr};
     };
 }

@@ -5,6 +5,7 @@
 #ifndef ZERL_STORAGECONTAINER_H
 #define ZERL_STORAGECONTAINER_H
 
+#include "game/core/types.h"
 #include "game/core/Item.h"
 
 namespace game {
@@ -14,7 +15,7 @@ namespace game {
         StorageContainer(const map::vector3& position);
         virtual ~StorageContainer();
 
-        static std::shared_ptr<StorageContainer> create(const map::vector3& position, std::string id, std::string materialID,
+        static std::shared_ptr<StorageContainer> create(const map::vector3& position, const std::string& id, const MaterialID_t& materialID,
                 std::shared_ptr<const properties::ItemDefinition> aItemDef);
 
         std::vector<std::shared_ptr<Item>> containedResources() const;
@@ -22,7 +23,7 @@ namespace game {
 
         void removeItem(std::shared_ptr<Item> item);
     protected:
-        virtual void init(std::string id, std::string materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef);
+        virtual void init(const std::string& id, const MaterialID_t& materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef);
 
         std::vector<std::shared_ptr<Item>> mContainedResources;
     };

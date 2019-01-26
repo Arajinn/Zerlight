@@ -6,8 +6,8 @@
 #define ZERL_ITEMSETTINGS_H
 
 #include "game/core/enums.h"
-//#include <string>
-//#include <memory>
+#include "game/core/types.h"
+
 #include <vector>
 #include <memory>
 
@@ -31,7 +31,7 @@ namespace properties {
     struct ItemsByMaterialInfo
     {
     public:
-        std::string materialID;
+        game::MaterialID_t materialID;
         std::vector<std::shared_ptr<game::Item>> items;
     };
 

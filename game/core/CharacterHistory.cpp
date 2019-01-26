@@ -165,7 +165,7 @@ namespace game
             return raceDef()->Name;
     }
 
-    std::vector<std::string> CharacterHistory::templateMaterialIDs() const
+    std::vector<MaterialID_t> CharacterHistory::templateMaterialIDs() const
     {
         if (!mTemplateMaterialIDs.empty())
             return mTemplateMaterialIDs;
@@ -173,7 +173,7 @@ namespace game
             raceClassDef()->TemplateMaterialIDs;
     }
 
-    std::string CharacterHistory::materialAtIndex(const int& index) const
+    MaterialID_t CharacterHistory::materialAtIndex(const int& index) const
     {
         if (index<0)
             return "";

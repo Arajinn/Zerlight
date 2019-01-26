@@ -14,10 +14,10 @@ namespace game{
         ResourcePile(const map::vector3& position);
         virtual ~ResourcePile();
 
-        static std::shared_ptr<ResourcePile> create(const map::vector3& position, std::string id, std::string materialID, std::shared_ptr<properties::ItemDefinition> aItemDef);
+        static std::shared_ptr<ResourcePile> create(const map::vector3& position, const std::string& id, const MaterialID_t& materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef);
 
     protected:
-        virtual void init(std::string id, std::string materialID, std::shared_ptr<properties::ItemDefinition> aItemDef);
+        virtual void init(const std::string& id, const MaterialID_t& materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef);
 
     };
 }

@@ -46,6 +46,11 @@ namespace properties {
     {
         mTerrainSettings=std::make_shared<TerrainSettings>();
         mTerrainSettings->AirMaterialID="Air";
+        mTerrainSettings->DirtMaterialID="Dirt";
+        mTerrainSettings->ClayMaterialID="Clay";
+        mTerrainSettings->WaterMaterialID="Water";
+        mTerrainSettings->LavaMaterialID="Lava";
+        mTerrainSettings->GrownOnMaterialID="Grass";
         mTerrainSettings->parseTerrainSettingsFile();
 
         parseMaterialDefs();
@@ -196,7 +201,7 @@ namespace properties {
             return nullptr;
     }
 
-    std::shared_ptr<const MaterialDef> GameDefinition::materialDefinition(const std::string& id) const
+    std::shared_ptr<const MaterialDef> GameDefinition::materialDefinition(const game::MaterialID_t& id) const
     {
         auto iter=std::find_if(mMaterialDefs.begin(),mMaterialDefs.end(),[&id](std::shared_ptr<MaterialDef> const& value)
         {
@@ -229,10 +234,15 @@ namespace properties {
             if (tree_item.first=="Item")
             {
                 std::shared_ptr<MaterialDef> newMaterialDef=std::make_shared<MaterialDef>();
-                newMaterialDef->ID=tree_item.second.get("ID","");
+                const auto materialID=tree_item.second.get("ID","");
+                newMaterialDef->ID=materialID;
                 newMaterialDef->Name=tree_item.second.get("Name","");
-                auto typeStr=tree_item.second.get("Type","");
-                newMaterialDef->Type=game::String2Enums::str2MaterialType(typeStr);
+                const auto typeStr=tree_item.second.get("Type","");
+                const auto typeEnum=game::String2Enums::str2MaterialType(typeStr);
+                if (typeEnum==game::MaterialType::Stone)
+                    mTerrainSettings->addStoneID(materialID);
+
+                newMaterialDef->Type=typeEnum;
                 newMaterialDef->Strength=tree_item.second.get("Strength",0.0f);
                 newMaterialDef->Value=tree_item.second.get("Value",0.0f);
                 newMaterialDef->Sustains=tree_item.second.get("Sustains",1.0f);

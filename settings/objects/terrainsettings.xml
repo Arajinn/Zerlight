@@ -270,4 +270,29 @@
     </StateSprite>
     </Value>
   </TerrainSprites>
+  <TerrainSprites>
+    <Key>Grass</Key>
+    <Value>
+    <StateSprite>
+    <Key>Floor</Key>
+    <SpriteID>GrassFloor</SpriteID>
+    </StateSprite>
+    <StateSprite>
+    <Key>TopRightRamp</Key>
+    <SpriteID>StoneTopRightRamp</SpriteID>
+    </StateSprite>
+    <StateSprite>
+    <Key>TopLeftRamp</Key>
+    <SpriteID>StoneTopLeftRamp</SpriteID>
+    </StateSprite>
+    <StateSprite>
+    <Key>BottomRightRamp</Key>
+    <SpriteID>StoneBottomRightRamp</SpriteID>
+    </StateSprite>
+    <StateSprite>
+    <Key>BottomLeftRamp</Key>
+    <SpriteID>StoneBottomLeftRamp</SpriteID>
+    </StateSprite>
+    </Value>
+  </TerrainSprites>
 </TerrainSettings>

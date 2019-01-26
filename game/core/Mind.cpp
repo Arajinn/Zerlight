@@ -35,7 +35,7 @@ namespace game
 
     void Mind::adjustHappiness(float delta)
     {
-        mHappinessLevel=std::max(utils::clamp(mHappinessLevel+delta,0.0f,100.0f),-25.0f);
+        mHappinessLevel=std::max(math_utils::clamp(mHappinessLevel+delta,0.0f,100.0f),-25.0f);
     }
 
     float Mind::combatValue() const

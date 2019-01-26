@@ -65,10 +65,52 @@ namespace map
         this->updateWeight();
     }
 
+    MapCell::MapCell(const map::vector3& position, const int& type)
+    {
+        mWall=type;
+        mFloor=type;
+
+        mEmbeddedWall= nullptr;
+        mEmbeddedFloor= nullptr;
+
+        mRamp=nullptr;
+        mLiquid=nullptr;
+
+        mPosition=position;
+
+        mIsVisible=false;
+        mOutside=false;
+
+        mDesignation=nullptr;
+
+        this->updateWeight();
+    }
+
     MapCell::MapCell(const map::vector3& position, const std::string& wallType, const std::string& floorType)
     {
         mWall=GAME_DEFINITIONS->indexOfMaterial(wallType);
         mFloor=GAME_DEFINITIONS->indexOfMaterial(floorType);
+
+        mEmbeddedWall= nullptr;
+        mEmbeddedFloor= nullptr;
+
+        mRamp=nullptr;
+        mLiquid=nullptr;
+
+        mPosition=position;
+
+        mIsVisible=false;
+        mOutside=false;
+
+        mDesignation=nullptr;
+
+        this->updateWeight();
+    }
+
+    MapCell::MapCell(const map::vector3& position, const int& wallType, const int& floorType)
+    {
+        mWall=wallType;
+        mFloor=floorType;
 
         mEmbeddedWall= nullptr;
         mEmbeddedFloor= nullptr;
@@ -330,9 +372,20 @@ namespace map
         return mEmbeddedWall;
     }
 
-    void MapCell::setNaturalFloor(const int& floor)
+    void MapCell::setNaturalWallAndFloor(const int& type)
     {
-        mFloor=floor;
+        mWall=type;
+        mFloor=type;
+    }
+
+    void MapCell::setNaturalFloor(const int& type)
+    {
+        mFloor=type;
+    }
+
+    void MapCell::setNaturalWall(const int& type)
+    {
+        mWall=type;
     }
 
     void  MapCell::setNavGraphNode(std::shared_ptr<map::NavGraphNode> node)

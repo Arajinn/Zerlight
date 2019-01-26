@@ -88,4 +88,15 @@ namespace properties {
 
         return "";
     }
+
+    void TerrainSettings::addStoneID(const game::MaterialID_t& materialID)
+    {
+        const auto iter=std::find_if(StoneMaterialIDs.begin(),StoneMaterialIDs.end(),[&materialID](game::MaterialID_t const& elem)
+        {
+            return materialID==elem;
+        });
+
+        if (iter==StoneMaterialIDs.end())
+            StoneMaterialIDs.push_back(materialID);
+    }
 }

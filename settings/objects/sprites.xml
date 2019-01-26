@@ -45,6 +45,10 @@
 	<Source>raw_stone_ramp_04.png</Source>
 </Item>
 <Item>
+    <SpriteID>GrassFloor</SpriteID>
+    <Source>grass_floor.png</Source>
+  </Item>
+<Item>
 	<SpriteID>WineBarrel</SpriteID>
 	<Source>wine1.png</Source>
 </Item>

@@ -5,9 +5,11 @@
 #ifndef ZERL_GAMEDEFINITION_H
 #define ZERL_GAMEDEFINITION_H
 
+#include "game/core/types.h"
+#include "game/properties/FactionDef.h"
+
 #include <memory>
 #include <vector>
-#include "FactionDef.h"
 
 namespace game
 {
@@ -54,7 +56,7 @@ namespace properties {
 
         std::shared_ptr<const BodyDef> bodyDefinition(const std::string& id) const;
 
-        std::shared_ptr<const MaterialDef> materialDefinition(const std::string& id) const;
+        std::shared_ptr<const MaterialDef> materialDefinition(const game::MaterialID_t& id) const;
         std::shared_ptr<const MaterialDef> materialDefinition(const int& index) const;
 
         std::shared_ptr<const SpriteDef> spriteDefinition(const std::string& spriteID) const;

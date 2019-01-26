@@ -1,18 +1,18 @@
-#include "interface/MainActionListener.h"
-#include "guichan/gui/Exception.h"
+#include "interface/GameActionListener.h"
 #include "game/GameContainer.h"
-#include "guichan/sdl/OpenGLSDLImageLoader.h"
-#include "guichan/gui/ZImage.h"
+#include "game/core/GameManager.h"
+#include "guichan/gui/Exception.h"
 #include <iostream>
 
 int main()
 {
     try
     {
-        std::shared_ptr<MainActionListener> fpsDemo=std::make_shared<MainActionListener>();
+        std::shared_ptr<interface::GameActionListener> fpsDemo=std::make_shared<interface::GameActionListener>();
         fpsDemo->init();
 
         std::shared_ptr<game::GameContainer> gameContainer=std::make_shared<game::GameContainer>();
+        gameContainer->gameManager->previewSpawn();
 
         fpsDemo->run();
     }

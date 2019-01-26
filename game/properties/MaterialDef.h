@@ -6,6 +6,7 @@
 #define ZERL_MATERIALDEF_H
 
 #include "game/core/enums.h"
+#include "game/core/types.h"
 #include "guichan/gui/ZColor.h"
 
 #include <string>
@@ -25,7 +26,7 @@ namespace properties
         MaterialDef();
         ~MaterialDef();
 
-        std::string ID;
+        game::MaterialID_t ID;
         std::string Name;
         std::string GroupName;
         bool OnlyAddUniqueName;

@@ -6,6 +6,7 @@
 #define ZERL_BODYPARTDEF_H
 
 #include "game/core/enums.h"
+#include "game/core/types.h"
 
 #include <string>
 #include <vector>
@@ -23,7 +24,7 @@ namespace properties {
 
         std::string ID;
         std::string Name;
-        std::string MaterialID;
+        game::MaterialID_t MaterialID;
         std::vector<game::BodyPartProperty> BodyProperties;
         bool Symmetrical;
         std::vector<std::shared_ptr<const BodyPartDef>> ContainedParts;

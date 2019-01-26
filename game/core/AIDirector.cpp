@@ -31,14 +31,14 @@ namespace game
 
     }
 
-    std::shared_ptr<Item> AIDirector::generateItem(const map::vector3& position, std::string itemID, std::string materialID,
+    std::shared_ptr<Item> AIDirector::generateItem(const map::vector3& position, const std::string& itemID, const MaterialID_t& materialID,
             ItemQuality quality)
     {
         std::shared_ptr<Item> craftableItem=Item::create(position,itemID,materialID,GAME_DEFINITIONS->itemDefinition(itemID));
         return craftableItem;
     }
 
-    std::shared_ptr<Item> AIDirector::createItem(const map::vector3& position, const std::string& itemID, const std::string& materialID)
+    std::shared_ptr<Item> AIDirector::createItem(const map::vector3& position, const std::string& itemID, const MaterialID_t& materialID)
     {
         auto object=this->generateItem(position,itemID,materialID);
         postCreateItem(object);

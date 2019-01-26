@@ -78,11 +78,15 @@ add_executable(Zerlight main.cpp
         interface/OptionCheckBox.cpp interface/OptionCheckBox.h
         interface/ResolutionListModel.cpp interface/ResolutionListModel.h
         interface/OptionButton.cpp interface/OptionButton.h
-        interface/MainActionListener.cpp interface/MainActionListener.h
-        interface/MainActionOptions.cpp interface/MainActionGame.cpp
         interface/InterfaceWidgetFactory.cpp interface/InterfaceWidgetFactory.h
         interface/MapWidget.cpp interface/MapWidget.h
+        interface/GameActionListener.cpp interface/GameActionListener.h
+        interface/MainMenuWidget.cpp interface/MainMenuWidget.h
+        interface/NewGameWidget.cpp interface/NewGameWidget.h
+        interface/CreateWorldLoadWidget.cpp interface/CreateWorldLoadWidget.h
         game/core/enums.h
+        game/core/types.h
+        game/core/defines.h
         game/core/GameManager.cpp game/core/GameManager.h
         game/core/GameEntity.cpp game/core/GameEntity.h
         game/core/Liquid.cpp game/core/Liquid.h
@@ -113,6 +117,25 @@ add_executable(Zerlight main.cpp
         game/core/Job.cpp game/core/Job.h
         game/core/StockManager.cpp game/core/StockManager.h
         game/core/Formation.cpp game/core/Formation.h
+        game/core/String2Enums.cpp game/core/String2Enums.h
+        game/core/Military.cpp game/core/Military.h
+        game/core/Weapon.cpp game/core/Weapon.h
+        game/core/CharacterSkill.cpp game/core/CharacterSkill.h
+        game/core/Enums2Str.cpp game/core/Enums2Str.h
+        game/core/Attack.cpp game/core/Attack.h
+        game/core/StringConstants.h
+        game/core/Designation.cpp game/core/Designation.h
+        game/core/Stockpile.cpp game/core/Stockpile.h
+        game/core/StockItemJob.cpp game/core/StockItemJob.h
+        game/core/TrainOrder.cpp game/core/TrainOrder.h
+        game/core/Automaton.cpp game/core/Automaton.h
+        game/core/BodyPartItem.cpp game/core/BodyPartItem.h
+        game/core/Faction.cpp game/core/Faction.h
+        game/core/CreateWorldOptions.cpp game/core/CreateWorldOptions.h
+        game/core/MilitaryStation.cpp game/core/MilitaryStation.h
+        game/core/TrainingStation.cpp game/core/TrainingStation.h
+        game/core/Ambassador.cpp game/core/Ambassador.h
+        game/core/Envoy.cpp game/core/Envoy.h
         game/behavior/TaskResult.h
         game/behavior/Node.cpp game/behavior/Node.h
         game/behavior/Action.cpp game/behavior/Action.h
@@ -150,6 +173,19 @@ add_executable(Zerlight main.cpp
         game/behavior/DrinkItem.cpp game/behavior/DrinkItem.h
         game/behavior/PathToDrink.cpp game/behavior/PathToDrink.h
         game/behavior/PlayerCharacterBehavior.cpp game/behavior/PlayerCharacterBehavior.h
+        game/behavior/SatisfyBreathing.cpp game/behavior/SatisfyBreathing.h
+        game/behavior/PathToDryLand.cpp game/behavior/PathToDryLand.h
+        game/behavior/PickupWeapon.cpp game/behavior/PickupWeapon.h
+        game/behavior/RunFromTarget.cpp game/behavior/RunFromTarget.h
+        game/behavior/PathToEnemy.cpp game/behavior/PathToEnemy.h
+        game/behavior/GetInPosition.cpp game/behavior/GetInPosition.h
+        game/behavior/EngageTarget.cpp game/behavior/EngageTarget.h
+        game/behavior/HandleTarget.cpp game/behavior/HandleTarget.h
+        game/behavior/AttackEnemy.cpp game/behavior/AttackEnemy.h
+        game/behavior/PathToLastEnemyLocation.cpp game/behavior/PathToLastEnemyLocation.h
+        game/behavior/TrackEnemy.cpp game/behavior/TrackEnemy.h
+        game/behavior/SenseThreats.cpp game/behavior/SenseThreats.h
+        game/behavior/WildAnimalBehavior.cpp game/behavior/WildAnimalBehavior.h
         game/map/vector3.cpp game/map/vector3.h
         game/map/rectangle2.cpp game/map/rectangle2.h
         game/map/MapCell.cpp game/map/MapCell.h
@@ -157,6 +193,17 @@ add_executable(Zerlight main.cpp
         game/map/Region.cpp game/map/Region.h
         game/map/NavGraph.cpp game/map/NavGraph.h
         game/map/NavGraphNode.cpp game/map/NavGraphNode.h
+        game/map_generator/modulebase.cpp game/map_generator/modulebase.h
+        game/map_generator/cache.cpp game/map_generator/cache.h
+        game/map_generator/const.cpp game/map_generator/const.h
+        game/map_generator/gradient.cpp game/map_generator/gradient.h
+        game/map_generator/multiply.cpp game/map_generator/multiply.h
+        game/map_generator/perlin.cpp game/map_generator/perlin.h
+        game/map_generator/riggedmultifractal.cpp game/map_generator/riggedmultifractal.h
+        game/map_generator/scale.cpp game/map_generator/scale.h
+        game/map_generator/scalebias.cpp game/map_generator/scalebias.h
+        game/map_generator/select.cpp game/map_generator/select.h
+        game/map_generator/turbulence.cpp game/map_generator/turbulence.h
         game/properties/GameDefinition.cpp game/properties/GameDefinition.h
         game/properties/GameSettings.cpp game/properties/GameSettings.h
         game/properties/TerrainSettings.cpp game/properties/TerrainSettings.h
@@ -170,35 +217,25 @@ add_executable(Zerlight main.cpp
         game/properties/BodySectionDef.cpp game/properties/BodySectionDef.h
         game/properties/BodyPartDef.cpp game/properties/BodyPartDef.h
         game/properties/ConstructionDef.cpp game/properties/ConstructionDef.h
-        game/utils/Randomizer.cpp game/utils/Randomizer.h
-        game/utils/math_utils.h game/core/defines.h
-        game/GameContainer.cpp game/GameContainer.h
-        game/core/String2Enums.cpp
-        game/core/String2Enums.h
         game/properties/TerrainSprites.cpp game/properties/TerrainSprites.h
         game/properties/SpriteDef.cpp game/properties/SpriteDef.h
         game/properties/TileDef.cpp game/properties/TileDef.h
-        game/behavior/SatisfyBreathing.cpp game/behavior/SatisfyBreathing.h
-        game/behavior/PathToDryLand.cpp game/behavior/PathToDryLand.h
-        game/behavior/PickupWeapon.cpp game/behavior/PickupWeapon.h
-        game/core/Military.cpp game/core/Military.h
         game/properties/FactionDef.cpp game/properties/FactionDef.h
         game/properties/RaceClassDef.cpp game/properties/RaceClassDef.h
-        game/core/Weapon.cpp game/core/Weapon.h
         game/properties/WeaponDef.cpp game/properties/WeaponDef.h
-        game/core/CharacterSkill.cpp game/core/CharacterSkill.h
         game/properties/AttackDef.cpp game/properties/AttackDef.h
         game/properties/UniformSettings.cpp game/properties/UniformSettings.h
-        game/behavior/RunFromTarget.cpp game/behavior/RunFromTarget.h
-        game/behavior/PathToEnemy.cpp game/behavior/PathToEnemy.h
-        game/behavior/GetInPosition.cpp game/behavior/GetInPosition.h
         game/properties/TargetedAttackDef.cpp game/properties/TargetedAttackDef.h
-        game/core/Enums2Str.cpp game/core/Enums2Str.h
-        game/core/Attack.cpp game/core/Attack.h
         game/properties/AmmoDef.cpp game/properties/AmmoDef.h
-        game/core/StringConstants.h
-        game/core/Designation.cpp game/core/Designation.h
-        game/core/Stockpile.cpp game/core/Stockpile.h game/core/StockItemJob.cpp game/core/StockItemJob.h game/core/TrainOrder.cpp game/core/TrainOrder.h game/properties/GenderDef.cpp game/properties/GenderDef.h game/properties/CharacterSettings.cpp game/properties/CharacterSettings.h game/properties/DefendDef.cpp game/properties/DefendDef.h game/properties/DamageDef.cpp game/properties/DamageDef.h game/properties/NaturalWeaponDef.cpp game/properties/NaturalWeaponDef.h game/core/Automaton.cpp game/core/Automaton.h game/core/BodyPartItem.cpp game/core/BodyPartItem.h game/behavior/EngageTarget.cpp game/behavior/EngageTarget.h game/behavior/HandleTarget.cpp game/behavior/HandleTarget.h game/behavior/AttackEnemy.cpp game/behavior/AttackEnemy.h game/behavior/PathToLastEnemyLocation.cpp game/behavior/PathToLastEnemyLocation.h game/behavior/TrackEnemy.cpp game/behavior/TrackEnemy.h game/behavior/SenseThreats.cpp game/behavior/SenseThreats.h game/properties/SquadDef.cpp game/properties/SquadDef.h game/behavior/WildAnimalBehavior.cpp game/behavior/WildAnimalBehavior.h game/core/Faction.cpp game/core/Faction.h game/core/CreateWorldOptions.cpp game/core/CreateWorldOptions.h game/core/MilitaryStation.cpp game/core/MilitaryStation.h game/core/TrainingStation.cpp game/core/TrainingStation.h game/core/Ambassador.cpp game/core/Ambassador.h game/core/Envoy.cpp game/core/Envoy.h)
+        game/properties/GenderDef.cpp game/properties/GenderDef.h
+        game/properties/CharacterSettings.cpp game/properties/CharacterSettings.h
+        game/properties/DefendDef.cpp game/properties/DefendDef.h
+        game/properties/DamageDef.cpp game/properties/DamageDef.h
+        game/properties/NaturalWeaponDef.cpp game/properties/NaturalWeaponDef.h
+        game/properties/SquadDef.cpp game/properties/SquadDef.h
+        game/utils/Randomizer.cpp game/utils/Randomizer.h
+        game/utils/math_utils.cpp game/utils/math_utils.h
+        game/GameContainer.cpp game/GameContainer.h)
 
 TARGET_LINK_LIBRARIES(${PROJECT_NAME}
         ${SDL2_LIBRARIES}

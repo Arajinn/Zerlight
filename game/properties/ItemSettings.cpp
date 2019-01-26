@@ -39,7 +39,7 @@ namespace properties
 
     bool ItemsByMaterial::isItemInStocks(std::shared_ptr<game::Item> item)
     {
-        std::string materialID=item->materialID();
+        const game::MaterialID_t materialID=item->materialID();
 
         auto iter_material=std::find_if(items.begin(),items.end(),[&materialID](ItemsByMaterialInfo const& value)
         {

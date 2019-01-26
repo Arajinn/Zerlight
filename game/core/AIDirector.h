@@ -6,6 +6,7 @@
 #define ZERL_AIDIRECTOR_H
 
 #include "game/core/enums.h"
+#include "game/core/types.h"
 #include "game/properties/SettlerSettings.h"
 
 #include <memory>
@@ -27,7 +28,7 @@ namespace game {
         AIDirector(std::shared_ptr<GameManager> aGameManager);
         ~AIDirector();
 
-        std::shared_ptr<Item> createItem(const map::vector3& position, const std::string& itemID, const std::string& materialID);
+        std::shared_ptr<Item> createItem(const map::vector3& position, const std::string& itemID, const MaterialID_t& materialID);
         void createBodyPartItem(const map::vector3& position, std::shared_ptr<Character> character, std::shared_ptr<BodySection> limb,
                                 const std::string& itemID);
         void createSettler(map::vector3 embarkPos, properties::SettlerSettings settlerSettings);
@@ -44,7 +45,7 @@ namespace game {
     private:
         std::shared_ptr<GameManager> mGameManager;
 
-        std::shared_ptr<Item> generateItem(const map::vector3& position, std::string itemID, std::string materialID, ItemQuality quality = ItemQuality::Average);
+        std::shared_ptr<Item> generateItem(const map::vector3& position, const std::string& itemID, const MaterialID_t& materialID, ItemQuality quality = ItemQuality::Average);
         void postCreateItem(std::shared_ptr<Item> item);
 
         map::vector3 findGroundPos(const map::vector3& pos);

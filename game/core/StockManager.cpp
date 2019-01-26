@@ -95,7 +95,7 @@ namespace game
             }
             else
             {
-                std::string materialID=item->materialID();
+                const auto materialID=item->materialID();
                 auto iter_item_by_material=std::find_if(iter_item_quality->items.items.begin(),iter_item_quality->items.items.end(),
                         [&materialID](properties::ItemsByMaterialInfo const& elem)
                 {
@@ -183,7 +183,7 @@ namespace game
             }
             else
             {
-                std::string materialID=item->materialID();
+                const auto materialID=item->materialID();
                 auto iter_item_by_material=std::find_if(iter_item_quality->items.items.begin(),iter_item_quality->items.items.end(),
                         [&materialID](properties::ItemsByMaterialInfo const& elem)
                 {
@@ -242,7 +242,7 @@ namespace game
 
             if (iter_item_quality!=iter_item_id->items.end())
             {
-                std::string materialID=item->materialID();
+                const auto materialID=item->materialID();
                 auto iter_item_by_material=std::find_if(iter_item_quality->items.items.begin(),iter_item_quality->items.items.end(),
                         [&materialID](properties::ItemsByMaterialInfo const& elem)
                 {
@@ -306,7 +306,7 @@ namespace game
 
             if (iter_item_quality!=iter_item_id->items.end())
             {
-                std::string materialID=item->materialID();
+                const auto materialID=item->materialID();
                 auto iter_item_by_material=std::find_if(iter_item_quality->items.items.begin(),iter_item_quality->items.items.end(),
                         [&materialID](properties::ItemsByMaterialInfo const& elem)
                 {

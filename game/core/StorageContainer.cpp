@@ -22,7 +22,7 @@ namespace game
 
     }
 
-    std::shared_ptr<StorageContainer> StorageContainer::create(const map::vector3& position, std::string id, std::string materialID,
+    std::shared_ptr<StorageContainer> StorageContainer::create(const map::vector3& position, const std::string& id, const MaterialID_t& materialID,
             std::shared_ptr<const properties::ItemDefinition> aItemDef)
     {
         std::shared_ptr<StorageContainer> ptr=std::make_shared<StorageContainer>(position);
@@ -30,7 +30,7 @@ namespace game
         return ptr;
     }
 
-    void StorageContainer::init(std::string id, std::string materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef)
+    void StorageContainer::init(const std::string& id, const MaterialID_t& materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef)
     {
         Item::init(id,materialID,aItemDef);
     }

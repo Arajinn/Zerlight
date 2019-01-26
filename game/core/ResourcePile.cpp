@@ -17,14 +17,14 @@ namespace game
 
     }
 
-    std::shared_ptr<ResourcePile> ResourcePile::create(const map::vector3& position, std::string id, std::string materialID, std::shared_ptr<properties::ItemDefinition> aItemDef)
+    std::shared_ptr<ResourcePile> ResourcePile::create(const map::vector3& position, const std::string& id, const MaterialID_t& materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef)
     {
         auto ptr=std::make_shared<ResourcePile>(position);
         ptr->init(id, materialID,aItemDef);
         return ptr;
     }
 
-    void ResourcePile::init(std::string id, std::string materialID, std::shared_ptr<properties::ItemDefinition> aItemDef)
+    void ResourcePile::init(const std::string& id, const MaterialID_t& materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef)
     {
         StorageContainer::init(id,materialID,aItemDef);
     }

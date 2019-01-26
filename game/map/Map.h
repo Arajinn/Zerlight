@@ -10,6 +10,11 @@
 #include <vector>
 #include <memory>
 
+namespace game
+{
+    struct CreateWorldOptions;
+}
+
 namespace map
 {
     class MapCell;
@@ -23,6 +28,7 @@ namespace map {
         ~Map();
 
         bool testMap();
+        bool generateMap(std::shared_ptr<game::CreateWorldOptions> worldOptions);
         void postInit();
 
         const std::shared_ptr<MapCell> cell(const vector3& pos) const;
@@ -31,9 +37,9 @@ namespace map {
         bool inBounds(const vector3& pos) const;
         bool inBounds(int x, int y, int z) const;
 
-        const int& mapWidth() const;
-        const int& mapHeight() const;
-        const int& mapDepth() const;
+        const size_t& mapWidth() const;
+        const size_t& mapHeight() const;
+        const size_t& mapDepth() const;
 
         const std::shared_ptr<NavGraph> navGraph();
 
@@ -42,7 +48,7 @@ namespace map {
         float getInitProgress() const;
     private:
         std::vector<std::vector<std::vector<std::shared_ptr<MapCell>>>> mMap;
-        int mMapWidth, mMapHeight, mMapDepth;
+        size_t mMapWidth, mMapHeight, mMapDepth;
 
         std::shared_ptr<NavGraph> mNavGraph;
 

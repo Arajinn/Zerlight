@@ -6,6 +6,7 @@
 #define ZERL_BODYSECTIONDEF_H
 
 #include "game/core/enums.h"
+#include "game/core/types.h"
 
 #include <string>
 #include <vector>
@@ -20,7 +21,7 @@ namespace properties {
         std::string ID;
         std::string Name;
         std::string BodyPartID;
-        std::string MaterialID;
+        game::MaterialID_t MaterialID;
         game::EquipmentType EquipType;
 
         float ToHitWeight;

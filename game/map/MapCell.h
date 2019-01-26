@@ -32,6 +32,8 @@ namespace map {
         MapCell();
         MapCell(const map::vector3& position, const std::string& type);
         MapCell(const map::vector3& position, const std::string& wallType, const std::string& floorType);
+        MapCell(const map::vector3& position, const int& type);
+        MapCell(const map::vector3& position, const int& wallType, const int& floorType);
         ~MapCell();
 
         void addObject(std::shared_ptr<game::GameEntity> ent);
@@ -46,7 +48,10 @@ namespace map {
 
         void setEmbeddedWall(std::shared_ptr<game::GameEntity> ent);
         void setEmbeddedFloor(std::shared_ptr<game::GameEntity> ent);
-        void setNaturalFloor(const int& floor);
+
+        void setNaturalWallAndFloor(const int& type);
+        void setNaturalFloor(const int& type);
+        void setNaturalWall(const int& type);
 
         void setRamp(std::shared_ptr<game::GameEntity> ent);
         std::shared_ptr<const game::Ramp> ramp() const;

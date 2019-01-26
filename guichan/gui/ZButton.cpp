@@ -171,6 +171,16 @@ namespace gui
         setHeight(getFont()->getHeight() + 2*mSpacing);
     }
 
+    void ZButton::adjustWidth()
+    {
+        setWidth(getFont()->getWidth(mCaption) + 2*mSpacing);
+    }
+
+    void ZButton::adjustHeight()
+    {
+        setHeight(getFont()->getHeight() + 2*mSpacing);
+    }
+
     bool ZButton::isPressed() const
     {
         if (mMousePressed)

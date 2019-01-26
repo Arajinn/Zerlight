@@ -27,12 +27,21 @@ namespace properties
 namespace game {
 class GameManager : public std::enable_shared_from_this<GameManager> {
     public:
+        enum class CurrentMode
+        {
+            Uninitialize,
+            PreviewWorld,
+            GeneratingWorld,
+            StandartWorld
+        };
+
         GameManager();
         ~GameManager();
 
         static std::shared_ptr<GameManager> create();
 
         bool testSpawn();
+        bool previewSpawn();
 
         std::shared_ptr<map::Region> region() const;
         std::shared_ptr<AIDirector> aiDirector() const;
@@ -45,10 +54,12 @@ class GameManager : public std::enable_shared_from_this<GameManager> {
         unsigned int nextNavNodeID();
         unsigned int nextNavID();
 
+        void startGenerate();
         bool generateNewWorld();
         float getInitProgress();
 
-        bool getIsGenerateFinish() const;
+        bool isGenerateFinish() const;
+        CurrentMode currentMode() const;
     private:
         void init();
 
@@ -72,6 +83,8 @@ class GameManager : public std::enable_shared_from_this<GameManager> {
         unsigned int mNextNavGraphID;
 
         bool mIsGenerateFinish;
+
+        CurrentMode mCurrentMode;
     };
 }
 

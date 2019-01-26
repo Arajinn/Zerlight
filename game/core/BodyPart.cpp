@@ -53,8 +53,8 @@ namespace game
         parent_section=section;
         mProstheticPart=prostheticPart;
 
-        std::string materialID=aBodyPartDef->MaterialID;
-        std::string newMaterialID;
+        auto materialID=aBodyPartDef->MaterialID;
+        MaterialID_t newMaterialID;
         if (aBodyPartDef->TemplateMaterialIndex>=0)
         {
             if (mProstheticPart!=nullptr)

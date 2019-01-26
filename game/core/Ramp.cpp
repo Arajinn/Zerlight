@@ -50,8 +50,8 @@ namespace game
             const view_orientation& orientation) const
     {
         std::shared_ptr<const properties::MaterialDef> materialDef=GAME_DEFINITIONS->materialDefinition(mMaterialIndex);
-        const gui::ZColor color=materialDef->Color;
-        const std::string materialID=materialDef->ID;
+        const auto color=materialDef->Color;
+        const auto materialID=materialDef->ID;
         std::shared_ptr<const properties::TerrainSprites> terrainSprite=TERRAIN_SETTINGS->terrainSprite(materialID);
 
         std::shared_ptr<const map::MapCell> cell1,cell2,cell3,cell4;

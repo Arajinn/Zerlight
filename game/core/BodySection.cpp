@@ -574,7 +574,7 @@ namespace game
             mEquippedItem->repair();
     }
 
-    std::string BodySection::materialID() const
+    MaterialID_t BodySection::materialID() const
     {
         return mMaterialID;
     }

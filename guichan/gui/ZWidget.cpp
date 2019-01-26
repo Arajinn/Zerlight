@@ -36,6 +36,7 @@ namespace gui
         mInternalFocusHandler=nullptr;
         mParent=nullptr;
         mFrameSize=0;
+        mFrameHighlightOnly=false;
         mFocusable=false;
         mVisible=true;
         mTabIn=true;
@@ -85,7 +86,11 @@ namespace gui
         unsigned int i;
         for (i = 0; i < getFrameSize(); ++i)
         {
-            graphics->setColor(shadowColor);
+            if (getFrameHighlightOnly())
+                graphics->setColor(highlightColor);
+            else
+                graphics->setColor(shadowColor);
+
             graphics->drawLine(i,i, width - i, i);
             graphics->drawLine(i,i + 1, i, height - i - 1);
             graphics->setColor(highlightColor);
@@ -191,6 +196,16 @@ namespace gui
     unsigned int ZWidget::getFrameSize() const
     {
         return mFrameSize;
+    }
+
+    void ZWidget::setFrameHighlightOnly(bool frameHighlightOnly)
+    {
+        mFrameHighlightOnly = frameHighlightOnly;
+    }
+
+    bool ZWidget::getFrameHighlightOnly() const
+    {
+        return mFrameHighlightOnly;
     }
 
     const Rectangle& ZWidget::getDimension() const
@@ -666,6 +681,15 @@ namespace gui
         for (auto listener : mActionListeners)
         {
             ActionEvent actionEvent(shared_from_this(), mActionEventId);
+            listener->action(actionEvent);
+        }
+    }
+
+    void ZWidget::distributeActionEvent(const std::string& eventId)
+    {
+        for (auto listener : mActionListeners)
+        {
+            ActionEvent actionEvent(shared_from_this(), eventId);
             listener->action(actionEvent);
         }
     }

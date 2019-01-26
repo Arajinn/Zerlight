@@ -5,7 +5,9 @@
 #ifndef ZERL_ITEMHISTORY_H
 #define ZERL_ITEMHISTORY_H
 
-#include "enums.h"
+#include "game/core/enums.h"
+#include "game/core/types.h"
+
 #include <string>
 #include <vector>
 #include <memory>
@@ -26,7 +28,7 @@ namespace game {
         void pre_delete();
 
         const std::string& itemID() const;
-        const std::string& materialID() const;
+        const MaterialID_t& materialID() const;
 
         const ItemQuality& quality() const;
 
@@ -35,7 +37,7 @@ namespace game {
         bool hasUniqueName() const;
         std::string name() const;
 
-        std::string materialAtIndex(const int& index) const;
+        MaterialID_t materialAtIndex(const int& index) const;
 
         std::vector<std::shared_ptr<Item>> components() const;
         void clearComponents();
@@ -45,7 +47,7 @@ namespace game {
         std::shared_ptr<Item> mItem;
 
         std::string mItemID;
-        std::string mMaterialID;
+        MaterialID_t mMaterialID;
 
         std::string mName;
 

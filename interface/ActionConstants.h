@@ -18,6 +18,7 @@ namespace action
     const std::string RESOLUTION_ACTION="resolution";
     const std::string VOLUME_ACTION="volume";
     const std::string GENERATE_NEW_WORLD_ACTION="generate_new_world";
+    const std::string ADVANCED_SETUP_ACTION="advanced_setup";
 }
 
 #endif //ZERLIGHT_ACTIONCONSTANTS_H

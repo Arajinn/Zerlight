@@ -39,7 +39,7 @@ namespace game
         return mItemID;
     }
 
-    const std::string& ItemHistory::materialID() const
+    const MaterialID_t& ItemHistory::materialID() const
     {
         return mMaterialID;
     }
@@ -88,7 +88,7 @@ namespace game
         return properties::GameDefinition::itemName(mItemID,mMaterialID,mItem);
     }
 
-    std::string ItemHistory::materialAtIndex(const int& index) const
+    MaterialID_t ItemHistory::materialAtIndex(const int& index) const
     {
         if ((index<0) || (mComponents.empty()))
             return mMaterialID;

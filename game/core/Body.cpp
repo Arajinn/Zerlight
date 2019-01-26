@@ -103,7 +103,7 @@ namespace game
 
     float Body::exhaustionModifier() const
     {
-        return utils::clamp(mRestLevel/owner->raceDefinition()->TiredLevel,0.5f,1.0f);
+        return math_utils::clamp(mRestLevel/owner->raceDefinition()->TiredLevel,0.5f,1.0f);
     }
 
     bool Body::containStatusEffect(const HealthStatusAilment& key) const

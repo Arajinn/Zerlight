@@ -33,7 +33,7 @@ namespace game
         std::cout << "~Item()" << std::endl;
     }
 
-    std::shared_ptr<Item> Item::create(const map::vector3& position, std::string id, std::string materialID,
+    std::shared_ptr<Item> Item::create(const map::vector3& position, const std::string& id, const MaterialID_t& materialID,
             std::shared_ptr<const properties::ItemDefinition> aItemDef)
     {
         auto ptr=std::make_shared<Item>(position);
@@ -41,7 +41,7 @@ namespace game
         return ptr;
     }
 
-    void Item::init(std::string id, std::string materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef)
+    void Item::init(const std::string& id, const MaterialID_t& materialID, std::shared_ptr<const properties::ItemDefinition> aItemDef)
     {
         mItemDef=aItemDef;
         mCharacter=nullptr;
@@ -73,7 +73,7 @@ namespace game
         return mHistory->itemID();
     }
 
-    std::string Item::materialID() const
+    MaterialID_t Item::materialID() const
     {
         return mHistory->materialID();
     }
@@ -217,7 +217,7 @@ namespace game
             }
             else
             {
-                const std::string materialID = mHistory->materialID();
+                const auto materialID = mHistory->materialID();
                 const std::string spriteID=item.getSpriteIDByMaterialID(materialID);
                 if (!spriteID.empty())
                 {
@@ -231,7 +231,7 @@ namespace game
 
             if (item.useMaterial)
             {
-                const std::string materialID = mHistory->materialID();
+                const auto materialID = mHistory->materialID();
                 std::shared_ptr<const properties::MaterialDef> materialDef=GAME_DEFINITIONS->materialDefinition(materialID);
                 info.Color=materialDef->Color;
             }
