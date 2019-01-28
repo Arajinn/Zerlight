@@ -9,12 +9,6 @@
 
 namespace gui
 {
-    int ZColor::COLOR_DARK_GRAY=0x353535;
-    int ZColor::COLOR_LIGHT_GRAY=0xa0a0a0;
-    int ZColor::COLOR_BLACK=0x000000;
-    int ZColor::COLOR_WHITE=0xffffff;
-
-
     ZColor::ZColor()
             : r(0),
               g(0),

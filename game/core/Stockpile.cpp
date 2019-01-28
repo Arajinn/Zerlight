@@ -121,8 +121,7 @@ namespace game
 
                 newItemsByQuality.items.items.push_back(newItemsByMaterialInfo);
 
-                const auto index=std::distance(mStockedItems.begin(),iter_item_id);
-                mStockedItems[index].items.push_back(newItemsByQuality);
+                (*iter_item_id).items.push_back(newItemsByQuality);
             }
             else
             {
@@ -139,9 +138,7 @@ namespace game
                     newItemsByMaterialInfo.materialID=item->materialID();
                     newItemsByMaterialInfo.items.push_back(item);
 
-                    const auto index1=std::distance(mStockedItems.begin(),iter_item_id);
-                    const auto index2=std::distance(iter_item_id->items.begin(),iter_item_quality);
-                    mStockedItems[index1].items[index2].items.items.push_back(newItemsByMaterialInfo);
+                    (*iter_item_quality).items.items.push_back(newItemsByMaterialInfo);
                 }
                 else
                 {
@@ -154,10 +151,7 @@ namespace game
 
                     if (iter_item==iter_item_by_material->items.end())
                     {
-                        const auto index1=std::distance(mStockedItems.begin(),iter_item_id);
-                        const auto index2=std::distance(iter_item_id->items.begin(),iter_item_quality);
-                        const auto index3=std::distance(iter_item_quality->items.items.begin(),iter_item_by_material);
-                        mStockedItems[index1].items[index2].items.items[index3].items.push_back(item);
+                        (*iter_item_by_material).items.push_back(item);
                     }
                 }
             }
@@ -214,19 +208,15 @@ namespace game
 
                     if (iter_item!=iter_item_by_material->items.end())
                     {
-                        const auto index1=std::distance(mStockedItems.begin(),iter_item_id);
-                        const auto index2=std::distance(iter_item_id->items.begin(),iter_item_quality);
-                        const auto index3=std::distance(iter_item_quality->items.items.begin(),iter_item_by_material);
+                        (*iter_item_by_material).items.erase(iter_item);
 
-                        mStockedItems[index1].items[index2].items.items[index3].items.erase(iter_item);
-
-                        if (mStockedItems[index1].items[index2].items.items[index3].items.empty())
+                        if ((*iter_item_by_material).items.empty())
                         {
-                            mStockedItems[index1].items[index2].items.items.erase(iter_item_by_material);
-                            if (mStockedItems[index1].items[index2].items.items.empty())
+                            (*iter_item_quality).items.items.erase(iter_item_by_material);
+                            if ((*iter_item_quality).items.items.empty())
                             {
-                                mStockedItems[index1].items.erase(iter_item_quality);
-                                if (mStockedItems[index1].items.empty())
+                                (*iter_item_id).items.erase(iter_item_quality);
+                                if ((*iter_item_id).items.empty())
                                 {
                                     mStockedItems.erase(iter_item_id);
                                 }

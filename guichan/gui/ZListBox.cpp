@@ -50,6 +50,13 @@ namespace gui
         addFocusListener(FocusListener::downcasted_shared_from_this<FocusListener>());
     }
 
+    void ZListBox::shutdown()
+    {
+        mSelectionListeners.clear();
+
+        ZWidget::shutdown();
+    }
+
     ZListBox::~ZListBox()
     {
 

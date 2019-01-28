@@ -59,32 +59,26 @@ namespace properties {
 
     std::shared_ptr<const TerrainSprites> TerrainSettings::terrainSprite(const std::string& materialID) const
     {
-        auto iter=std::find_if(mTerrainSprites.begin(),mTerrainSprites.end(),[&materialID](std::shared_ptr<TerrainSprites> const& item)
+        const auto iter=std::find_if(mTerrainSprites.begin(),mTerrainSprites.end(),[&materialID](std::shared_ptr<TerrainSprites> const& item)
         {
             return item->Key==materialID;
         });
 
         if (iter!=mTerrainSprites.end())
-        {
-            int index=std::distance(mTerrainSprites.begin(),iter);
-            return mTerrainSprites.at(index);
-        }
+            return (*iter);
         else
             return nullptr;
     }
 
     std::string TerrainSettings::materialToRampID(const game::MaterialType& materialType) const
     {
-        auto iter=std::find_if(mMaterialIDsToRampIDs.begin(),mMaterialIDsToRampIDs.end(),[&materialType](std::pair<game::MaterialType,std::string> const& item)
+        const auto iter=std::find_if(mMaterialIDsToRampIDs.begin(),mMaterialIDsToRampIDs.end(),[&materialType](std::pair<game::MaterialType,std::string> const& item)
         {
             return item.first==materialType;
         });
 
         if (iter!=mMaterialIDsToRampIDs.end())
-        {
-            int index=std::distance(mMaterialIDsToRampIDs.begin(),iter);
-            return mMaterialIDsToRampIDs.at(index).second;
-        }
+            return (*iter).second;
 
         return "";
     }

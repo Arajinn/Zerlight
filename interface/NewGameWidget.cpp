@@ -79,7 +79,7 @@ namespace interface {
         mButtonWidget = gui::WidgetFactory::create_zcontainer();
         mButtonWidget->setVisible(true);
         mButtonWidget->setOpaque(true);
-        mButtonWidget->setBaseColor(gui::ZColor::COLOR_DARK_GRAY);
+        mButtonWidget->setBaseColor(COLOR_DARK_GRAY);
         mButtonWidget->setFrameHighlightOnly(true);
         mButtonWidget->setFrameSize(2);
 
@@ -112,10 +112,16 @@ namespace interface {
 
     void NewGameWidget::clearObjects()
     {
+        mButtonWidget->shutdown();
         mButtonWidget=nullptr;
 
+        mBackButton->shutdown();
         mBackButton=nullptr;
+
+        mAdvancedSetupButton->shutdown();
         mAdvancedSetupButton=nullptr;
+
+        mGenerateButton->shutdown();
         mGenerateButton=nullptr;
     }
 }

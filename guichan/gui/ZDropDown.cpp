@@ -77,23 +77,25 @@ namespace gui
 
     ZDropDown::~ZDropDown()
     {
+
+    }
+
+    void ZDropDown::shutdown()
+    {
         if (widgetExists(mListBox))
         {
             mListBox->removeActionListener(ActionListener::downcasted_shared_from_this<ZDropDown>());
             mListBox->removeSelectionListener(SelectionListener::downcasted_shared_from_this<ZDropDown>());
         }
 
-        if (mInternalScrollArea)
-        {
-            mScrollArea=nullptr;
-        }
-
-        if (mInternalListBox)
-        {
-            mListBox=nullptr;
-        }
+        mScrollArea=nullptr;
+        mListBox=nullptr;
 
         setInternalFocusHandler(nullptr);
+
+        mSelectionListeners.clear();
+
+        ZWidget::shutdown();
     }
 
     void ZDropDown::draw_item(std::shared_ptr<Graphics> graphics)

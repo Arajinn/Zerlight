@@ -48,6 +48,13 @@ namespace gui
         adjustSize();
     }
 
+    void ZTextBox::shutdown()
+    {
+        mText=nullptr;
+
+        ZWidget::shutdown();
+    }
+
     void ZTextBox::setText(const std::string& text)
     {
         mText->setContent(text);

@@ -8,16 +8,16 @@
 #include <iostream>
 
 namespace gui {
+
+#define COLOR_DARK_GRAY 0x353535
+#define COLOR_LIGHT_GRAY 0xa0a0a0
+#define COLOR_BLACK 0x000000
+#define COLOR_WHITE 0xffffff
     /**
      * Represents a color with red, green, blue and alpha components.
      */
     class ZColor {
     public:
-        static int COLOR_DARK_GRAY;
-        static int COLOR_LIGHT_GRAY;
-        static int COLOR_BLACK;
-        static int COLOR_WHITE;
-
         /**
          * Constructor. Initializes the color to black.
          */

@@ -235,7 +235,7 @@ add_executable(Zerlight main.cpp
         game/properties/SquadDef.cpp game/properties/SquadDef.h
         game/utils/Randomizer.cpp game/utils/Randomizer.h
         game/utils/math_utils.cpp game/utils/math_utils.h
-        game/GameContainer.cpp game/GameContainer.h)
+        game/GameContainer.cpp game/GameContainer.h interface/HUDWidget.cpp interface/HUDWidget.h interface/HUDTopPanel.cpp interface/HUDTopPanel.h)
 
 TARGET_LINK_LIBRARIES(${PROJECT_NAME}
         ${SDL2_LIBRARIES}

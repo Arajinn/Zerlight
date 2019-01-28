@@ -43,6 +43,11 @@ namespace gui
         }
 
         mFocusHandler=nullptr;
+        mTop=nullptr;
+        mGraphics=nullptr;
+        mInput=nullptr;
+        mKeyListeners.clear();
+
     }
 
     void Gui::setTop(std::shared_ptr<ZWidget> top)

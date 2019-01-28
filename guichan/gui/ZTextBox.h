@@ -23,6 +23,7 @@ namespace gui {
         ZTextBox();
 
         virtual void init();
+        virtual void shutdown();
 
         /**
          * Constructor.

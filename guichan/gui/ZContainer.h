@@ -29,6 +29,7 @@ namespace gui {
          */
         ZContainer();
         virtual void init();
+        virtual void shutdown();
 
         /**
          * Destructor.

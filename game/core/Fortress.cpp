@@ -146,9 +146,8 @@ namespace game
 
                 if (iter_item!=iter_effect->entities.end())
                 {
-                    const auto index=std::distance(mEntsWithEffects.begin(),iter_effect);
-                    mEntsWithEffects[index].entities.erase(iter_item);
-                    if (mEntsWithEffects[index].entities.empty())
+                    (*iter_effect).entities.erase(iter_item);
+                    if ((*iter_effect).entities.empty())
                     {
                         mEntsWithEffects.erase(iter_effect);
                     }

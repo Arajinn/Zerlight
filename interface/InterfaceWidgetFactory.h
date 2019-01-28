@@ -16,6 +16,8 @@ namespace interface
     class MainMenuWidget;
     class NewGameWidget;
     class CreateWorldLoadWidget;
+    class HUDWidget;
+    class HUDTopPanel;
 }
 
 class InterfaceWidgetFactory
@@ -27,6 +29,8 @@ public:
     static std::shared_ptr<interface::MainMenuWidget> create_mainmenuwidget();
     static std::shared_ptr<interface::NewGameWidget> create_newgamewidget();
     static std::shared_ptr<interface::CreateWorldLoadWidget> create_createworldloadwidget();
+    static std::shared_ptr<interface::HUDWidget> create_hudwidget();
+    static std::shared_ptr<interface::HUDTopPanel> create_hudtoppanel();
 };
 
 

@@ -46,14 +46,14 @@ namespace interface {
         const auto width=getWidth();
         const auto height=getHeight();
 
-        const auto indent=20;
+        const auto indent=40;
 
         mButtonWidget->setDimension(gui::Rectangle(0, 0, width, height));
 
         mGenerateLabel->adjustSize();
-        mGenerateLabel->setPosition(width/2-mGenerateLabel->getWidth()/2, height/2-indent);
+        mGenerateLabel->setPosition(width/2-mGenerateLabel->getWidth()/2, height/2-indent-mGenerateProgress->getHeight());
 
-        mGenerateProgress->setPosition(width/2-mGenerateProgress->getWidth()/2, height/2+indent);
+        mGenerateProgress->setPosition(width/2-mGenerateProgress->getWidth()/2, height/2-mGenerateProgress->getHeight());
     }
 
     void CreateWorldLoadWidget::initObjects()
@@ -61,7 +61,7 @@ namespace interface {
         mButtonWidget = gui::WidgetFactory::create_zcontainer();
         mButtonWidget->setVisible(true);
         mButtonWidget->setOpaque(true);
-        mButtonWidget->setBaseColor(gui::ZColor::COLOR_DARK_GRAY);
+        mButtonWidget->setBaseColor(COLOR_DARK_GRAY);
         mButtonWidget->setFrameHighlightOnly(true);
         //mButtonWidget->setFrameSize(2);
 
@@ -70,7 +70,7 @@ namespace interface {
         mButtonWidget->add(mGenerateLabel);
 
         mGenerateProgress = gui::WidgetFactory::create_zprogressbar();
-        mGenerateProgress->setBaseColor(gui::ZColor::COLOR_LIGHT_GRAY);
+        mGenerateProgress->setBaseColor(COLOR_LIGHT_GRAY);
         mGenerateProgress->setWidth(400);
         mGenerateProgress->setHeight(40);
         mButtonWidget->add(mGenerateProgress);
@@ -80,9 +80,13 @@ namespace interface {
 
     void CreateWorldLoadWidget::clearObjects()
     {
+        mButtonWidget->shutdown();
         mButtonWidget=nullptr;
 
+        mGenerateLabel->shutdown();
         mGenerateLabel=nullptr;
+
+        mGenerateProgress->shutdown();
         mGenerateProgress=nullptr;
     }
 

@@ -22,6 +22,13 @@ namespace gui
         mOpaque = true;
     }
 
+    void ZContainer::shutdown()
+    {
+        mContainerListeners.clear();
+
+        ZWidget::shutdown();
+    }
+
     ZContainer::~ZContainer()
     {
 

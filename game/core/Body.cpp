@@ -227,10 +227,7 @@ namespace game
             if (iter_section==iter->sections.end())
                 return;
             else
-            {
-                const auto index=std::distance(mEquipmentSlots.begin(),iter);
-                mEquipmentSlots[index].sections.push_back(section);
-            }
+                (*iter).sections.push_back(section);
         }
     }
 

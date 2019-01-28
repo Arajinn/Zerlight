@@ -17,7 +17,8 @@
 
 namespace gui
 {
-    std::shared_ptr<Font> ZWidget::mGlobalFont = nullptr;
+    std::shared_ptr<Font> ZWidget::mGlobalFontStandart = nullptr;
+    std::shared_ptr<Font> ZWidget::mGlobalFontSmall = nullptr;
     std::shared_ptr<DefaultFont> ZWidget::mDefaultFont = std::make_shared<DefaultFont>();
     std::list<std::shared_ptr<ZWidget>> ZWidget::mWidgetInstances;
 
@@ -43,6 +44,7 @@ namespace gui
         mTabOut=true;
         mEnabled=true;
         mCurrentFont=nullptr;
+        mUseFont=UseFont::Standart;
 
         mWidgetInstances.push_back(shared_from_this());
     }
@@ -69,6 +71,17 @@ namespace gui
         setFocusHandler(nullptr);
 
         mWidgetInstances.remove(shared_from_this());
+
+        mMouseListeners.clear();
+        mKeyListeners.clear();
+        mActionListeners.clear();
+        mDeathListeners.clear();
+        mFocusListeners.clear();
+        mWidgetListeners.clear();
+        mFocusHandler=nullptr;
+        mInternalFocusHandler=nullptr;
+        mParent=nullptr;
+        mChildren.clear();
     }
 
     void ZWidget::drawFrame(std::shared_ptr<Graphics> graphics)
@@ -435,22 +448,40 @@ namespace gui
         y = parentY + mDimension.y + getParent()->getChildrenArea().y;
     }
 
+    void ZWidget::setUseFont(const UseFont& font)
+    {
+        mUseFont=font;
+    }
+
     std::shared_ptr<Font> ZWidget::getFont() const
     {
         if (mCurrentFont == nullptr)
         {
-            if (mGlobalFont == nullptr)
-                return mDefaultFont;
+            if (mUseFont==UseFont::Standart)
+            {
+                if (mGlobalFontStandart == nullptr)
+                    return mDefaultFont;
 
-            return mGlobalFont;
+                return mGlobalFontStandart;
+            }
+            else if (mUseFont==UseFont::Small)
+            {
+                if (mGlobalFontSmall == nullptr)
+                    return mDefaultFont;
+
+                return mGlobalFontSmall;
+            }
         }
 
         return mCurrentFont;
     }
 
-    void ZWidget::setGlobalFont(std::shared_ptr<Font> font)
+    void ZWidget::setGlobalFont(std::shared_ptr<Font> font, UseFont fontType)
     {
-        mGlobalFont = font;
+        if (fontType==UseFont::Standart)
+            mGlobalFontStandart = font;
+        else if (fontType==UseFont::Small)
+            mGlobalFontSmall = font;
 
         for (auto item : mWidgetInstances)
         {

@@ -124,10 +124,7 @@ namespace properties {
         });
 
         if (iter!=mRaceDefinitions.end())
-        {
-            const auto index=std::distance(mRaceDefinitions.begin(),iter);
-            return mRaceDefinitions.at(index);
-        }
+            return (*iter);
         else
             return nullptr;
     }
@@ -140,10 +137,7 @@ namespace properties {
         });
 
         if (iter!=mConstructionDefs.end())
-        {
-            const auto index=std::distance(mConstructionDefs.begin(),iter);
-            return mConstructionDefs.at(index);
-        }
+            return (*iter);
         else
             return nullptr;
     }
@@ -156,10 +150,7 @@ namespace properties {
         });
 
         if (iter!=mItemDefinitions.end())
-        {
-            const auto index=std::distance(mItemDefinitions.begin(),iter);
-            return mItemDefinitions.at(index);
-        }
+            return (*iter);
         else
             return nullptr;
     }
@@ -177,10 +168,7 @@ namespace properties {
         });
 
         if (iter!=mBodyPartDefs.end())
-        {
-            const auto index=std::distance(mBodyPartDefs.begin(),iter);
-            return mBodyPartDefs.at(index);
-        }
+            return (*iter);
         else
             return nullptr;
     }
@@ -193,10 +181,7 @@ namespace properties {
         });
 
         if (iter!=mBodyDefs.end())
-        {
-            const auto index=std::distance(mBodyDefs.begin(),iter);
-            return mBodyDefs.at(index);
-        }
+            return (*iter);
         else
             return nullptr;
     }
@@ -209,10 +194,7 @@ namespace properties {
         });
 
         if (iter!=mMaterialDefs.end())
-        {
-            const auto index=std::distance(mMaterialDefs.begin(),iter);
-            return mMaterialDefs.at(index);
-        }
+            return (*iter);
         else
             return nullptr;
     }
@@ -357,10 +339,7 @@ namespace properties {
                 });
 
         if (iter!=mSpriteDefs.end())
-        {
-            int index=std::distance(mSpriteDefs.begin(),iter);
-            return mSpriteDefs.at(index);
-        }
+            return (*iter);
         else
             return nullptr;
     }
@@ -743,8 +722,7 @@ namespace properties {
 
                             if (iter != body_sections_container.end())
                             {
-                                int index = std::distance(body_sections_container.begin(), iter);
-                                newBodyDef->MainBody=body_sections_container.at(index);
+                                newBodyDef->MainBody=(*iter);
                             }
                         }
                     }
@@ -831,9 +809,9 @@ namespace properties {
                                                              return item->ID == connectsToID;
                                                          });
 
-                                if (iter != body_sections_container.end()) {
-                                    int index = std::distance(body_sections_container.begin(), iter);
-                                    newBodySectionDef->ConnectedSections.push_back(body_sections_container.at(index));
+                                if (iter != body_sections_container.end())
+                                {
+                                    newBodySectionDef->ConnectedSections.push_back((*iter));
                                 }
                             }
                         }
@@ -863,10 +841,7 @@ namespace properties {
         });
 
         if (iter!=mFactionDefs.end())
-        {
-            int index=std::distance(mFactionDefs.begin(),iter);
-            return mFactionDefs.at(index);
-        }
+            return (*iter);
         else
             return nullptr;
     }
@@ -903,10 +878,7 @@ namespace properties {
         });
 
         if (iter!=mAmmoDefs.end())
-        {
-            const auto index=std::distance(mAmmoDefs.begin(),iter);
-            return mAmmoDefs.at(index);
-        }
+            return (*iter);
         else
             return nullptr;
     }

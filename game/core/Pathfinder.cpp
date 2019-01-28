@@ -371,11 +371,10 @@ namespace game
                     }
                     else
                     {
-                        const auto index=std::distance(sortedDictionary1.begin(),iter1);
-                        if (sortedDictionary1.at(index)->distanceCost > pathfinderNode->distanceCost)
+                        if ((*iter1)->distanceCost > pathfinderNode->distanceCost)
                         {
                             {
-                                auto nodeId = sortedDictionary1.at(index)->node->nodeNavID();
+                                auto nodeId = (*iter1)->node->nodeNavID();
                                 auto iter = std::find_if(priority_queue.begin(), priority_queue.end(),
                                                          [&nodeId](PriorityQueueNavGraphPathNode const &elem)
                                                          {

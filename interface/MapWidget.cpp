@@ -8,6 +8,7 @@
 #include "MainMenuWidget.h"
 #include "NewGameWidget.h"
 #include "CreateWorldLoadWidget.h"
+#include "HUDWidget.h"
 #include "guichan/gui/Graphics.h"
 #include "guichan/gui/KeyEvent.h"
 #include "guichan/gui/MouseEvent.h"
@@ -86,6 +87,9 @@ void MapWidget::init()
     initCreateWorldLoadWidget();
     resizeCreateWorldLoadWidget();
 
+    initHUDWidget();
+    resizeHUDWidget();
+
     changeDisplayMode();
 }
 
@@ -96,6 +100,7 @@ void MapWidget::shutdown()
     clearMainMenuWidget();
     clearNewGameWidget();
     clearCreateWorldLoadWidget();
+    clearHUDWidget();
 
     gui::ZContainer::shutdown();
 }
@@ -105,6 +110,7 @@ void MapWidget::resize()
     resizeMainMenuWidget();
     resizeNewGameWidget();
     resizeCreateWorldLoadWidget();
+    resizeHUDWidget();
 }
 
 void MapWidget::initFonts()
@@ -113,7 +119,10 @@ void MapWidget::initFonts()
     mHighLightFont = std::make_shared<gui::ImageFont>("../images/interface/techyfontbighighlight.png"," abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`'*#=[]\"");
     mSmallBlackFont = std::make_shared<gui::ImageFont>("../images/interface/techyfontblack.png",       " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`'*#=[]\"");
     mWhiteFont = std::make_shared<gui::ImageFont>("../images/interface/techyfontwhite.png",       " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`'*#=[]\"");
-    gui::ZWidget::setGlobalFont(mWhiteFont);
+    mWhiteFontSmall = std::make_shared<gui::ImageFont>("../images/interface/techyfontwhitesmall.png",       " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`'*#=[]\"");
+
+    gui::ZWidget::setGlobalFont(mWhiteFont,ZWidget::UseFont::Standart);
+    gui::ZWidget::setGlobalFont(mWhiteFontSmall,ZWidget::UseFont::Small);
 }
 
 void MapWidget::clearFonts()
@@ -122,6 +131,7 @@ void MapWidget::clearFonts()
     mHighLightFont = nullptr;
     mSmallBlackFont = nullptr;
     mWhiteFont = nullptr;
+    mWhiteFontSmall = nullptr;
 }
 
 void MapWidget::initMainMenuWidget()
@@ -141,6 +151,7 @@ void MapWidget::resizeMainMenuWidget()
 
 void MapWidget::clearMainMenuWidget()
 {
+    mMainMenuWidget->shutdown();
     mMainMenuWidget=nullptr;
 }
 
@@ -161,6 +172,7 @@ void MapWidget::resizeNewGameWidget()
 
 void MapWidget::clearNewGameWidget()
 {
+    mNewGameWidget->shutdown();
     mNewGameWidget=nullptr;
 }
 
@@ -180,7 +192,28 @@ void MapWidget::resizeCreateWorldLoadWidget()
 
 void MapWidget::clearCreateWorldLoadWidget()
 {
-    mNewGameWidget=nullptr;
+    mCreateWorldLoadWidget->shutdown();
+    mCreateWorldLoadWidget=nullptr;
+}
+
+void MapWidget::initHUDWidget()
+{
+    mHUDWidget = InterfaceWidgetFactory::create_hudwidget();
+    mHUDWidget->setVisible(false);
+    mHUDWidget->setOpaque(false);
+    add(mHUDWidget);
+}
+
+void MapWidget::resizeHUDWidget()
+{
+    mHUDWidget->setDimension(gui::Rectangle(0, 0, getWidth(), getHeight()));
+    mHUDWidget->resize();
+}
+
+void MapWidget::clearHUDWidget()
+{
+    mHUDWidget->shutdown();
+    mHUDWidget=nullptr;
 }
 
 void MapWidget::changeDisplayMode()
@@ -190,24 +223,28 @@ void MapWidget::changeDisplayMode()
         mMainMenuWidget->setVisible(true);
         mNewGameWidget->setVisible(false);
         mCreateWorldLoadWidget->setVisible(false);
+        mHUDWidget->setVisible(false);
     }
     else if (mDisplayMode==DisplayMode::NewGameWidget)
     {
         mMainMenuWidget->setVisible(false);
         mNewGameWidget->setVisible(true);
         mCreateWorldLoadWidget->setVisible(false);
+        mHUDWidget->setVisible(false);
     }
     else if (mDisplayMode==DisplayMode::CreateWorldLoadWidget)
     {
         mMainMenuWidget->setVisible(false);
         mNewGameWidget->setVisible(false);
         mCreateWorldLoadWidget->setVisible(true);
+        mHUDWidget->setVisible(false);
     }
     else if (mDisplayMode==DisplayMode::MapWidget)
     {
         mMainMenuWidget->setVisible(false);
         mNewGameWidget->setVisible(false);
         mCreateWorldLoadWidget->setVisible(false);
+        mHUDWidget->setVisible(true);
     }
 }
 

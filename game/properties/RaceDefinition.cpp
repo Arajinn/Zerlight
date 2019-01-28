@@ -56,16 +56,13 @@ namespace properties
 
     std::shared_ptr<const GenderDef> RaceDefinition::gender(const game::GenderType& type) const
     {
-        auto iter=std::find_if(Genders.begin(),Genders.end(),[&type](std::shared_ptr<GenderDef> const& elem)
+        const auto iter=std::find_if(Genders.begin(),Genders.end(),[&type](std::shared_ptr<GenderDef> const& elem)
         {
             return elem->Gender==type;
         });
 
         if (iter!=Genders.end())
-        {
-            const auto index=std::distance(Genders.begin(),iter);
-            return Genders.at(index);
-        }
+            return (*iter);
         else
             return nullptr;
     }

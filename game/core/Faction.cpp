@@ -143,10 +143,13 @@ namespace game
 
         character->history()->died();
 
-        if (mAmbassador->ID()==character->ID())
+        if (mAmbassador!=nullptr)
         {
-            mAmbassador=nullptr;
-            std::cout << "The ambassador of "+mName+" has died." << std::endl;
+            if (mAmbassador->ID() == character->ID())
+            {
+                mAmbassador = nullptr;
+                std::cout << "The ambassador of " + mName + " has died." << std::endl;
+            }
         }
 
         for (const auto& envoy : mEnvoys)

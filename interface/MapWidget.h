@@ -23,6 +23,7 @@ namespace interface
     class MainMenuWidget;
     class NewGameWidget;
     class CreateWorldLoadWidget;
+    class HUDWidget;
 }
 
 class MapWidget : public gui::ZContainer, public gui::MouseListener, public gui::KeyListener, public gui::ActionListener{
@@ -94,6 +95,7 @@ private:
     std::shared_ptr<gui::ImageFont> mFont;
     std::shared_ptr<gui::ImageFont> mSmallBlackFont;
     std::shared_ptr<gui::ImageFont> mWhiteFont;
+    std::shared_ptr<gui::ImageFont> mWhiteFontSmall;
     std::shared_ptr<gui::ImageFont> mHighLightFont;
 
     void initMainMenuWidget();
@@ -110,6 +112,11 @@ private:
     void resizeCreateWorldLoadWidget();
     void clearCreateWorldLoadWidget();
     std::shared_ptr<interface::CreateWorldLoadWidget> mCreateWorldLoadWidget;
+
+    void initHUDWidget();
+    void resizeHUDWidget();
+    void clearHUDWidget();
+    std::shared_ptr<interface::HUDWidget> mHUDWidget;
 };
 
 

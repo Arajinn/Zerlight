@@ -9,37 +9,21 @@
 #include "MainMenuWidget.h"
 #include "NewGameWidget.h"
 #include "CreateWorldLoadWidget.h"
-
-void DeleteOptionButton(OptionButton* obj)
-{
-    obj->shutdown();
-    std::cout << "Deleting DemoButton\n";
-}
+#include "HUDWidget.h"
+#include "HUDTopPanel.h"
 
 std::shared_ptr<OptionButton> InterfaceWidgetFactory::create_optionbutton(const std::string &caption)
 {
-    auto ptr=std::shared_ptr<OptionButton>(new OptionButton(),DeleteOptionButton);
+    auto ptr=std::shared_ptr<OptionButton>(new OptionButton());
     ptr->init(caption);
     return ptr;
-}
-
-void DeleteOptionCheckBox(OptionCheckBox* obj)
-{
-    obj->shutdown();
-    std::cout << "Deleting DemoButton\n";
 }
 
 std::shared_ptr<OptionCheckBox> InterfaceWidgetFactory::create_optioncheckbox(const std::string& caption)
 {
-    auto ptr=std::shared_ptr<OptionCheckBox>(new OptionCheckBox(),DeleteOptionCheckBox);
+    auto ptr=std::shared_ptr<OptionCheckBox>(new OptionCheckBox());
     ptr->init(caption);
     return ptr;
-}
-
-void DeleteMapContainer(MapWidget* obj)
-{
-    obj->shutdown();
-    std::cout << "Deleting DemoButton\n";
 }
 
 std::shared_ptr<MapWidget> InterfaceWidgetFactory::create_mapwidget()
@@ -49,41 +33,37 @@ std::shared_ptr<MapWidget> InterfaceWidgetFactory::create_mapwidget()
     return ptr;
 }
 
-void DeleteMainMenuWidget(interface::MainMenuWidget* obj)
-{
-    obj->shutdown();
-    std::cout << "Deleting StartWidget\n";
-}
-
 std::shared_ptr<interface::MainMenuWidget> InterfaceWidgetFactory::create_mainmenuwidget()
 {
-    auto ptr=std::shared_ptr<interface::MainMenuWidget>(new interface::MainMenuWidget(),DeleteMainMenuWidget);
+    auto ptr=std::make_shared<interface::MainMenuWidget>();
     ptr->init();
     return ptr;
-}
-
-void DeleteNewGameWidget(interface::NewGameWidget* obj)
-{
-    obj->shutdown();
-    std::cout << "Deleting StartWidget\n";
 }
 
 std::shared_ptr<interface::NewGameWidget> InterfaceWidgetFactory::create_newgamewidget()
 {
-    auto ptr=std::shared_ptr<interface::NewGameWidget>(new interface::NewGameWidget(),DeleteNewGameWidget);
+    auto ptr=std::make_shared<interface::NewGameWidget>();
     ptr->init();
     return ptr;
 }
 
-void DeleteCreateWorldLoadWidget(interface::CreateWorldLoadWidget* obj)
-{
-    obj->shutdown();
-    std::cout << "Deleting StartWidget\n";
-}
-
 std::shared_ptr<interface::CreateWorldLoadWidget> InterfaceWidgetFactory::create_createworldloadwidget()
 {
-    auto ptr=std::shared_ptr<interface::CreateWorldLoadWidget>(new interface::CreateWorldLoadWidget(),DeleteCreateWorldLoadWidget);
+    auto ptr=std::make_shared<interface::CreateWorldLoadWidget>();
+    ptr->init();
+    return ptr;
+}
+
+std::shared_ptr<interface::HUDWidget> InterfaceWidgetFactory::create_hudwidget()
+{
+    auto ptr=std::make_shared<interface::HUDWidget>();
+    ptr->init();
+    return ptr;
+}
+
+std::shared_ptr<interface::HUDTopPanel> InterfaceWidgetFactory::create_hudtoppanel()
+{
+    auto ptr=std::make_shared<interface::HUDTopPanel>();
     ptr->init();
     return ptr;
 }

@@ -50,10 +50,7 @@ namespace gui
 
     void ZIcon::shutdown()
     {
-        if (mInternalImage)
-        {
-            mImage=nullptr;
-        }
+        mImage=nullptr;
 
         ZWidget::shutdown();
     }

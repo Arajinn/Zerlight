@@ -48,6 +48,7 @@ namespace gui {
                   std::shared_ptr<ZScrollArea> scrollArea = nullptr,
                   std::shared_ptr<ZListBox> listBox = nullptr);
 
+        virtual void shutdown();
         /**
          * Destructor.
          */

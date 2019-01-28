@@ -90,8 +90,7 @@ namespace game
 
                 newItemsByQuality.items.items.push_back(newItemsByMaterialInfo);
 
-                const auto index=std::distance(mUnstockedItems.begin(),iter_item_id);
-                mUnstockedItems[index].items.push_back(newItemsByQuality);
+                (*iter_item_id).items.push_back(newItemsByQuality);
             }
             else
             {
@@ -108,9 +107,7 @@ namespace game
                     newItemsByMaterialInfo.materialID=item->materialID();
                     newItemsByMaterialInfo.items.push_back(item);
 
-                    const auto index1=std::distance(mUnstockedItems.begin(),iter_item_id);
-                    const auto index2=std::distance(iter_item_id->items.begin(),iter_item_quality);
-                    mUnstockedItems[index1].items[index2].items.items.push_back(newItemsByMaterialInfo);
+                    (*iter_item_quality).items.items.push_back(newItemsByMaterialInfo);
                 }
                 else
                 {
@@ -122,10 +119,7 @@ namespace game
 
                     if (iter_item==iter_item_by_material->items.end())
                     {
-                        const auto index1=std::distance(mUnstockedItems.begin(),iter_item_id);
-                        const auto index2=std::distance(iter_item_id->items.begin(),iter_item_quality);
-                        const auto index3=std::distance(iter_item_quality->items.items.begin(),iter_item_by_material);
-                        mUnstockedItems[index1].items[index2].items.items[index3].items.push_back(item);
+                        (*iter_item_by_material).items.push_back(item);
                     }
                 }
             }
@@ -178,8 +172,7 @@ namespace game
 
                 newItemsByQuality.items.items.push_back(newItemsByMaterialInfo);
 
-                const auto index=std::distance(mItems.begin(),iter_item_id);
-                mItems[index].items.push_back(newItemsByQuality);
+                (*iter_item_id).items.push_back(newItemsByQuality);
             }
             else
             {
@@ -196,9 +189,7 @@ namespace game
                     newItemsByMaterialInfo.materialID=item->materialID();
                     newItemsByMaterialInfo.items.push_back(item);
 
-                    const auto index1=std::distance(mItems.begin(),iter_item_id);
-                    const auto index2=std::distance(iter_item_id->items.begin(),iter_item_quality);
-                    mItems[index1].items[index2].items.items.push_back(newItemsByMaterialInfo);
+                    (*iter_item_quality).items.items.push_back(newItemsByMaterialInfo);
                 }
                 else
                 {
@@ -211,10 +202,7 @@ namespace game
 
                     if (iter_item==iter_item_by_material->items.end())
                     {
-                        const auto index1=std::distance(mItems.begin(),iter_item_id);
-                        const auto index2=std::distance(iter_item_id->items.begin(),iter_item_quality);
-                        const auto index3=std::distance(iter_item_quality->items.items.begin(),iter_item_by_material);
-                        mItems[index1].items[index2].items.items[index3].items.push_back(item);
+                        (*iter_item_by_material).items.push_back(item);
                     }
                 }
             }
@@ -260,19 +248,15 @@ namespace game
 
                     if (iter_item!=iter_item_by_material->items.end())
                     {
-                        const auto index1=std::distance(mItems.begin(),iter_item_id);
-                        const auto index2=std::distance(iter_item_id->items.begin(),iter_item_quality);
-                        const auto index3=std::distance(iter_item_quality->items.items.begin(),iter_item_by_material);
+                        (*iter_item_by_material).items.erase(iter_item);
 
-                        mItems[index1].items[index2].items.items[index3].items.erase(iter_item);
-
-                        if (mItems[index1].items[index2].items.items[index3].items.empty())
+                        if ((*iter_item_by_material).items.empty())
                         {
-                            mItems[index1].items[index2].items.items.erase(iter_item_by_material);
-                            if (mItems[index1].items[index2].items.items.empty())
+                            (*iter_item_quality).items.items.erase(iter_item_by_material);
+                            if ((*iter_item_quality).items.items.empty())
                             {
-                                mItems[index1].items.erase(iter_item_quality);
-                                if (mItems[index1].items.empty())
+                                (*iter_item_id).items.erase(iter_item_quality);
+                                if ((*iter_item_id).items.empty())
                                 {
                                     mItems.erase(iter_item_id);
                                 }
@@ -324,19 +308,15 @@ namespace game
 
                     if (iter_item!=iter_item_by_material->items.end())
                     {
-                        const auto index1=std::distance(mUnstockedItems.begin(),iter_item_id);
-                        const auto index2=std::distance(iter_item_id->items.begin(),iter_item_quality);
-                        const auto index3=std::distance(iter_item_quality->items.items.begin(),iter_item_by_material);
+                        (*iter_item_by_material).items.erase(iter_item);
 
-                        mUnstockedItems[index1].items[index2].items.items[index3].items.erase(iter_item);
-
-                        if (mUnstockedItems[index1].items[index2].items.items[index3].items.empty())
+                        if ((*iter_item_by_material).items.empty())
                         {
-                            mUnstockedItems[index1].items[index2].items.items.erase(iter_item_by_material);
-                            if (mUnstockedItems[index1].items[index2].items.items.empty())
+                            (*iter_item_quality).items.items.erase(iter_item_by_material);
+                            if ((*iter_item_quality).items.items.empty())
                             {
-                                mUnstockedItems[index1].items.erase(iter_item_quality);
-                                if (mUnstockedItems[index1].items.empty())
+                                (*iter_item_id).items.erase(iter_item_quality);
+                                if ((*iter_item_id).items.empty())
                                 {
                                     mUnstockedItems.erase(iter_item_id);
                                 }

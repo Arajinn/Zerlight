@@ -45,6 +45,12 @@ namespace gui {
          */
         virtual ~ZWidget();
 
+        enum class UseFont
+        {
+            Small,
+            Standart
+        };
+
         /**
          * Draws the widget. The call to draw is initiated by the widget's
          * parent. The graphics object is set up so that all drawing is relative
@@ -652,6 +658,7 @@ namespace gui {
          * @since 0.1.0
          */
         std::shared_ptr<Font> getFont() const;
+        void setUseFont(const UseFont& font);
 
         /**
          * Sets the global font to be used by default for all widgets.
@@ -660,7 +667,7 @@ namespace gui {
          * @see getGlobalFont
          * @since 0.1.0
          */
-        static void setGlobalFont(std::shared_ptr<Font> font);
+        static void setGlobalFont(std::shared_ptr<Font> font, UseFont fontType=UseFont::Standart);
 
         /**
          * Sets the font for the widget. If NULL is passed, the global font
@@ -1208,7 +1215,8 @@ namespace gui {
         /**
          * Holds the global font used by the widget.
          */
-        static std::shared_ptr<Font> mGlobalFont;
+        static std::shared_ptr<Font> mGlobalFontStandart;
+        static std::shared_ptr<Font> mGlobalFontSmall;
 
         /**
          * Holds a list of all instances of widgets.
@@ -1219,6 +1227,8 @@ namespace gui {
          * Holds all children of the widget.
          */
         std::list<std::shared_ptr<ZWidget>> mChildren;
+
+        UseFont mUseFont;
     };
 }
 

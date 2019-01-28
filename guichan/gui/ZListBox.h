@@ -33,6 +33,7 @@ namespace gui {
         ZListBox();
 
         virtual void init();
+        virtual void shutdown();
 
         /**
          * Constructor.
